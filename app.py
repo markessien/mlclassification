@@ -33,9 +33,12 @@ def predictor(input_type, folder_or_image, model=None):
         # Apply directly the ML classifier to predict the output
         # Do all that and return
         classifier = import_model()
-        outcome = test(classifier, folder_or_image)  # an example
-        print(outcome)
+        outcome = test(classifier, folder_or_image)  
+        if outcome == True:
+            print('Hotel')
+            return
 
+        print('Not Hotel')
         return  # important. Must return
 
     # It's implicit that the input type is a folder from here on

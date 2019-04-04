@@ -41,6 +41,7 @@ def test(classifier, test_img):
     print("testing")
     test_image = prepImage(test_img)
     result = classifier.predict(test_image)
+    training_set.class_indices
     return printResult(result)
 
 
@@ -52,8 +53,6 @@ def prepImage(testImage):
 
 
 def printResult(result):
-    print(result)
-    training_set.class_indices
     if result[0][0] >= 0.5:
         prediction = True
     else:
