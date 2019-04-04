@@ -4,14 +4,15 @@
 
 import os
 import json
-from model import train
-from model import test
+from predict_model import test, import_model
 
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
-
+classifier = import_model()
 # model argument can be substituted with a model of ours
+
+
 def predictor(input_type, folder_or_image, model=None):
     """
     Accepts either a folder or an image. Optionally accepts a model argument
@@ -28,10 +29,11 @@ def predictor(input_type, folder_or_image, model=None):
     """
 
     if input_type == 'file':
+
         # Apply directly the ML classifier to predict the output
         # Do all that and return
-
-        outcome = "It is a hotel"  # an example
+        classifier = import_model()
+        outcome = test(classifier, folder_or_image)  # an example
         print(outcome)
 
         return  # important. Must return
@@ -49,8 +51,8 @@ def predictor(input_type, folder_or_image, model=None):
             # Categorize result based on the prediction
             # Just an example. The below line will be replaced with the actual ML logic
             # print(folder_name+'/'+file)
-            outcome = test(folder_name+'/'+file)
-            if outcome == 'Hotel':
+            outcome = test(classifier, folder_name+'/'+file)
+            if outcome == True:
                 hotels.append(file)
             else:
                 not_hotels.append(file)
