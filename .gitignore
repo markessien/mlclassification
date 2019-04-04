@@ -102,3 +102,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#processed images
+train_data/
+validation_data/
+model.h5

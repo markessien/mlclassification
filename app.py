@@ -4,36 +4,16 @@ from keras.preprocessing import image
 from keras.models import load_model
 from keras.layers import Convolution2D, MaxPooling2D, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
-from IPython.display import display
 import numpy as np
 
 import tensorflow as tf
 
-train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True
-)
-
-training_set = train_datagen.flow_from_directory(
-    'training_images/hotels/training_images',
-    target_size=(64, 64),
-    batch_size=8,
-    class_mode='binary'
-)
-
-test_datagen = ImageDataGenerator(rescale=1./255)
-
-test_set = test_datagen.flow_from_directory(
-    'training_images/hotels/test_images',
-    target_size=(64, 64),
-    batch_size=8,
-    class_mode='binary'
-)
+from prepare_images import train_generator
+from prepare_images import validation_generator
 
 
-def train():
+
+def train(epochs):
     print("Training")
     classifier = Sequential()
 
@@ -51,27 +31,28 @@ def train():
         optimizer="adam", loss="binary_crossentropy", metrics=['accuracy'])
 
     classifier.fit_generator(
-        training_set,
+        train_generator,
         steps_per_epoch=2000,
-        epochs=5,
-        validation_data=test_set,
+        epochs=epochs,
+        validation_data=validation_generator,
         validation_steps=200
     )
 
     classifier.save("model.h5")
 
+# Test is not yet passing
 
 def test():
     print("testing")
     classifier = load_model("model.h5")
     print("\nModel Loaded\n")
-    test_image = prepImage("not_hotels/1.png")
+    test_image = prepImage("validation_data/not-hotels/1.png")
     result = classifier.predict(test_image)
     printResult(result)
-    test_image = prepImage("not_hotels/6.png")
+    test_image = prepImage("validation_data/not-hotels/6.png")
     result = classifier.predict(test_image)
     printResult(result)
-    test_image = prepImage("not_hotels/5.png")
+    test_image = prepImage("validation_data/not-hotels/5.png")
     result = classifier.predict(test_image)
     printResult(result)
 
@@ -84,7 +65,7 @@ def prepImage(testImage):
 
 
 def printResult(result):
-    training_set.class_indices
+    train_generator.class_indices
     if result[0][0] >= 0.5:
         prediction = 'hotel'
     else:
@@ -98,8 +79,10 @@ def setupTF():
     sess = tf.Session(config=config)
     keras.backend.set_session(sess)
 
+if __name__ == '__main__':
+    train(3)
+    test()
 
-train()
 # def main(isGPU, train):
 #     if isGPU :
 #         setupTF()
