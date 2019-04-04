@@ -1,7 +1,13 @@
 # mlclassification
 
+#To install VENV.. make sure to do this first
 pip3 install requirements.txt
 
+#activate  VENV
 source app/bin/activate
 
-pip3 install env/requirements.txt
+#Install dependencies in VENV
+pip3 install -r  env/requirements.txt
+
+#Start app (Make sure to enter absolute path)
+python3 app.py

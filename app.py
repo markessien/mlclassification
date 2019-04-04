@@ -50,7 +50,7 @@ def predictor(input_type, folder_or_image, model=None):
             # Just an example. The below line will be replaced with the actual ML logic
             # print(folder_name+'/'+file)
             outcome = test(folder_name+'/'+file)
-            if outcome == 'hotel':
+            if outcome == 'Hotel':
                 hotels.append(file)
             else:
                 not_hotels.append(file)
