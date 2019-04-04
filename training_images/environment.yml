@@ -1,0 +1,6 @@
+name: mlclassify
+dependencies:
+  - pip:
+    - numpy
+    - tensorflow
+    - keras
