@@ -1,5 +1,8 @@
 # mlclassification
 
+Download and install anaconda.
+
+
 #To install VENV.. make sure to do this first
 pip3 install requirements.txt
 
