@@ -38,10 +38,26 @@ pip3 install -r  env/requirements.txt
 
 ## Deployment
 
-Start app (Make sure to enter absolute path)
+Start app (Make sure to enter a valid path to a file or a folder)
 
 ```
 python3 app.py
+```
+
+Example of valid path
+
+```
+File path: ./predict/hotel/kimono-1986491_640.jpg
+
+Folder path: ./predict
+```
+
+### Train App
+
+Make sure to enter absolute path
+
+```
+python3 train_model.py
 ```
 
 ## Built With
@@ -51,7 +67,7 @@ python3 app.py
 
 ## Documentation
 
-Read documentation [here](https://docs.google.com/drawings/d/1cjHtqez0jRJyvVU2CN3sm5OCUrd2mkoVNIjyJwKg21E/edit?usp=sharing)
+Read documentation [here](https://docs.google.com/document/d/1rmpzDJTY0VO4IIhxTE0HqCEoa4yUMz3GCE-KlVNshTY/edit?usp=sharing)
 
 ## License
 
