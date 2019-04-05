@@ -3,15 +3,13 @@
 Image Classification of Hotels and Non-Hotels
 This project is carried out for the purpose of building a machine learning model for classifying images of Hotels and Non-hotels
 
-Getting Started
+Full process documentation can be found at https://docs.google.com/document/d/1rmpzDJTY0VO4IIhxTE0HqCEoa4yUMz3GCE-KlVNshTY/edit?usp=sharing
+
+#Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Full process documentation can be found at https://docs.google.com/drawings/d/1cjHtqez0jRJyvVU2CN3sm5OCUrd2mkoVNIjyJwKg21E/edit?usp=sharing
-
-
-Prerequisites
-Anaconda
-Install Anaconda python distribution 3.7 on your system
+#Prerequisites
+1.Anaconda (Install Anaconda python distribution 3.7 on your system)
 
 #Install VENV.. make sure to do this first
 pip3 install requirements.txt
@@ -23,14 +21,14 @@ source app/bin/activate
 pip3 install -r  env/requirements.txt
 
 GETTING STARTED
-#Start app (Make sure to enter absolute path)
+#Start app (Make sure to enter a valid path to a file or a folder)
 python3 app.py
 
-#EXAMPLE
+#Example of valid path
 
-Single file path: predict/hotel/kimono-1986491_640.jpg
+File path: ./predict/hotel/kimono-1986491_640.jpg
 
-Folder: predict
+Folder path: ./predict
 
 #Train app (Make sure to enter absolute path)
 python3 train_model.py
