@@ -60,8 +60,6 @@ Folder path: ./predict
 
 ### Train App
 
-Make sure to enter absolute path
-
 ```
 python3 train_model.py
 ```
