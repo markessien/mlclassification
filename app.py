@@ -28,19 +28,21 @@ def predictor(input_type, folder_or_image, model=None):
 
     """
 
+
+    classifier = import_model()
     if input_type == 'file':
 
         # Apply directly the ML classifier to predict the output
         # Do all that and return
-        classifier = import_model()
-        outcome = test(classifier, folder_or_image)  
-        if outcome == True:
+        if folder_or_image.lower().endswith(image_extensions):
+            outcome = test(classifier, folder_or_image)
+            if outcome == True:
+                print('Not Hotel')
+                return
+
             print('Hotel')
-            return
-
-        print('Not Hotel')
-        return  # important. Must return
-
+            return  # important. Must return
+        print('Unsupported file type') 
     # It's implicit that the input type is a folder from here on
 
     hotels = []  # list of file names that are hotels
@@ -54,12 +56,13 @@ def predictor(input_type, folder_or_image, model=None):
             # Categorize result based on the prediction
             # Just an example. The below line will be replaced with the actual ML logic
             # print(folder_name+'/'+file)
-            outcome = test(classifier, folder_name+'/'+file)
-            if outcome == True:
-                hotels.append(file)
-            else:
-                not_hotels.append(file)
-
+            if file.lower().endswith(image_extensions):
+                outcome = test(classifier, folder_name+'/'+file)
+                if outcome == True:
+                    not_hotels.append(file)
+                else:
+                    hotels.append(file)
+            
         # After each iteration in a folder,
         with open(os.path.join(folder_name, file_name), 'w') as f:
             # write result to a json file in the folder

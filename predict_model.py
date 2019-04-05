@@ -54,7 +54,7 @@ def prepImage(testImage):
 
 
 def printResult(result):
-    if result[0][0] >= 0.5:
+    if result[0][0] == 1:
         prediction = True
     else:
         prediction = False
