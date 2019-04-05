@@ -104,3 +104,4 @@ venv.bak/
 __pycache__
 .vscode
 settings.json
+app/
