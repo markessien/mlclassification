@@ -12,7 +12,6 @@ Python distribution
 
 ```
 Anaconda
-
 ```
 
 ### Installing
@@ -25,14 +24,17 @@ Use the pip package to create virtual environment (VENV) using the requirements 
 pip3 install requirements.txt
 ```
 
-#If there is an app folder skip this step
+If there is an app folder skip this step
 
-``` python3 -m venv app```
+```
+python3 -m venv app
+```
 
-#Activate the virtual environment (VENV)
+Activate the virtual environment (VENV)
 
 ```
 LINUX/Mac: source app/bin/activate
+
 Windows: app\Scripts\activate.bat
 ```
 
