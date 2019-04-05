@@ -37,6 +37,7 @@ def import_model():
     return classifier
 
 
+
 def test(classifier, test_img):
     print("testing")
     test_image = prepImage(test_img)
