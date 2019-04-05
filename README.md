@@ -27,7 +27,7 @@ pip3 install requirements.txt
 
 #If there is an app folder skip this step
 
-``` python3 -m venv app````
+``` python3 -m venv app```
 
 #Activate the virtual environment (VENV)
 
