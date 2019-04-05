@@ -3,6 +3,7 @@
 # Ubuntu 18.04
 
 import os
+import sys
 import json
 from predict_model import test, import_model
 
@@ -28,7 +29,6 @@ def predictor(input_type, folder_or_image, model=None):
 
     """
 
-
     classifier = import_model()
     if input_type == 'file':
 
@@ -42,7 +42,7 @@ def predictor(input_type, folder_or_image, model=None):
 
             print('Hotel')
             return  # important. Must return
-        print('Unsupported file type') 
+        print('Unsupported file type')
     # It's implicit that the input type is a folder from here on
 
     hotels = []  # list of file names that are hotels
@@ -62,7 +62,7 @@ def predictor(input_type, folder_or_image, model=None):
                     not_hotels.append(file)
                 else:
                     hotels.append(file)
-            
+
         # After each iteration in a folder,
         with open(os.path.join(folder_name, file_name), 'w') as f:
             # write result to a json file in the folder
@@ -80,8 +80,13 @@ def main():
     input_type = None
 
     while 1:
-        folder_or_image = input('Enter a folder path or image path: ')
-
+        
+        try: sys.argv[1]
+        except IndexError: x = None
+        if x is None:
+            return print('A file or folder is compulsory')
+        folder_or_image = sys.argv[1]
+        print(folder_or_image)
         # if it's not a folder that was supplied, check if it's a file
         if not os.path.isdir(folder_or_image):
             if os.path.isfile(folder_or_image):

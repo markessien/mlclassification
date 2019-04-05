@@ -49,15 +49,14 @@ pip3 install -r  env/requirements.txt
 Start app (Make sure to enter a valid path to a file or a folder)
 
 ```
-python3 app.py
+python3 app.py filepath
 ```
 
 Example of valid path
 
 ```
-File path: ./predict/hotel/kimono-1986491_640.jpg
-
-Folder path: ./predict
+python3 app.py ./kimono-1986491_640.jpg
+python3 app.py ./predict
 ```
 
 ### Train App
