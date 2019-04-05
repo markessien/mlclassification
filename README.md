@@ -13,8 +13,6 @@ Prerequisites
 Anaconda
 Install Anaconda python distribution 3.7 on your system
 
-GET STARTED
-
 #Install VENV.. make sure to do this first
 pip3 install requirements.txt
 
@@ -24,8 +22,19 @@ source app/bin/activate
 #Install dependencies in VENV
 pip3 install -r  env/requirements.txt
 
+GETTING STARTED
 #Start app (Make sure to enter absolute path)
 python3 app.py
+
+#EXAMPLE
+
+Single file path: predict/hotel/kimono-1986491_640.jpg
+
+Folder: predict
+
+#Train app (Make sure to enter absolute path)
+python3 train_model.py
+
 License
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
