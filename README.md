@@ -14,8 +14,12 @@ These instructions will get you a copy of the project up and running on your loc
 #Install VENV.. make sure to do this first
 pip3 install requirements.txt
 
+#If there is an app folder skip this step
+ python3 -m venv app
+
 #activate  VENV
-source app/bin/activate
+LINUX/Mac: source app/bin/activate
+Windows: app\Scripts\activate.bat
 
 #Install dependencies in VENV
 pip3 install -r  env/requirements.txt
