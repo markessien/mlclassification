@@ -1,10 +1,10 @@
-
 # Python 3.6.7
 # Ubuntu 18.04
 
 import os
-import sys
 import json
+import sys
+import argparse
 from predict_model import test, import_model
 
 file_name = 'classification_results.json'  # the file name
@@ -29,6 +29,7 @@ def predictor(input_type, folder_or_image, model=None):
 
     """
 
+
     classifier = import_model()
     if input_type == 'file':
 
@@ -42,7 +43,7 @@ def predictor(input_type, folder_or_image, model=None):
 
             print('Hotel')
             return  # important. Must return
-        print('Unsupported file type')
+        print('Unsupported file type') 
     # It's implicit that the input type is a folder from here on
 
     hotels = []  # list of file names that are hotels
@@ -62,7 +63,7 @@ def predictor(input_type, folder_or_image, model=None):
                     not_hotels.append(file)
                 else:
                     hotels.append(file)
-
+            
         # After each iteration in a folder,
         with open(os.path.join(folder_name, file_name), 'w') as f:
             # write result to a json file in the folder
@@ -74,34 +75,36 @@ def predictor(input_type, folder_or_image, model=None):
     return
 
 
-def main():
+def parse_args(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'folder_or_image',
+        help='A path to a folder or image is required e.g /hotels or newhotel.jpg',
+    )
+    return parser.parse_args(argv[1:])
+
+
+def main(argv=sys.argv):
     """ The main script """
 
     input_type = None
+    args = parse_args(argv)
+    folder_or_image = args.folder_or_image
+    
+    # if it's not a folder that was supplied, check if it's a file
+    if not os.path.isdir(folder_or_image):
+        if os.path.isfile(folder_or_image):
+            if folder_or_image.split('.')[1].lower() not in image_extensions:
+                print("Error: An image file is required. Try again\n")
+                return
+            input_type = 'file'
+            # add logic before here to pass in the model we want to use in the predictor
+            predictor(input_type, folder_or_image)
+            return
+        print('Error: Invalid path. Kindly supply a valid folder or image path\n')
+        return
 
-    while 1:
-        
-        try: sys.argv[1]
-        except IndexError: x = None
-        if x is None:
-            return print('A file or folder is compulsory')
-        folder_or_image = sys.argv[1]
-        print(folder_or_image)
-        # if it's not a folder that was supplied, check if it's a file
-        if not os.path.isdir(folder_or_image):
-            if os.path.isfile(folder_or_image):
-                if folder_or_image.split('.')[1].lower() not in image_extensions:
-                    print("Error: An image file is required. Try again\n")
-                    continue
-
-                input_type = 'file'
-                break
-
-            print('Error: Invalid path. Kindly supply a valid folder or image path\n')
-            continue
-
-        input_type = 'folder'
-        break
+    input_type = 'folder'
 
     # add logic before here to pass in the model we want to use in the predictor
     predictor(input_type, folder_or_image)
