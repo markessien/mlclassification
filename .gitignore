@@ -84,9 +84,7 @@ celerybeat-schedule
 # Environments
 .env
 .venv
-env/
 venv/
-ENV/
 env.bak/
 venv.bak/
 
@@ -103,7 +101,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-#processed images
-train_data/
-validation_data/
-model.h5
+__pycache__
+.vscode
+settings.json
+app/
