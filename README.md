@@ -7,6 +7,8 @@ This project is carried out for the purpose of building a machine learning model
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Project Structure
+
+```
 .
 ├── datasets
 │   ├── test_set
@@ -26,6 +28,7 @@ These instructions will get you a copy of the project up and running on your loc
 ├── requirements.txt
 ├── app.py
 └── README.md
+```
 
 ### Prerequisites
 
@@ -88,6 +91,7 @@ download and put it in the models folder.
 Download and extract this file to the root folder of the project, https://drive.google.com/file/d/15ExWHHPnzdqzQDM7ROxBdwohbxa5b_Lx/view?usp=sharing
 or you can train your own model by providing a dataset folder in the root folder of the project with  below structure.
 
+```
 .
 ├── datasets
 │   ├── test_set
@@ -98,6 +102,7 @@ or you can train your own model by providing a dataset folder in the root folder
 │   └── training_set
 ├       ├── valid_case
 ├       └── not_valid_case
+```
 
 ```
 python3 train_model.py
