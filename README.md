@@ -6,6 +6,27 @@ This project is carried out for the purpose of building a machine learning model
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### Project Structure
+.
+├── datasets
+│   ├── test_set
+│   │   ├── hotels
+│   │   └── not-hotels
+│   │            
+│   │             
+│   └── training_set
+├       ├── hotels
+├       └── not-hotels
+├── dir2
+│   ├── file21.ext
+│   ├── file22.ext
+│   └── file23.ext
+├── env
+├── utils
+├── requirements.txt
+├── app.py
+└── README.md
+
 ### Prerequisites
 
 Python distribution
@@ -48,22 +69,41 @@ pip3 install -r  env/requirements.txt
 
 Start app (Make sure to enter a valid path to a file or a folder)
 
-```
-python3 app.py filepath
-```
 
-Example of valid path
+Example of valid commands
 
 ```
-python3 app.py ./kimono-1986491_640.jpg
-python3 app.py ./predict
+python3 app.py predict --path ./kimono-1986491_640.jpg
+python3 app.py predict --path ./predict
 ```
 
 ### Train App
 
+make sure you have a dataset folder of below structure in the root folder of the app
+
+A trained model weight file can be found at:
+https://drive.google.com/drive/folders/1rYweIKMNjQiKC-D92BPEcK7CSPd_jDPb?usp=sharing
+download and put it in the models folder.
+
+Download and extract this file to the root folder of the project, https://drive.google.com/file/d/15ExWHHPnzdqzQDM7ROxBdwohbxa5b_Lx/view?usp=sharing
+or you can train your own model by providing a dataset folder in the root folder of the project with  below structure.
+
+.
+├── datasets
+│   ├── test_set
+│   │   ├── valid_case
+│   │   └── not_valid_case
+│   │            
+│   │             
+│   └── training_set
+├       ├── valid_case
+├       └── not_valid_case
+
 ```
 python3 train_model.py
+
 ```
+
 
 ## Built With
 

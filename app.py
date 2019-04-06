@@ -5,7 +5,8 @@ import os
 import json
 import sys
 import argparse
-from predict_model import test, import_model
+from utils.predict_model import test, import_model
+from utils.train_model import train
 
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
@@ -35,12 +36,12 @@ def predictor(input_type, folder_or_image, model=None):
         if folder_or_image.lower().endswith(image_extensions):
             outcome = test(classifier, folder_or_image)
             if outcome == True:
-                print('Not Hotel')
+                print('\nNot Hotel')
                 return
 
-            print('Hotel')
+            print('\nHotel')
             return  # important. Must return
-        print('Unsupported file type') 
+        print('\nUnsupported file type') 
     # It's implicit that the input type is a folder from here on
 
     hotels = []  # list of file names that are hotels
@@ -73,10 +74,15 @@ def predictor(input_type, folder_or_image, model=None):
 
 
 def parse_args(argv):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser("")
     parser.add_argument(
-        'folder_or_image',
-        help='A path to a folder or image is required e.g /hotels or newhotel.jpg',
+        'app_action',
+        help='This can either be predict or train',
+        default='predict'
+    )
+    parser.add_argument(
+        '--path',
+        help='A path to a folder or image is required e.g /hotels or newhotel.jpg'
     )
     return parser.parse_args(argv[1:])
 
@@ -86,30 +92,37 @@ def main(argv=sys.argv):
 
     input_type = None
     args = parse_args(argv)
-    folder_or_image = args.folder_or_image
-    
-    # if it's not a folder that was supplied, check if it's a file
-    if not os.path.isdir(folder_or_image):
-        if os.path.isfile(folder_or_image):
-            if folder_or_image.split('.')[1].lower() not in image_extensions:
-                print("Error: An image file is required. Try again\n")
-                return
-            input_type = 'file'
-            # add logic before here to pass in the model we want to use in the predictor
-            predictor(input_type, folder_or_image)
-            return
-        print('Error: Invalid path. Kindly supply a valid folder or image path\n')
+    folder_or_image = args.path
+    action = args.app_action
+    if action == 'train':
+        train()
+    elif action == 'predict' and folder_or_image is None:
+        print('\n A path to a folder or image is required e.g /hotels or newhotel.jpg \n for help: run python3 app.py -h')
         return
+    elif action == 'predict':
+        # if it's not a folder that was supplied, check if it's a file
+        if not os.path.isdir(folder_or_image):
+            if os.path.isfile(folder_or_image):
+                if folder_or_image.split('.')[1].lower() not in image_extensions:
+                    print("\nError: An image file is required. Try again\n")
+                    return
+                input_type = 'file'
+                # add logic before here to pass in the model we want to use in the predictor
+                predictor(input_type, folder_or_image)
+                return
+            print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
+            return
 
-    input_type = 'folder'
+        input_type = 'folder'
 
-    # add logic before here to pass in the model we want to use in the predictor
-    predictor(input_type, folder_or_image)
+        # add logic before here to pass in the model we want to use in the predictor
+        predictor(input_type, folder_or_image)
+        if input_type == 'folder':
+            print(
+                f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
 
-    if input_type == 'folder':
-        print(
-            f"Done! The '{file_name}' file has been written to respective folders in {folder_or_image}")
-
+    else:
+        print('\nAction command is not supported\n for help: run python3 app.py -h')
 
 if __name__ == '__main__':
     main()
