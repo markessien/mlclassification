@@ -3,8 +3,6 @@ import numpy as np
 import keras
 import tensorflow as tf
 from keras.models import load_model
-from IPython.display import display
-from PIL import Image
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
