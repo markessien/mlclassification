@@ -4,6 +4,7 @@
 import os
 import json
 import sys
+sys.stdout.flush
 import argparse
 from predict_model import test, import_model
 

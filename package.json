@@ -1,0 +1,27 @@
+{
+  "name": "mlclassification",
+  "version": "1.0.0",
+  "description": "This project is carried out for the purpose of building a machine learning model for classifying images of Hotes from Non-hotels",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markessien/mlclassification.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markessien/mlclassification/issues"
+  },
+  "homepage": "https://github.com/markessien/mlclassification#readme",
+  "devDependencies": {
+    "electron": "^4.1.4"
+  },
+  "dependencies": {
+    "python-shell": "^1.0.7"
+  }
+}
