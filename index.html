@@ -4,16 +4,9 @@
       <meta charset="UTF-8">
       <title>Hello Python from Electron!</title>
       <script>
-    let {remote} = require('electron');
-      function triggerModel(file){
-          console.log("trigger")
-            console.log(file)
-            remote.getGlobal("triggerModel",file)
-      }
       </script>
     </head>
     <body>
       <h1>Hello Python!</h1>
-      <input id="myFile" onchange="triggerModel(this.value)" type="file" webkitdirectory />
     </body>
   </html>
