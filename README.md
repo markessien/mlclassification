@@ -19,10 +19,10 @@ These instructions will get you a copy of the project up and running on your loc
 │   └── training_set
 ├       ├── hotels
 ├       └── not-hotels
-├── dir2
-│   ├── file21.ext
-│   ├── file22.ext
-│   └── file23.ext
+├── model
+│   └── best_weight.h5
+│   
+│   
 ├── env
 ├── utils
 ├── requirements.txt
