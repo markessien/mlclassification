@@ -43,8 +43,10 @@ def all_models():
     return all_models
 
 
-def import_model(model_name):
-
+def import_model(model_name=None):
+    #Our default model is model.h5
+    if not model_name:
+        model_name='model.h5'
     classifier = load_model(model_name)
 
     return classifier
