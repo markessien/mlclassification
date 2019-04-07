@@ -122,12 +122,7 @@ def parse_args(argv):
         '--model',
         help="A model name to use e.g catdogmodel or my_model (no need to add the extension)"
     )
-    parser.add_argument(
-        '-a',
-        '--models',
-        help="A list of all the trained models"
-    )
-    
+
     return parser.parse_args(argv[1:])
 
 
