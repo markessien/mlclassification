@@ -74,8 +74,9 @@ def printResult(result):
     return prediction
 
 
-def evaluation_metrix(): 
-   
+def evaluation_metrix():
+    classifier = import_model(model_name)
+    test_image = prepImage(testImage)
     evaluator = test(classifier, test_img)  
     accuracyScore = accuracy_score(test_image, evaluator, normalize=False)
     classificationReport = classification_report(test_image, evaluator, target_names =['0','1'])
