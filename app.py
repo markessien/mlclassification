@@ -4,7 +4,6 @@
 import os
 import json
 import sys
-sys.stdout.flush
 import argparse
 from utils.predict_model import test, import_model
 from utils.train_model import train
