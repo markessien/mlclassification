@@ -5,17 +5,23 @@ import os
 import json
 import sys
 import argparse
-from utils.predict_model import test, import_model
+
+import shutil
+
 from utils.train_model import train
+from utils.predict_model import test, import_model, all_models
+
 
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
-classifier = import_model()
-# model argument can be substituted with a model of ours
+
+# As there's no other model in the models directory, this will be the best_weights.h5 model
+default_model = all_models()[0]
 
 
-def predictor(input_type, folder_or_image, model=None):
+# Use the default one if no one is supplied by the user
+def predictor(input_type, folder_or_image, model=default_model):
     """
     Accepts either a folder or an image. Optionally accepts a model argument
     that's the ML model to use for the predictor. If not given, then one of the
@@ -27,48 +33,72 @@ def predictor(input_type, folder_or_image, model=None):
     not hotels
     """
 
+    # Load the user-supplied model or the default one
+    classifier = import_model(model)
 
-    classifier = import_model()
     if input_type == 'file':
 
-        # Apply directly the ML classifier to predict the output
-        # Do all that and return
-        if folder_or_image.lower().endswith(image_extensions):
-            outcome = test(classifier, folder_or_image)
-            if outcome == True:
-                print('\nNot Hotel')
-                return
+        # Removed the file type vaildation that was here before because it's already done in the argparser place.
+        # No need for redundancy
+        outcome = test(classifier, folder_or_image)
 
-            print('\nHotel')
-            return  # important. Must return
-        print('\nUnsupported file type') 
+        if outcome == True:
+            print('\nNot Hotel')
+            return
+
+        print('\nHotel')
+
+        return  # important. Must return
+
     # It's implicit that the input type is a folder from here on
 
-    hotels = []  # list of file names that are hotels
-    not_hotels = []  # list of file names that are not hotels
+    prediction = []  # list of file names that are the prediction
+    not_prediction = []  # list of file names that are not the prediction
 
     for folder_name, folders, files in os.walk(folder_or_image):
 
+        # Make the prediction and not prediction folders (just thier paths)
+        # I used some form of dynamic naming here to create the folder names
+        # Please feel free to change it to something more suitable.
+        # I simply used the folder name of the current folder being checked as
+        # the prediction folder and then added 'not_' to that name for the
+        # not_prediction folder. So if 'hotels' was being checked, the folder
+        # names for the predictions would be 'hotels' and 'not_hotels'
+        # Kindly change as deemed.
+        prediction_folder = os.path.join(
+            folder_name, os.path.basename(folder_name))
+        not_prediction_folder = os.path.join(
+            folder_name, 'not_' + os.path.basename(folder_name))
+
+        # Create the folders using their paths
+        os.mkdir(prediction_folder)
+        os.mkdir(not_prediction_folder)
+
         for file in files:
 
-            # Apply ML classifier logic to all files in the folder
-            # Categorize result based on the prediction
-            # Just an example. The below line will be replaced with the actual ML logic
-            # print(folder_name+'/'+file)
+            # Didn't remove the file-type validation here as some files in the supplied
+            # directory may not be images, unlike up where only an image is supplied.
             if file.lower().endswith(image_extensions):
-                outcome = test(classifier, folder_name+'/'+file)
-                if outcome == True:
-                    not_hotels.append(file)
-                else:
-                    hotels.append(file)
-            
-        # After each iteration in a folder,
-        with open(os.path.join(folder_name, file_name), 'w') as f:
-            # write result to a json file in the folder
-            json.dump({'hotels': hotels, 'not_hotels': not_hotels}, f)
+                outcome = test(classifier, os.path.join(folder_name, file))
 
-        hotels.clear()  # clear the list containing the hotel names for use in the next iterated folder
-        not_hotels.clear()  # Do the same for the not_hotels list
+                # Add to JSON list and then copy it to its respective folder
+                if outcome == True:
+                    not_prediction.append(file)
+                    shutil.copy(os.path.join(folder_name, file),
+                                not_prediction_folder)
+                else:
+                    prediction.append(file)
+                    shutil.copy(os.path.join(folder_name, file),
+                                prediction_folder)
+
+        # Then actually write to JSON
+        with open(os.path.join(folder_name, file_name), 'w') as f:
+            json.dump({os.path.basename(folder_name): prediction,
+                       'not_' + os.path.basename(folder_name): not_prediction}, f)
+
+        # clear the list containing the prediction names for use in the next iterated folder
+        prediction.clear()
+        not_prediction.clear()  # Do the same for the not_prediction list
 
     return
 
@@ -123,6 +153,7 @@ def main(argv=sys.argv):
 
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
+
 
 if __name__ == '__main__':
     main()
