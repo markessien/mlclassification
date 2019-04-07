@@ -28,7 +28,7 @@ def predictor(input_type, folder_or_image, model=None):
     """
 
 
-    classifier = import_model()
+    classifier = import_model(model)
     if input_type == 'file':
 
         # Apply directly the ML classifier to predict the output
@@ -94,6 +94,11 @@ def parse_args(argv):
         '--test_folder_path',
         help = 'A test folder path e.g dataset/test_set'
     )
+    parser.add_argument(
+        '-m',
+        '--model',
+        help="A model name to use e.g catdogmodel.h5"
+    )
     return parser.parse_args(argv[1:])
 
 
@@ -106,6 +111,7 @@ def main(argv=sys.argv):
     action = args.app_action
     train_folder_path = args.train_folder_path
     test_folder_path = args.test_folder_path
+    model = args.model
     if action == 'train':
         #Check that both train and test folders are present
         if train_folder_path:
@@ -133,7 +139,7 @@ def main(argv=sys.argv):
                     return
                 input_type = 'file'
                 # add logic before here to pass in the model we want to use in the predictor
-                predictor(input_type, folder_or_image)
+                predictor(input_type, folder_or_image, model)
                 return
             print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
             return
@@ -141,7 +147,7 @@ def main(argv=sys.argv):
         input_type = 'folder'
 
         # add logic before here to pass in the model we want to use in the predictor
-        predictor(input_type, folder_or_image)
+        predictor(input_type, folder_or_image, model)
         if input_type == 'folder':
             print(
                 f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
