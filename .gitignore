@@ -106,7 +106,7 @@ __pycache__
 settings.json
 app/
 
-#Dependency directories
+Dependency directories
 node_modules/
 jspm_packages/
 

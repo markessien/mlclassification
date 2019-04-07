@@ -46,13 +46,12 @@
             border-radius: 4px;
             box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.5);
         }
-
         #myBar {
             position: absolute;
             width: 50%;
             height: 30px;
             background-color: #11998E;
-        }
+            }
     </style>
     <title>Hello Python from Electron!</title>
     <script>
@@ -117,27 +116,27 @@
 </head>
 
 <body>
-    <br />
+    <br/>
     <div class="columns is-centered">
         <div class="column is-centered has-text-centered">
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Upload Training Data
-                </header>
-                <button class="button custom-button" onclick="testDatasetDialog()">
-                    Upload Training Data
-                </button>
-                <div class="card-content">
-                    <h1 class="custom-title">
-                        <b>Datasets:</b>
-                    </h1>
+                <div class="card has-text-centered">
+                        <header class="card-header-title is-centered">
+                            Upload Training Data
+                        </header>
+                        <button class="button custom-button" onclick="testDatasetDialog()">
+                            Upload Training Data
+                        </button>
+                        <div class="card-content">
+                            <h1 class="custom-title">
+                                <b>Datasets:</b>
+                            </h1>
                             <ul>
                                 <li>Hotels</li>
                                 <li>Non Hotels</li>
                             </ul>
                         </div>
                     </div>
-            <br />
+            <br/>
             <div class="card has-text-centered">
                 <header class="card-header-title is-centered">
                     Upload Test Data
@@ -154,11 +153,11 @@
                     </ul>
                 </div>
             </div>
-            <br />
+            <br/>
             <h1><b>Upload Prediction Folder</b></h1>
             <button class="button custom-button">Select Directory</button>
             <div>
-                <br />
+                    <br/>
                 <b class="button custom-button action-button .custom-title" onclick="showDialog()">
                     TRAIN
                 </b>
@@ -168,11 +167,11 @@
             </div>
         </div>
         <div class="column has-text-centered">
-            <div class="progress">
-                <div id="myBar"></div>
-            </div>
+                <div class="progress">
+                        <div id="myBar"></div>
+                        </div>
         </div>
-    </div>
+    </div> 
 </body>
 
 </html>
