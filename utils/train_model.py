@@ -4,8 +4,6 @@ import keras
 import os
 import tensorflow as tf
 from keras.models import load_model
-
-from PIL import Image
 from pathlib import Path
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator

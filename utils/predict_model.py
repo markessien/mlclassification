@@ -6,14 +6,10 @@ import os
 import keras
 import numpy as np
 import tensorflow as tf
-
 from pathlib import Path
-
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
-
-from keras.models import Sequential, load_model
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.models import load_model
 
 from .constants import model_default
 
