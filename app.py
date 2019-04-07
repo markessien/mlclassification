@@ -91,13 +91,12 @@ def predictor(input_type, folder_or_image, model=default_model):
                     shutil.copy(os.path.join(folder_name, file),
                                 prediction_folder)
 
-        # Then actually write to JSON
+        # Then actually write to JSON (Since we are still using JSON)
         with open(os.path.join(folder_name, file_name), 'w') as f:
             json.dump({os.path.basename(folder_name): prediction,
                        'not_' + os.path.basename(folder_name): not_prediction}, f)
-
-        # clear the list containing the prediction names for use in the next iterated folder
-        prediction.clear()
+       
+        prediction.clear() # clear the list containing the prediction names for use in the next iterated folder
         not_prediction.clear()  # Do the same for the not_prediction list
 
     return
