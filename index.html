@@ -23,15 +23,9 @@
             color: white;
         }
 
-<<<<<<< HEAD
         .custom-button:focus {
             background: #1BB9AC;
             color: white;
-=======
-        .action-button {
-            width: 30%;
-            margin: 3rem 2rem;
->>>>>>> electron_dev_ui_nedu
         }
 
         .card {
@@ -50,12 +44,14 @@
             dialog
         } = require('electron').remote;
 
+        const { ipcRenderer } = require('electron')
+
         function showDialog() {
             console.log("showing")
             var path = dialog.showOpenDialog({
                 properties: ['openDirectory']
             });
-            console.log(path)
+            ipcRenderer.send('datasetRecovery', path)
         }
     </script>
 </head>
