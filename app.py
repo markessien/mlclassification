@@ -140,7 +140,7 @@ def main(argv=sys.argv):
     if args.model == None:
         model_name = default_model_name
 
-    elif model_name not in os.listdir(all_model_path):
+    elif model_name not in all_models():
         print('\nModel does not exist. Please choose a model.')
         return
 
