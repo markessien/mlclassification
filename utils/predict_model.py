@@ -4,18 +4,14 @@
 
 import os
 import numpy as np
-import tensorflow as tf
-from pathlib import Path
+
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
+
 from keras.models import load_model
 
-from .constants import model_default
-
-root_dir = Path(__file__).parents[1] # The root directory (mlclassification)
-model_dir = os.path.join(root_dir, "models") # the models directory
-
 from .constants import default_model, model_dir
+
 
 
 def all_models(default=False):
@@ -37,7 +33,6 @@ def import_model(model_name):
 
     model_path = os.path.join(model_dir, model_name)
     classifier = load_model(model_path)
-    print("Model loaded")
 
     return classifier
 
