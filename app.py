@@ -16,14 +16,9 @@ from utils.constants import model_default
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
-<<<<<<< HEAD
 
 # Use the default one if no one is supplied by the user
 def predictor(input_type, folder_or_image, model=None):
-=======
-# Use the default one if no one is supplied by the user
-def predictor(input_type, folder_or_image, model):
->>>>>>> backend
     """
     Accepts either a folder or an image. Optionally accepts a model argument
     that's the ML model to use for the predictor. If not given, then one of the
