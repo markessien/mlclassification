@@ -84,6 +84,10 @@ def parse_args(argv):
         '--path',
         help='A path to a folder or image is required e.g /hotels or newhotel.jpg'
     )
+    parser.add_argument(
+        '--model',
+        help='Selects a model to be used',
+        )
     return parser.parse_args(argv[1:])
 
 
@@ -94,8 +98,15 @@ def main(argv=sys.argv):
     args = parse_args(argv)
     folder_or_image = args.path
     action = args.app_action
+
+    model_name = "{}.h5".format(args.model)
+    all_model_path = "./model"
+    if model_name not in os.listdir(all_model_path):
+        print('\nModel does not exist. Please choose a model.')
+        return
+
     if action == 'train':
-        train()
+        train(model_name)
     elif action == 'predict' and folder_or_image is None:
         print('\n A path to a folder or image is required e.g /hotels or newhotel.jpg \n for help: run python3 app.py -h')
         return

@@ -32,10 +32,11 @@ test_set = test_datagen.flow_from_directory('./datasets/test_set',
                                             target_size=(64, 64),
                                             batch_size=32,
                                             class_mode='binary')
-resume_weights = "./model/best_weight.h5"
 
-def train( epochs = 100, all_count=10000):
+def train(model_name, epochs=100, all_count=10000):
     epoch_steps= all_count/ 32
+    model_path = "./model/{}".format(model_name)
+
     print("Training")
     classifier = Sequential()
 
@@ -55,13 +56,13 @@ def train( epochs = 100, all_count=10000):
     classifier.add(Dense(units=128, activation='relu'))
     classifier.add(Dense(units=1, activation='sigmoid'))
         # checkpoint
-    filepath="./model/best_weight.h5"
-    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+
+    checkpoint = ModelCheckpoint(model_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     callbacks_list = [checkpoint]
-    if os.path.isfile(resume_weights):
-        print ("Resumed model's weights from {}".format(resume_weights))
+    if os.path.isfile(model_path):
+        print ("Resumed model's weights from {}".format(model_path))
         # load weights
-        classifier.load_weights(resume_weights)
+        classifier.load_weights(model_path)
     # Compiling the CNN
     classifier.compile(
         optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
