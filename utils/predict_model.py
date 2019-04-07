@@ -44,8 +44,9 @@ def all_models():
 
 
 def import_model(model_name):
-
-    classifier = load_model(model_name)
+    
+    model_path = "./models/{}".format(model_name)
+    classifier = load_model(model_path)
 
     return classifier
 

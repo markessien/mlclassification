@@ -15,13 +15,8 @@ from utils.predict_model import test, import_model, all_models
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
-
-# As there's no other model in the models directory, this will be the best_weights.h5 model
-default_model = all_models()[0]
-
-
 # Use the default one if no one is supplied by the user
-def predictor(input_type, folder_or_image, model=default_model):
+def predictor(input_type, folder_or_image, model):
     """
     Accepts either a folder or an image. Optionally accepts a model argument
     that's the ML model to use for the predictor. If not given, then one of the
@@ -139,8 +134,13 @@ def main(argv=sys.argv):
     action = args.app_action
 
     model_name = "{}.h5".format(args.model)
-    all_model_path = "./model"
-    if model_name not in os.listdir(all_model_path):
+    default_model_name = "best_weight.h5"
+    all_model_path = "./models"
+
+    if args.model == None:
+        model_name = default_model_name
+
+    elif model_name not in os.listdir(all_model_path):
         print('\nModel does not exist. Please choose a model.')
         return
 
@@ -173,7 +173,7 @@ def main(argv=sys.argv):
                     return
                 input_type = 'file'
                 # add logic before here to pass in the model we want to use in the predictor
-                predictor(input_type, folder_or_image)
+                predictor(input_type, folder_or_image, model_name)
                 return
             print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
             return
@@ -181,7 +181,7 @@ def main(argv=sys.argv):
         input_type = 'folder'
 
         # add logic before here to pass in the model we want to use in the predictor
-        predictor(input_type, folder_or_image)
+        predictor(input_type, folder_or_image, model_name)
         if input_type == 'folder':
             print(
                 f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
