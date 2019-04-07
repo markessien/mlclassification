@@ -42,12 +42,6 @@ Anaconda
 
 Install Anaconda python distribution on your system
 
-Use the pip package to create virtual environment (VENV) using the requirements file
-
-```
-pip3 install requirements.txt
-```
-
 If there is an app folder skip this step
 
 ```
@@ -76,8 +70,8 @@ Start app (Make sure to enter a valid path to a file or a folder)
 Example of valid commands
 
 ```
-python3 app.py predict --path ./kimono-1986491_640.jpg
-python3 app.py predict --path ./predict
+python app.py predict --path kimono-1986491_640.jpg
+python app.py predict --path predict
 ```
 
 ### Train App
