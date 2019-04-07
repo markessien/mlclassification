@@ -122,6 +122,11 @@ def parse_args(argv):
         '--model',
         help="A model name to use e.g catdogmodel or my_model (no need to add the extension)"
     )
+    parser.add_argument(
+        '-a',
+        '--models',
+        help="A list of all the trained models"
+    )
     
     return parser.parse_args(argv[1:])
 
@@ -223,11 +228,17 @@ def main(argv=sys.argv):
             return
 
         model_delete(model)
+
         return
+
     elif action == 'models':
-        #list all models
-        print(all_models)
+
+        # List all models
+        print(all_models())
+
         return
+
+
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
 

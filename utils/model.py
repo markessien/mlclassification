@@ -9,8 +9,8 @@ def model_delete(model_file):
     model_file = os.path.join(model_dir, model_file)
     
     if os.path.isfile(model_file):
-        if model_file.split('.')[-1].lower()!=model_extension:
-            print("Error: A model file is required. Try again\n")
+        if not model_file.endswith(model_extension):
+            print("Error: A .h5 model file is required. Try again\n")
             return
         if(model_file == default_model):
             print("Can't delete default model")
