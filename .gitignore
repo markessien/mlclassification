@@ -106,4 +106,4 @@ __pycache__
 settings.json
 app/
 
-/node_modules/
+node_modules/
