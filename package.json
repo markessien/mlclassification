@@ -12,16 +12,19 @@
     "url": "git+https://github.com/markessien/mlclassification.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "HNG Team",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/markessien/mlclassification/issues"
   },
   "homepage": "https://github.com/markessien/mlclassification#readme",
   "devDependencies": {
-    "electron": "^4.1.4"
+    "electron": "^4.1.4",
+    "electron-packager": "^13.1.1"
   },
   "dependencies": {
+    "bulma": "^0.7.4",
+    "progressbar.js": "^1.0.1",
     "python-shell": "^1.0.7"
   }
 }
