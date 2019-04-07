@@ -48,26 +48,31 @@
 <body>
     <div class="columns is-centered">
         <div class="column is-centered">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Component
-                    </p>
-                    <a href="#" class="card-header-icon" aria-label="more options">
-                        <span class="icon">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </a>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                        <br>
-                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                <div class="card has-text-centered">
+                        <!-- <header class="card-header">
+                                    <p class="card-header-title is-centered"> Upload Training Data</p>
+                                    <a href="#" class="card-header-icon" aria-label="more options">
+                                        <span class="icon">
+                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </a>
+                                </header> -->
+                        <header class="card-header-title is-centered">
+                            Upload Test Data
+                        </header>
+                        <button class="button custom-button" onclick="showDialog()">
+                            Upload Test Data
+                        </button>
+                        <div class="card-content">
+                            <h1 class="custom-title">
+                                <b>Datasets:</b>
+                            </h1>
+                            <ul>
+                                <li>Hotels</li>
+                                <li>Non Hotels</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </div>
         </div>
         <div class="column has-text-centered">
             <div class="card">
