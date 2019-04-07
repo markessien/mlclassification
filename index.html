@@ -46,6 +46,14 @@
 
         const { ipcRenderer } = require('electron')
 
+        function testDatasetDialog() {
+            console.log("showing")
+            var path = dialog.showOpenDialog({
+                properties: ['openDirectory']
+            });
+            ipcRenderer.send('testDatasetRecovery', path)
+        }
+
         function showDialog() {
             console.log("showing")
             var path = dialog.showOpenDialog({
@@ -57,13 +65,32 @@
 </head>
 
 <body>
+    <br/>
     <div class="columns is-centered">
         <div class="column is-centered has-text-centered">
+                <div class="card has-text-centered">
+                        <header class="card-header-title is-centered">
+                            Upload Training Data
+                        </header>
+                        <button class="button custom-button" onclick="testDatasetDialog()">
+                            Upload Training Data
+                        </button>
+                        <div class="card-content">
+                            <h1 class="custom-title">
+                                <b>Datasets:</b>
+                            </h1>
+                            <ul>
+                                <li>Hotels</li>
+                                <li>Non Hotels</li>
+                            </ul>
+                        </div>
+                    </div>
+            <br/>
             <div class="card has-text-centered">
                 <header class="card-header-title is-centered">
                     Upload Test Data
                 </header>
-                <button class="button custom-button" onclick="showDialog()">
+                <button class="button custom-button" onclick="testDatasetDialog()">
                     Upload Test Data
                 </button>
                 <div class="card-content">

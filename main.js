@@ -2,28 +2,23 @@ const { app, BrowserWindow } = require('electron');
 var fs = require('fs');
 let { PythonShell }= require('python-shell')
 const {ipcMain} = require('electron')
+const path = require('path')
 
-ipcMain.on('datasetRecovery', (event, arg) => {
-    let results = [];
-    console.log(arg[0])
+ipcMain.on('testDatasetRecovery', (event, arg) => {
+    var dir = arg[0]
+    console.log(dir)
+    var results = [];
+    var list = fs.readdirSync(dir);
 
-    fs.readdirSync(arg[0], function (err, list) {
-        list.forEach(function (file) {
-            file = path.resolve(dir, file);
-
-            fs.stat(file, function (err, stat) {
-                if (stat.isDirectory()) {
-                    // console.log(file)
-                    results.push(file);
-                }
-            });
-
-        });
-        
-
-    });
-    console.log(results)
-
+    list.forEach(function (file) {
+        file = path.resolve(dir, file);
+        var fileStats = fs.statSync(file);
+        if (fileStats.isDirectory()){
+            file = file.split('/');
+            results.push(file[file.length-1]);
+        }
+    })
+    return results;
 });
 
 function createWindow() {
