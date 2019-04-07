@@ -4,7 +4,7 @@ import keras
 import os
 import tensorflow as tf
 from keras.models import load_model
-from IPython.display import display
+
 from PIL import Image
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator

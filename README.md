@@ -82,14 +82,11 @@ python3 app.py predict --path ./predict
 
 ### Train App
 
-make sure you have a dataset folder of below structure in the root folder of the app
+Make sure you have a dataset folder with the below structure in the root folder of the app
 
-A trained model weight file can be found at:
-https://drive.google.com/drive/folders/1rYweIKMNjQiKC-D92BPEcK7CSPd_jDPb?usp=sharing
-download and put it in the models folder.
+A trained model weight file can be found [here](https://drive.google.com/drive/folders/1rYweIKMNjQiKC-D92BPEcK7CSPd_jDPb?usp=sharing), download and put it in the models folder.
 
-Download and extract this file to the root folder of the project, https://drive.google.com/file/d/15ExWHHPnzdqzQDM7ROxBdwohbxa5b_Lx/view?usp=sharing
-or you can train your own model by providing a dataset folder in the root folder of the project with  below structure.
+Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQDM7ROxBdwohbxa5b_Lx/view?usp=sharing) to the root folder of the project or you can train your own model by providing a dataset folder in the root folder of the project with  below structure.
 
 ```
 .
