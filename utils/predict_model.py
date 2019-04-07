@@ -3,20 +3,21 @@
 # Importing the Keras libraries and packages
 
 import os
+import numpy as np
 
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
 from keras.models import load_model
 
-from .constants import model_default, model_dir
+from .constants import default_model, model_dir
 
 
 
 def all_models(default=False):
 
     if default:
-        return model_default
+        return default_model
 
     all_models = [] # List of all the models in the models directory
 
@@ -29,8 +30,10 @@ def all_models(default=False):
 
 
 def import_model(model_name):
+
     model_path = os.path.join(model_dir, model_name)
     classifier = load_model(model_path)
+    print("Model loaded")
 
     return classifier
 

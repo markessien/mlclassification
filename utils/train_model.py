@@ -8,17 +8,15 @@ import keras
 import numpy as np
 import tensorflow as tf
 
-from PIL import Image
-from pathlib import Path
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
+from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
 
-root_dir = Path(__file__).parents[1] # The root directory (mlclassification)
-model_dir = os.path.join(root_dir, "models") # the models directory
+from .constants import model_dir
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -92,12 +90,10 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
                              validation_data=test_set,
                              validation_steps=2000,
                              callbacks=callbacks_list)
-    print(training_set.class_indices)                  
+        
     # training_set.class_indices
     
-    # classifier.save("./model/index.h5")
-
-
+    classifier.save(model_path)
 
 
 def prepImage(testImage):
