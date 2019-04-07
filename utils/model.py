@@ -1,13 +1,13 @@
+
+
 import os
-from .constants import model_default
-from .constants import model_extension
+from .constants import default_model, model_dir, model_extension
 
 
 def model_delete(model_file):
-    print(model_file)
-    model_file = './models/{}'.format(model_file)
-    default_model = './models/{}'.format(model_default)
-    print(model_file)
+
+    model_file = os.path.join(model_dir, model_file)
+    
     if os.path.isfile(model_file):
         if model_file.split('.')[-1].lower()!=model_extension:
             print("Error: A model file is required. Try again\n")

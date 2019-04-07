@@ -1,5 +1,5 @@
 # Python 3.6.7
-# Ubuntu 18.04
+
 
 import os
 import json
@@ -11,33 +11,22 @@ import shutil
 from utils.train_model import train
 from utils.predict_model import test, import_model, all_models
 from utils.model import model_delete
-from utils.constants import model_default
+
+from utils.constants import model_extension, default_model
 
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
 
 # Use the default one if no one is supplied by the user
-def predictor(input_type, folder_or_image, model=None):
+def predictor(input_type, folder_or_image, model):
     """
-    Accepts either a folder or an image. Optionally accepts a model argument
-    that's the ML model to use for the predictor. If not given, then one of the
-    pretrained models from Keras or whatever library is used.
-    If an image is given as input, predicts whether the image is a hotel or not
-    and prints to the terminal
-    If a folder is supplied, loops through all the files in the folder and
-    creates a .json file containing a list of all images that are hotels and
-    not hotels
+    Accepts either a folder or an image, and a model argument that's the ML model
+    to use for the function. 
+
     """
-    # As there's no other model in the models directory, this will be the default model.
-    if not model:
-        model = model_default
 
-
-    # Load the user-supplied model or the default one
-    #Here specify full path of model
-    #We already have model as something.h5
-    model = "./models/{}".format(model)
+    # Load the model
     classifier = import_model(model)
 
     if input_type == 'file':
@@ -72,7 +61,7 @@ def predictor(input_type, folder_or_image, model=None):
         prediction_folder = os.path.join(
             folder_name, os.path.basename(folder_name))
         not_prediction_folder = os.path.join(
-            folder_name, 'not_',os.path.basename(folder_name))
+            folder_name, 'not_' + os.path.basename(folder_name))
 
         # Create the folders using their paths
         os.mkdir(prediction_folder)
@@ -114,6 +103,7 @@ def parse_args(argv):
         default='predict'
     )
     parser.add_argument(
+        '-p',
         '--path',
         help='A path to a folder or image e.g hotels or newhotel.jpg'
     )
@@ -130,7 +120,7 @@ def parse_args(argv):
     parser.add_argument(
         '-m',
         '--model',
-        help="A model name to use e.g catdogmodel.h5"
+        help="A model name to use e.g catdogmodel or my_model (no need to add the extension)"
     )
     return parser.parse_args(argv[1:])
 
@@ -138,72 +128,102 @@ def parse_args(argv):
 def main(argv=sys.argv):
     """ The main script """
 
-    input_type = None
     args = parse_args(argv)
-    folder_or_image = args.path
+
     action = args.app_action
 
-    model = args.model # this will help avoid models like None.h5
-    
-    if model is not None:
-        model = "{}.h5".format(args.model)
-    
-    elif model is None:
-        model = model_default
-    # Check if model exists in directory
-    if model not in all_models():
-        print('\nModel does not exist. Please choose a model.')
-        return
-    train_folder_path = args.train_folder_path
-    test_folder_path = args.test_folder_path
-    if action == 'train':
-        #Check that both train and test folders are present
-        if train_folder_path:
-            # If train folder is provided, test folder must also be provided
-            if test_folder_path:
-                train(model, train_folder=train_folder_path, test_folder=test_folder_path)
-            print('\n You cannot provide only one folder. Provide training folder and testing folder or None')
-            return #You must return  
-        if test_folder_path:
-            #Means test folder was provided but not train folder
-            print('\n You cannot provide only one folder. Provide training folder and testing folder or None')
-            return #You must return
-        else:
-            # Means no folder was provided, run with default
-            train(model)
-    elif action == 'delete':
-        #check that model name is provided. 
-        if not model:
-            print("\n you must supply a model to delete")
+    # If the action is train, the model is the name of the new model
+    # that is going to be trained; if it's predict, the model is the
+    # name of the model to use for prediction
+    model = args.model 
+
+    if action == 'train': 
+        # Instead of the folder_paths being None if they were not supplied
+        # make them empty strings so the os.path functions below won't 
+        # throw errors
+        train_folder_path = "" if args.train_folder_path is None else args.train_folder_path
+        test_folder_path = "" if args.test_folder_path is None else args.test_folder_path
+
+        new_model = model
+
+        if not new_model:
+            print("Kindly give a name to save your model with")
             return
-        model_delete(model)
-        return
+        
+        if new_model + model_extension in all_models():
+            print("There's already a model with that name. Choose another name")
+            return
+                
+        # Check that both train and test folders are present (Catch both orders)
+        if os.path.isdir(train_folder_path):
+
+            # If train folder is provided first, test folder must also be provided
+            if os.path.isdir(test_folder_path):
+                train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
+
+            print('\n You cannot provide only one folder. Provide both training and testing folder')
+            return # You must return  
+
+        # If test folder is provided, check is train folder is also provided
+        if os.path.isdir(test_folder_path):
+            if os.path.isdir(train_folder_path):
+                train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
+
+            print('\n You cannot provide only one folder. Provide both training and testing folder')
+            return # You must return
+        
+        # Means no folder was provided, run with default folders
+        train(new_model)
+
     elif action == 'predict':
-        if not folder_or_image:
-            print('\n A path to a folder or image is required e.g hotels or newhotel.jpg \n for help: run python3 app.py -h')
-            return
+
+        folder_or_image = "" if args.path is None else args.path
+
+        # If no model was given, use the default one
+        if not model:
+            model = default_model
+        
         else:
-            # if it's not a folder that was supplied, check if it's a file
-            if not os.path.isdir(folder_or_image):
-                if os.path.isfile(folder_or_image):
-                    if folder_or_image.split('.')[1].lower() not in image_extensions:
-                        print("\nError: An image file is required. Try again\n")
-                        return
-                    input_type = 'file'
-                    # add logic before here to pass in the model we want to use in the predictor
-                    predictor(input_type, folder_or_image, model)
-                    return
-                print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
+            # If one was supplied, check that it actually exists
+            if model + model_extension not in all_models():
+                print("No such model has been trained")
                 return
 
-            input_type = 'folder'
+        # if it's not a folder that was supplied, check if it's a file
+        if not os.path.isdir(folder_or_image):
+            if os.path.isfile(folder_or_image):
+                if not folder_or_image.endswith(image_extensions):
+                    print("\nError: An image file is required. Try again\n")
+                    return
+                input_type = 'file'
+                # add logic before here to pass in the model we want to use in the predictor
+                predictor(input_type, folder_or_image, model)
+                return
+            print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
+            return
 
-            # add logic before here to pass in the model we want to use in the predictor
-            predictor(input_type, folder_or_image, model)
-            if input_type == 'folder':
-                print(
-                    f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
-    
+        input_type = 'folder'
+
+        # add logic before here to pass in the model we want to use in the predictor
+        predictor(input_type, folder_or_image, model)
+        if input_type == 'folder':
+            print(
+                f"\nDone! The results are in {folder_or_image}")
+
+    elif action == 'delete':
+        # Check that model name is provided. 
+
+        if not model:
+            print("\n You must supply a model to delete")
+            return
+            
+        if model + model_extension not in all_models():
+            print("That model does not exist")
+            return
+
+        model_delete(model)
+        return
+
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
 
