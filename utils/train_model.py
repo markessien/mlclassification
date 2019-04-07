@@ -39,6 +39,11 @@ def _generator(folder_path =None, is_train_set=True):
         return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
+    if folder_path is None:
+        folder_path = './datasets/test_set'
+    return test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
+                                                 batch_size=32,
+                                                 class_mode='binary')
 
 
 def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folder=None):
