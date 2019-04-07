@@ -19,28 +19,3 @@ def model_delete(model_file):
         return
     print('Error: Invalid path. Kindly supply a valid folder or image path\n')
     return
-
-
-
-def parse_args(argv):
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        'model_filename',
-        help='The name of the model file',
-    )
-    return parser.parse_args(argv[1:])
-
-
-
-def main(argv=sys.argv):
-    """ The main script """
-
-    args = parse_args(argv)
-    model_file = args.model_filename
-
-    model_delete(model_file)
-
-
-
-if __name__ == '__main__':
-    main()
