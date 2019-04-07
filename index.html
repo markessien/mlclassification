@@ -93,10 +93,13 @@
 
                 list.forEach(function (file) {
                     file = path.resolve(dir, file);
+                    var ul = document.getElementById("datasets");
+                    while (ul.hasChildNodes()) {
+                                ul.removeChild(ul.firstChild);
+                            }
 
                     fs.stat(file, function (err, stat) {
                         if (stat.isDirectory()) {
-                            var ul = document.getElementById("datasets");
 
                             var li = document.createElement("li");
                             li.setAttribute('id', path.basename(file));
