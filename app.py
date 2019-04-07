@@ -16,9 +16,14 @@ from utils.constants import model_default
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
+<<<<<<< HEAD
 
 # Use the default one if no one is supplied by the user
 def predictor(input_type, folder_or_image, model=None):
+=======
+# Use the default one if no one is supplied by the user
+def predictor(input_type, folder_or_image, model):
+>>>>>>> backend
     """
     Accepts either a folder or an image. Optionally accepts a model argument
     that's the ML model to use for the predictor. If not given, then one of the
@@ -139,10 +144,14 @@ def main(argv=sys.argv):
     args = parse_args(argv)
     folder_or_image = args.path
     action = args.app_action
+    model = args.model # this will help avoid models like None.h5
+    if model is not None:
+        model = "{}.h5".format(args.model)
+    
 
-    model = "{}.h5".format(args.model)
-    all_model_path = "./model"
-    if model not in os.listdir(all_model_path):
+    if model is None:
+        model = model_default
+    elif model not in all_models():
         print('\nModel does not exist. Please choose a model.')
         return
 
@@ -175,7 +184,7 @@ def main(argv=sys.argv):
                     return
                 input_type = 'file'
                 # add logic before here to pass in the model we want to use in the predictor
-                predictor(input_type, folder_or_image,)
+                predictor(input_type, folder_or_image, model)
                 return
             print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
             return
@@ -183,7 +192,7 @@ def main(argv=sys.argv):
         input_type = 'folder'
 
         # add logic before here to pass in the model we want to use in the predictor
-        predictor(input_type, folder_or_image)
+        predictor(input_type, folder_or_image, model)
         if input_type == 'folder':
             print(
                 f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")

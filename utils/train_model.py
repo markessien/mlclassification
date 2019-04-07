@@ -52,7 +52,7 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
     test_set = _generator(test_folder, is_train_set=False)
 
     epoch_steps= all_count/ 32
-    model_path = "./model/{}".format(model_name)
+    model_path = "./models/{}".format(model_name)
 
     print("Training")
     classifier = Sequential()

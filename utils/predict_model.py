@@ -6,7 +6,6 @@ import os
 import keras
 import numpy as np
 import tensorflow as tf
-from keras.models import load_model
 
 from pathlib import Path
 
@@ -16,6 +15,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential, load_model
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
+from .constants import model_default
 
 root_dir = Path(__file__).parents[1] # The root directory (mlclassification)
 model_dir = os.path.join(root_dir, "models") # the models directory
@@ -31,7 +31,10 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 
-def all_models():
+def all_models(default=False):
+
+    if default:
+        return model_default
 
     all_models = [] # List of all the models in the models directory
 
@@ -44,8 +47,9 @@ def all_models():
 
 
 def import_model(model_name):
-
-    classifier = load_model(model_name)
+    
+    model_path = "./models/{}".format(model_name)
+    classifier = load_model(model_path)
 
     return classifier
 
@@ -69,4 +73,5 @@ def printResult(result):
         prediction = True
     else:
         prediction = False
+
     return prediction
