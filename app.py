@@ -35,6 +35,9 @@ def predictor(input_type, folder_or_image, model=None):
 
 
     # Load the user-supplied model or the default one
+    #Here specify full path of model
+    #We already have model as something.h5
+    model = "./models/{}".format(model)
     classifier = import_model(model)
 
     if input_type == 'file':
@@ -147,12 +150,10 @@ def main(argv=sys.argv):
     
     elif model is None:
         model = model_default
-
     # Check if model exists in directory
     if model not in all_models():
         print('\nModel does not exist. Please choose a model.')
         return
-
     train_folder_path = args.train_folder_path
     test_folder_path = args.test_folder_path
     if action == 'train':
@@ -170,30 +171,6 @@ def main(argv=sys.argv):
         else:
             # Means no folder was provided, run with default
             train(model)
-    elif action == 'predict' and folder_or_image is None:
-        print('\n A path to a folder or image is required e.g /hotels or newhotel.jpg \n for help: run python3 app.py -h')
-        return
-    elif action == 'predict':
-        # if it's not a folder that was supplied, check if it's a file
-        if not os.path.isdir(folder_or_image):
-            if os.path.isfile(folder_or_image):
-                if folder_or_image.split('.')[1].lower() not in image_extensions:
-                    print("\nError: An image file is required. Try again\n")
-                    return
-                input_type = 'file'
-                # add logic before here to pass in the model we want to use in the predictor
-                predictor(input_type, folder_or_image, model)
-                return
-            print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
-            return
-
-        input_type = 'folder'
-
-        # add logic before here to pass in the model we want to use in the predictor
-        predictor(input_type, folder_or_image, model)
-        if input_type == 'folder':
-            print(
-                f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
     elif action == 'delete':
         #check that model name is provided. 
         if not model:
@@ -201,6 +178,32 @@ def main(argv=sys.argv):
             return
         model_delete(model)
         return
+    elif action == 'predict':
+        if not folder_or_image:
+            print('\n A path to a folder or image is required e.g hotels or newhotel.jpg \n for help: run python3 app.py -h')
+            return
+        else:
+            # if it's not a folder that was supplied, check if it's a file
+            if not os.path.isdir(folder_or_image):
+                if os.path.isfile(folder_or_image):
+                    if folder_or_image.split('.')[1].lower() not in image_extensions:
+                        print("\nError: An image file is required. Try again\n")
+                        return
+                    input_type = 'file'
+                    # add logic before here to pass in the model we want to use in the predictor
+                    predictor(input_type, folder_or_image, model)
+                    return
+                print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
+                return
+
+            input_type = 'folder'
+
+            # add logic before here to pass in the model we want to use in the predictor
+            predictor(input_type, folder_or_image, model)
+            if input_type == 'folder':
+                print(
+                    f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
+    
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
 
