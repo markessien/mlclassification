@@ -29,7 +29,7 @@ def predictor(input_type, folder_or_image, model=None):
     creates a .json file containing a list of all images that are hotels and
     not hotels
     """
-    # As there's no other model in the models directory, this will be the best_weights.h5 model
+    # As there's no other model in the models directory, this will be the default model.
     if not model:
         model = model_default
 

@@ -20,7 +20,7 @@ These instructions will get you a copy of the project up and running on your loc
 ├       ├── hotels
 ├       └── not-hotels
 ├── model
-│   └── best_weight.h5
+│   └── default_model.h5
 │   
 │   
 ├── env
