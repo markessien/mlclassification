@@ -105,3 +105,5 @@ __pycache__
 .vscode
 settings.json
 app/
+
+/node_modules/
