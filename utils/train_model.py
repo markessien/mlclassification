@@ -25,16 +25,37 @@ train_datagen = ImageDataGenerator(
 
 test_datagen = ImageDataGenerator(rescale=1./255)
 
-training_set = train_datagen.flow_from_directory('./datasets/training_set', target_size=(64, 64),
+def _generator(folder_path =None, is_train_set=True):
+    """
+    Accepts a training folder path and generate training set from it.
+
+    if a folder is not supplied, defaults to using ./datasets/training_set
+    """
+    if is_train_set:
+        if folder_path is None:
+            folder_path = './datasets/training_set'
+        return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
-test_set = test_datagen.flow_from_directory('./datasets/test_set',
-                                            target_size=(64, 64),
-                                            batch_size=32,
-                                            class_mode='binary')
+    # if is_train_set is False then it's a test data set
+    if folder_path is None:
+        folder_path = './datasets/test_set'
+    return test_datagen.flow_from_directory(test_folder_path,target_size=(64, 64),
+                                                 batch_size=32,
+                                                 class_mode='binary')
+
+
+
+
 resume_weights = "./model/best_weight.h5"
 
-def train( epochs = 100, all_count=10000):
+def train( epochs = 100, all_count=10000, train_folder=None, test_folder=None):
+    
+    #Generate training data set 
+    training_set = _generator(train_folder, is_train_set=True)
+    #Generate test data set
+    test_set = _generator(test_folder, is_train_set=False)
+
     epoch_steps= all_count/ 32
     print("Training")
     classifier = Sequential()
@@ -93,3 +114,4 @@ def setupTF():
     config = tf.ConfigProto(device_count={'GPU': 1})
     sess = tf.Session(config=config)
     keras.backend.set_session(sess)
+

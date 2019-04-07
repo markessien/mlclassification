@@ -82,7 +82,17 @@ def parse_args(argv):
     )
     parser.add_argument(
         '--path',
-        help='A path to a folder or image is required e.g /hotels or newhotel.jpg'
+        help='A path to a folder or image(optional) e.g /hotels or newhotel.jpg'
+    )
+    parser.add_argument(
+        '-trp',
+        '--train_folder_path',
+        help = 'A training folder path e.g dataset/training_set'
+    )
+    parser.add_argument(
+        '-tep',
+        '--test_folder_path',
+        help = 'A test folder path e.g dataset/test_set'
     )
     return parser.parse_args(argv[1:])
 
@@ -94,8 +104,10 @@ def main(argv=sys.argv):
     args = parse_args(argv)
     folder_or_image = args.path
     action = args.app_action
+    train_folder_path = args.train_folder_path
+    test_folder_path = args.test_folder_path
     if action == 'train':
-        train()
+        train(train_folder=train_folder_path, test_folder=test_folder_path)
     elif action == 'predict' and folder_or_image is None:
         print('\n A path to a folder or image is required e.g /hotels or newhotel.jpg \n for help: run python3 app.py -h')
         return
