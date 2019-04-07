@@ -37,18 +37,7 @@ def _generator(folder_path=None, is_train_set=True):
     if is_train_set:
         if folder_path is None:
             folder_path = './datasets/training_set'
-        return train_datagen.flow_from_directory(folder_path, target_size=(64, 64),
                                                  batch_size=32,
-                                                 class_mode='binary')
-
-
-def train(model_name, train_folder=None, test_folder=None, epochs=100, all_count=10000):
-    # Generate training data set
-    training_set = _generator(train_folder, is_train_set=True)
-    # Generate test data set
-    test_set = _generator(test_folder, is_train_set=False)
-
-    epoch_steps = all_count / 32
     model_path = "./model/{}".format(model_name)
 
     print("Training")

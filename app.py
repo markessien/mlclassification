@@ -24,7 +24,8 @@ def parse_args(argv):
     parser.add_argument(
         '-p',
         '--path',
-        help='A path to a folder or image e.g hotels or newhotel.jpg'
+        help='A path to a folder or image e.g /foo or foobar.jpg'
+
     )
     parser.add_argument(
         '-trp',
