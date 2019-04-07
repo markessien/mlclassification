@@ -105,17 +105,20 @@ def parse_args(argv):
     parser.add_argument(
         '-p',
         '--path',
-        help='A path to a folder or image e.g hotels or newhotel.jpg'
+        help='A path to a folder or image e.g /foo or foobar.jpg'
+
     )
     parser.add_argument(
         '-trp',
         '--train_folder_path',
         help = 'A training folder path e.g dataset/training_set'
+
     )
     parser.add_argument(
         '-tep',
         '--test_folder_path',
         help = 'A test folder path e.g dataset/test_set'
+
     )
     parser.add_argument(
         '-m',
@@ -175,6 +178,7 @@ def main(argv=sys.argv):
         
         # Means no folder was provided, run with default folders
         train(new_model)
+
 
     elif action == 'predict':
 

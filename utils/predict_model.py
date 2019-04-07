@@ -14,6 +14,7 @@ from .constants import default_model, model_dir
 
 
 
+
 def all_models(default=False):
 
     if default:
@@ -25,7 +26,7 @@ def all_models(default=False):
         for file in files:
             if file.split('.')[1].lower() == 'h5':
                 all_models.append(file)
-
+                
     return all_models
 
 

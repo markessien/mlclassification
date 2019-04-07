@@ -8,6 +8,8 @@ import keras
 import numpy as np
 import tensorflow as tf
 
+from keras.models import load_model
+
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -39,6 +41,8 @@ def _generator(folder_path =None, is_train_set=True):
         return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
+
+      
     if folder_path is None:
         folder_path = './datasets/test_set'
     return test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
@@ -116,4 +120,5 @@ def setupTF():
     keras.backend.set_session(sess)
 
     return
+
 
