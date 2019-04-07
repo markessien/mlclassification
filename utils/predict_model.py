@@ -3,32 +3,14 @@
 # Importing the Keras libraries and packages
 
 import os
-import keras
-import numpy as np
-import tensorflow as tf
-
-from pathlib import Path
 
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras.models import Sequential, load_model
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.models import load_model
 
-from .constants import model_default
+from .constants import model_default, model_dir
 
-root_dir = Path(__file__).parents[1] # The root directory (mlclassification)
-model_dir = os.path.join(root_dir, "models") # the models directory
-
-
-train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True
-)
-
-test_datagen = ImageDataGenerator(rescale=1./255)
 
 
 def all_models(default=False):
@@ -48,7 +30,7 @@ def all_models(default=False):
 
 def import_model(model_name):
     
-    model_path = "./models/{}".format(model_name)
+    model_path = os.path.join(model_dir, model_name)
     classifier = load_model(model_path)
 
     return classifier
@@ -62,9 +44,11 @@ def test(classifier, test_img):
 
 
 def prepImage(testImage):
+
     test_image = image.load_img(testImage, target_size=(64, 64))
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
+
     return test_image
 
 

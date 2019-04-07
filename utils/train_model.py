@@ -1,18 +1,18 @@
-# Importing the Keras libraries and packages
-import numpy as np
-import keras
-import os
-import tensorflow as tf
-from keras.models import load_model
 
-from PIL import Image
+
+# Importing the Keras libraries and packages
+
+import os
+
+import keras
+import numpy as np
+import tensorflow as tf
+
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
+
 from keras.models import Sequential
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import Flatten
-from keras.layers import Dense
+
 from keras.callbacks import ModelCheckpoint
 
 
@@ -90,20 +90,25 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
                              callbacks=callbacks_list)
     print(training_set.class_indices)                  
     # training_set.class_indices
+    
     # classifier.save("./model/index.h5")
 
 
 
 
 def prepImage(testImage):
+
     test_image = image.load_img(testImage, target_size=(64, 64))
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
+
     return test_image
 
 def setupTF():
-    print("Setting up GPU TensorFlow")
+
     config = tf.ConfigProto(device_count={'GPU': 1})
     sess = tf.Session(config=config)
     keras.backend.set_session(sess)
+
+    return
 
