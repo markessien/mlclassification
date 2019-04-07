@@ -40,7 +40,7 @@ def _generator(folder_path =None, is_train_set=True):
     # if is_train_set is False then it's a test data set
     if folder_path is None:
         folder_path = './datasets/test_set'
-    return test_datagen.flow_from_directory(test_folder_path,target_size=(64, 64),
+    return test_datagen.flow_from_directory(test_folder,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
 
