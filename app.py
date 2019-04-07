@@ -1,5 +1,5 @@
 # Python 3.6.7
-# Ubuntu 18.04
+
 
 import os
 import json
@@ -8,7 +8,7 @@ import argparse
 from controllers.predict_model import predictor
 from controllers.train_model import train
 from utils.model_event import import_model, all_models, model_delete
-
+from utils.constants import model_extension, default_model
 
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
@@ -18,12 +18,13 @@ def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict or train',
+        help='This can either be predict, train, models or delete',
         default='predict'
     )
     parser.add_argument(
+        '-p',
         '--path',
-        help='A path to a folder or image(optional) e.g /hotels or newhotel.jpg'
+        help='A path to a folder or image e.g hotels or newhotel.jpg'
     )
     parser.add_argument(
         '-trp',
@@ -34,6 +35,7 @@ def parse_args(argv):
         help='A test folder path e.g dataset/test_set'
     )
     parser.add_argument(
+        '-m',
         '--model',
         help='Selects a model to be used',
     )
@@ -44,7 +46,6 @@ def parse_args(argv):
 def main(argv=sys.argv):
     """ The main script """
 
-    input_type = None
     args = parse_args(argv)
     folder_or_image = args.path
     action = args.app_action
@@ -70,7 +71,7 @@ def main(argv=sys.argv):
         # if it's not a folder that was supplied, check if it's a file
         if not os.path.isdir(folder_or_image):
             if os.path.isfile(folder_or_image):
-                if folder_or_image.split('.')[1].lower() not in image_extensions:
+                if not folder_or_image.endswith(image_extensions):
                     print("\nError: An image file is required. Try again\n")
                     result = json.dumps(
                         {"error": "true", "message": "An image file is required. Try again"})

@@ -5,8 +5,8 @@ import json
 from pathlib import Path
 from keras.models import load_model
 
-model_default = "best_weight.h5"
-model_name_default = "best_weight"
+model_default = "default_model.h5"
+model_name_default = "default_model"
 model_extensions = ["h5"]
 
 root_dir = Path(__file__).parents[1]  # The root directory (mlclassification)
