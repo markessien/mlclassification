@@ -38,11 +38,6 @@ def _generator(folder_path =None, is_train_set=True):
                                                  batch_size=32,
                                                  class_mode='binary')
 
-test_set = test_datagen.flow_from_directory('./datasets/test_set',
-                                            target_size=(64, 64),
-                                            batch_size=32,
-                                            class_mode='binary')
-
 
 def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folder=None):
     

@@ -10,13 +10,15 @@ import shutil
 
 from utils.train_model import train
 from utils.predict_model import test, import_model, all_models
-
+from utils.model import model_delete
+from utils.constants import model_default
 
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
+
 # Use the default one if no one is supplied by the user
-def predictor(input_type, folder_or_image, model):
+def predictor(input_type, folder_or_image, model=None):
     """
     Accepts either a folder or an image. Optionally accepts a model argument
     that's the ML model to use for the predictor. If not given, then one of the
@@ -27,6 +29,10 @@ def predictor(input_type, folder_or_image, model):
     creates a .json file containing a list of all images that are hotels and
     not hotels
     """
+    # As there's no other model in the models directory, this will be the best_weights.h5 model
+    if not model:
+        model = model_default
+
 
     # Load the user-supplied model or the default one
     classifier = import_model(model)
@@ -63,7 +69,7 @@ def predictor(input_type, folder_or_image, model):
         prediction_folder = os.path.join(
             folder_name, os.path.basename(folder_name))
         not_prediction_folder = os.path.join(
-            folder_name, 'not_' + os.path.basename(folder_name))
+            folder_name, 'not_',os.path.basename(folder_name))
 
         # Create the folders using their paths
         os.mkdir(prediction_folder)
@@ -101,12 +107,12 @@ def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict or train',
+        help='This can either be predict, train or delete',
         default='predict'
     )
     parser.add_argument(
         '--path',
-        help='A path to a folder or image(optional) e.g /hotels or newhotel.jpg'
+        help='A path to a folder or image e.g hotels or newhotel.jpg'
     )
     parser.add_argument(
         '-trp',
@@ -119,9 +125,10 @@ def parse_args(argv):
         help = 'A test folder path e.g dataset/test_set'
     )
     parser.add_argument(
+        '-m',
         '--model',
-        help='Selects a model to be used',
-        )
+        help="A model name to use e.g catdogmodel.h5"
+    )
     return parser.parse_args(argv[1:])
 
 
@@ -133,13 +140,16 @@ def main(argv=sys.argv):
     folder_or_image = args.path
     action = args.app_action
 
-    model_name = "{}.h5".format(args.model)
-    default_model_name = "best_weight.h5"
+    model = args.model # this will help avoid models like None.h5
+    
+    if model is not None:
+        model = "{}.h5".format(args.model)
+    
+    elif model is None:
+        model = model_default
 
-    if args.model == None:
-        model_name = default_model_name
-
-    elif model_name not in all_models():
+    # Check if model exists in directory
+    if model not in all_models():
         print('\nModel does not exist. Please choose a model.')
         return
 
@@ -150,7 +160,7 @@ def main(argv=sys.argv):
         if train_folder_path:
             # If train folder is provided, test folder must also be provided
             if test_folder_path:
-                train(model_name, train_folder=train_folder_path, test_folder=test_folder_path)
+                train(model, train_folder=train_folder_path, test_folder=test_folder_path)
             print('\n You cannot provide only one folder. Provide training folder and testing folder or None')
             return #You must return  
         if test_folder_path:
@@ -159,7 +169,7 @@ def main(argv=sys.argv):
             return #You must return
         else:
             # Means no folder was provided, run with default
-            train(model_name)
+            train(model)
     elif action == 'predict' and folder_or_image is None:
         print('\n A path to a folder or image is required e.g /hotels or newhotel.jpg \n for help: run python3 app.py -h')
         return
@@ -172,7 +182,7 @@ def main(argv=sys.argv):
                     return
                 input_type = 'file'
                 # add logic before here to pass in the model we want to use in the predictor
-                predictor(input_type, folder_or_image, model_name)
+                predictor(input_type, folder_or_image, model)
                 return
             print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
             return
@@ -180,11 +190,17 @@ def main(argv=sys.argv):
         input_type = 'folder'
 
         # add logic before here to pass in the model we want to use in the predictor
-        predictor(input_type, folder_or_image, model_name)
+        predictor(input_type, folder_or_image, model)
         if input_type == 'folder':
             print(
                 f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
-
+    elif action == 'delete':
+        #check that model name is provided. 
+        if not model:
+            print("\n you must supply a model to delete")
+            return
+        model_delete(model)
+        return
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
 
