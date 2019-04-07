@@ -4,10 +4,8 @@ from .constants import model_extension
 
 
 def model_delete(model_file):
-    print(model_file)
     model_file = './models/{}'.format(model_file)
     default_model = './models/{}'.format(model_default)
-    print(model_file)
     if os.path.isfile(model_file):
         if model_file.split('.')[-1].lower()!=model_extension:
             print("Error: A model file is required. Try again\n")
