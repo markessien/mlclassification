@@ -135,7 +135,6 @@ def main(argv=sys.argv):
 
     model_name = "{}.h5".format(args.model)
     default_model_name = "best_weight.h5"
-    all_model_path = "./models"
 
     if args.model == None:
         model_name = default_model_name

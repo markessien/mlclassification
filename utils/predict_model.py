@@ -44,8 +44,8 @@ def all_models():
 
 
 def import_model(model_name):
-    
-    model_path = "./models/{}".format(model_name)
+
+    model_path = os.path.join(model_dir, model_name)
     classifier = load_model(model_path)
 
     return classifier
@@ -56,7 +56,6 @@ def test(classifier, test_img):
     test_image = prepImage(test_img)
     result = classifier.predict(test_image)
     return printResult(result)
-
 
 def prepImage(testImage):
     test_image = image.load_img(testImage, target_size=(64, 64))
