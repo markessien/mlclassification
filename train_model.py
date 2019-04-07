@@ -57,7 +57,7 @@ def train():
 
     classifier.fit_generator(training_set,
                              steps_per_epoch=832,
-                             epochs=5,
+                             epochs=25,
                              validation_data=test_set,
                              validation_steps=2000)
                         

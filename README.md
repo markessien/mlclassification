@@ -1,42 +1,85 @@
-# mlclassification
+# Image Classification of Hotels and Non-Hotels
 
-Image Classification of Hotels and Non-Hotels
-This project is carried out for the purpose of building a machine learning model for classifying images of Hotels and Non-hotels
+This project is carried out for the purpose of building a machine learning model for classifying images of Hotes from Non-hotels
 
-Full process documentation can be found at https://docs.google.com/document/d/1rmpzDJTY0VO4IIhxTE0HqCEoa4yUMz3GCE-KlVNshTY/edit?usp=sharing
+## Getting Started
 
-#Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-#Prerequisites
-1.Anaconda (Install Anaconda python distribution 3.7 on your system)
+### Prerequisites
 
-#Install VENV.. make sure to do this first
+Python distribution
+
+```
+Anaconda
+```
+
+### Installing
+
+Install Anaconda python distribution on your system
+
+Use the pip package to create virtual environment (VENV) using the requirements file
+
+```
 pip3 install requirements.txt
+```
 
-#activate  VENV
-source app/bin/activate
+If there is an app folder skip this step
 
-#Install dependencies in VENV
+```
+python3 -m venv app
+```
+
+Activate the virtual environment (VENV)
+
+```
+LINUX/Mac: source app/bin/activate
+
+Windows: app\Scripts\activate.bat
+```
+
+Install dependencies in VENV using requirements file
+
+```
 pip3 install -r  env/requirements.txt
+``` 
 
-GETTING STARTED
-#Start app (Make sure to enter a valid path to a file or a folder)
-python3 app.py
+## Deployment
 
-#Example of valid path
+Start app (Make sure to enter a valid path to a file or a folder)
 
-File path: ./predict/hotel/kimono-1986491_640.jpg
+```
+python3 app.py filepath
+```
 
-Folder path: ./predict
+Example of valid path
 
-#Train app (Make sure to enter absolute path)
+```
+python3 app.py ./kimono-1986491_640.jpg
+python3 app.py ./predict
+```
+
+### Train App
+
+```
 python3 train_model.py
+```
 
-License
-This project is licensed under the MIT License - see the LICENSE.md file for details
+## Built With
 
-Acknowledgments
-Hat tip to anyone whose code was used
-Inspiration
-etc
+* [Anaconda](https://www.anaconda.com/distribution/) - The python distribution used
+* [VS Code](https://code.visualstudio.com/) - The IDE used
+
+## Documentation
+
+Read documentation [here](https://docs.google.com/document/d/1rmpzDJTY0VO4IIhxTE0HqCEoa4yUMz3GCE-KlVNshTY/edit?usp=sharing)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
