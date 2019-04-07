@@ -110,7 +110,7 @@ def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict, train or delete',
+        help='This can either be predict, train, models or delete',
         default='predict'
     )
     parser.add_argument(
@@ -130,8 +130,9 @@ def parse_args(argv):
     parser.add_argument(
         '-m',
         '--model',
-        help="A model name to use e.g catdogmodel.h5"
+        help="A model name to use e.g catdogmodel."
     )
+    
     return parser.parse_args(argv[1:])
 
 
@@ -142,7 +143,9 @@ def main(argv=sys.argv):
     args = parse_args(argv)
     folder_or_image = args.path
     action = args.app_action
-
+    train_folder_path = args.train_folder_path
+    test_folder_path = args.test_folder_path
+    
     model = args.model # this will help avoid models like None.h5
     
     if model is not None:
@@ -154,8 +157,7 @@ def main(argv=sys.argv):
     if model not in all_models():
         print('\nModel does not exist. Please choose a model.')
         return
-    train_folder_path = args.train_folder_path
-    test_folder_path = args.test_folder_path
+    
     if action == 'train':
         #Check that both train and test folders are present
         if train_folder_path:
@@ -177,6 +179,9 @@ def main(argv=sys.argv):
             print("\n you must supply a model to delete")
             return
         model_delete(model)
+        return
+    elif action == 'models':
+        print(all_models())
         return
     elif action == 'predict':
         if not folder_or_image:
@@ -203,6 +208,7 @@ def main(argv=sys.argv):
             if input_type == 'folder':
                 print(
                     f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
+    
     
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
