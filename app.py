@@ -11,9 +11,6 @@ from utils.train_model import train
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
-classifier = import_model()
-# model argument can be substituted with a model of ours
-
 
 def predictor(input_type, folder_or_image, model=None):
     """
