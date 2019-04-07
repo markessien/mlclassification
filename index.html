@@ -23,9 +23,15 @@
             color: white;
         }
 
+<<<<<<< HEAD
         .custom-button:focus {
             background: #1BB9AC;
             color: white;
+=======
+        .action-button {
+            width: 30%;
+            margin: 3rem 2rem;
+>>>>>>> electron_dev_ui_nedu
         }
 
         .card {
@@ -77,10 +83,20 @@
             <br/>
             <h1><b>Upload Prediction Folder</b></h1>
             <button class="button custom-button">Select Directory</button>
+            <div>
+                    <br/>
+                <b class="button custom-button action-button .custom-title" onclick="showDialog()">
+                    TRAIN
+                </b>
+                <b class="button is-primary action-button .custom-title" onclick="showDialog()">
+                    PREDICT
+                </b>
+            </div>
         </div>
         <div class="column has-text-centered">
-
+            
         </div>
+    </div> 
 </body>
 
 </html>

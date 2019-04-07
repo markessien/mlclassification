@@ -106,13 +106,4 @@ __pycache__
 settings.json
 app/
 
-<<<<<<< HEAD
-Dependency directories
 node_modules/
-jspm_packages/
-
-# Optional npm cache directory
-.npm
-=======
-node_modules/
->>>>>>> electron_dev_ui_nedu
