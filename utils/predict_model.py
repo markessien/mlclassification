@@ -46,9 +46,8 @@ def all_models():
 def import_model(model_name=None):
     #Our default model is model.h5
     if not model_name:
-        model_name='model.h5'
+        model_name='best_weight.h5'
     classifier = load_model(model_name)
-
     return classifier
 
 
