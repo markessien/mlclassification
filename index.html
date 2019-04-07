@@ -39,13 +39,45 @@
             dialog
         } = require('electron').remote;
 
+        const fs = require('fs');
+        const path = require('path');
+
         function showDialog() {
             console.log("showing")
             var path = dialog.showOpenDialog({
                 properties: ['openDirectory']
             });
             console.log(path)
+
+            getFolderNames(path.toString());
         }
+
+       
+
+        function getFolderNames(dir) {
+            const results = [];
+
+            fs.readdir(dir, function (err, list) {
+
+                list.forEach(function (file) {
+                    file = path.resolve(dir, file);
+
+                    fs.stat(file, function (err, stat) {
+                        if (stat.isDirectory()) {
+                            var ul = document.getElementById("datasets");
+
+                            var li = document.createElement("li");
+                            li.setAttribute('id', path.basename(file));
+                            li.appendChild(document.createTextNode(path.basename(file)));
+                            ul.appendChild(li);
+                        }
+                    });
+
+                });
+
+
+            });
+        };
     </script>
 </head>
 
@@ -63,9 +95,8 @@
                     <h1 class="custom-title">
                         <b>Datasets:</b>
                     </h1>
-                    <ul>
-                        <li>Hotels</li>
-                        <li>Non Hotels</li>
+                    <ul id="datasets">
+
                     </ul>
                 </div>
             </div>
