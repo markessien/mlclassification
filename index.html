@@ -36,6 +36,22 @@
         .card-content {
             padding: 0.75rem;
         }
+
+        .progress {
+            height: 30px;
+            background: #EDEDED;
+            position: absolute;
+            width: 200px;
+            margin-top: 0.75rem;
+            border-radius: 4px;
+            box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.5);
+        }
+        #myBar {
+            position: absolute;
+            width: 50%;
+            height: 30px;
+            background-color: #11998E;
+            }
     </style>
     <title>Hello Python from Electron!</title>
     <script>
@@ -117,7 +133,9 @@
             </div>
         </div>
         <div class="column has-text-centered">
-            
+                <div class="progress">
+                        <div id="myBar"></div>
+                        </div>
         </div>
     </div> 
 </body>
