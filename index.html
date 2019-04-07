@@ -27,6 +27,10 @@
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 4px;
         }
+
+        .card-content {
+            padding: 0.75rem;
+        }
     </style>
     <title>Hello Python from Electron!</title>
     <script>
@@ -48,50 +52,27 @@
 <body>
     <div class="columns is-centered">
         <div class="column is-centered">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Component
-                    </p>
-                    <a href="#" class="card-header-icon" aria-label="more options">
-                        <span class="icon">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </a>
+            <div class="card has-text-centered">
+                <header class="card-header-title is-centered">
+                    Upload Test Data
                 </header>
+                <button class="button custom-button" onclick="showDialog()">
+                    Upload Test Data
+                </button>
                 <div class="card-content">
-                    <div class="content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                        <br>
-                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                    </div>
+                    <h1 class="custom-title">
+                        <b>Datasets:</b>
+                    </h1>
+                    <ul>
+                        <li>Hotels</li>
+                        <li>Non Hotels</li>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="column has-text-centered">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Component
-                    </p>
-                    <a href="#" class="card-header-icon" aria-label="more options">
-                        <span class="icon">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </a>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                        <br>
-                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                    </div>
-                </div>
-            </div>
+
         </div>
-    </div>
 </body>
 
 </html>
