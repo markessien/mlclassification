@@ -35,6 +35,9 @@ def predictor(input_type, folder_or_image, model=None):
 
 
     # Load the user-supplied model or the default one
+    #Here specify full path of model
+    #We already have model as something.h5
+    model = "./models/{}".format(model)
     classifier = import_model(model)
 
     if input_type == 'file':
@@ -142,14 +145,11 @@ def main(argv=sys.argv):
     model = args.model # this will help avoid models like None.h5
     if model is not None:
         model = "{}.h5".format(args.model)
-    
-
     if model is None:
         model = model_default
     elif model not in all_models():
         print('\nModel does not exist. Please choose a model.')
         return
-
     train_folder_path = args.train_folder_path
     test_folder_path = args.test_folder_path
     if action == 'train':
@@ -167,9 +167,16 @@ def main(argv=sys.argv):
         else:
             # Means no folder was provided, run with default
             train(model)
+    elif action == 'delete':
+        #check that model name is provided. 
+        if not model:
+            print("\n you must supply a model to delete")
+            return
+        model_delete(model)
+        return
     elif action == 'predict':
         if not folder_or_image:
-            print('\n A path to a folder or image is required e.g /hotels or newhotel.jpg \n for help: run python3 app.py -h')
+            print('\n A path to a folder or image is required e.g hotels or newhotel.jpg \n for help: run python3 app.py -h')
             return
         else:
             # if it's not a folder that was supplied, check if it's a file
@@ -192,13 +199,7 @@ def main(argv=sys.argv):
             if input_type == 'folder':
                 print(
                     f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
-    elif action == 'delete':
-        #check that model name is provided. 
-        if not model:
-            print("\n you must supply a model to delete")
-            return
-        model_delete(model)
-        return
+    
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
 
