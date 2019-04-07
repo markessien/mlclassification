@@ -99,7 +99,7 @@ def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict, train or delete',
+        help='This can either be predict, train, models or delete',
         default='predict'
     )
     parser.add_argument(
@@ -122,6 +122,7 @@ def parse_args(argv):
         '--model',
         help="A model name to use e.g catdogmodel or my_model (no need to add the extension)"
     )
+    
     return parser.parse_args(argv[1:])
 
 
@@ -223,7 +224,10 @@ def main(argv=sys.argv):
 
         model_delete(model)
         return
-
+    elif action == 'models':
+        #list all models
+        print(all_models)
+        return
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
 
