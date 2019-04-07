@@ -6,7 +6,6 @@ import os
 import keras
 import numpy as np
 import tensorflow as tf
-from keras.models import load_model
 
 from pathlib import Path
 
@@ -31,7 +30,10 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 
-def all_models():
+def all_models(default=False):
+
+    if default:
+        return "default_model.h5"
 
     all_models = [] # List of all the models in the models directory
 
@@ -70,4 +72,5 @@ def printResult(result):
         prediction = True
     else:
         prediction = False
+
     return prediction
