@@ -6,6 +6,7 @@ import tensorflow as tf
 from keras.models import load_model
 
 from PIL import Image
+from pathlib import Path
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -15,6 +16,8 @@ from keras.layers import Flatten
 from keras.layers import Dense
 from keras.callbacks import ModelCheckpoint
 
+root_dir = Path(__file__).parents[1] # The root directory (mlclassification)
+model_dir = os.path.join(root_dir, "models") # the models directory
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -47,7 +50,7 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
     test_set = _generator(test_folder, is_train_set=False)
 
     epoch_steps= all_count/ 32
-    model_path = "./models/{}".format(model_name)
+    model_path = os.path.join(model_dir, model_name)
 
     print("Training")
     classifier = Sequential()
