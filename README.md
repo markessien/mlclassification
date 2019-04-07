@@ -45,7 +45,7 @@ Install Anaconda python distribution on your system
 If there is an app folder skip this step
 
 ```
-python3 -m venv app
+python -m venv app
 ```
 
 Activate the virtual environment (VENV)
