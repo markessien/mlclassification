@@ -5,11 +5,11 @@ const {
 let {PythonShell} = require('python-shell')
 
 function createWindow() {
-    PythonShell.run('app.py',{args:["./test_set"]}, function (err, results) {
-        if (err) throw err;
-        console.log('hello.py finished.');
-        console.log('results', results);
-    });
+    // PythonShell.run('app.py',{args:["./test_set"]}, function (err, results) {
+    //     if (err) throw err;
+    //     console.log('hello.py finished.');
+    //     console.log('results', results);
+    // });
     window = new BrowserWindow({
         width: 800,
         height: 600

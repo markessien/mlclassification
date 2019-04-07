@@ -1,12 +1,90 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>Hello Python from Electron!</title>
-      <script>
-      </script>
-    </head>
-    <body>
-      <h1>Hello Python!</h1>
-    </body>
-  </html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./html_assets/fonts/questrial/style.css" >
+    <link rel="stylesheet" href="./html_assets/fonts/ubuntu/style.css" >
+    <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
+    <style> 
+        .custom-title{
+            font-family: "Ubuntu"
+        }
+    </style>
+    <title>Hello Python from Electron!</title>
+    <script>
+        // Code for electron dialog
+        const {
+            dialog
+        } = require('electron').remote;
+
+        function showDialog() {
+            console.log("showing")
+            var path = dialog.showOpenDialog({
+                properties: ['openDirectory']
+            });
+            console.log(path)
+        }
+    </script>
+</head>
+
+<body>
+    <div class="columns is-centered">
+        <div class="column">
+                <div class="card">
+                        <header class="card-header">
+                          <p class="card-header-title">
+                            Component
+                          </p>
+                          <a href="#" class="card-header-icon" aria-label="more options">
+                            <span class="icon">
+                              <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </header>
+                        <div class="card-content">
+                          <div class="content">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                            <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+                            <br>
+                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                          </div>
+                        </div>
+                        <footer class="card-footer">
+                          <a href="#" class="card-footer-item">Save</a>
+                          <a href="#" class="card-footer-item">Edit</a>
+                          <a href="#" class="card-footer-item">Delete</a>
+                        </footer>
+                      </div>
+        </div>
+        <div class="column">
+                <div class="card">
+                        <header class="card-header">
+                          <p class="card-header-title">
+                            Component
+                          </p>
+                          <a href="#" class="card-header-icon" aria-label="more options">
+                            <span class="icon">
+                              <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </header>
+                        <div class="card-content">
+                          <div class="content">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                            <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+                            <br>
+                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                          </div>
+                        </div>
+                        <footer class="card-footer">
+                          <a href="#" class="card-footer-item">Save</a>
+                          <a href="#" class="card-footer-item">Edit</a>
+                          <a href="#" class="card-footer-item">Delete</a>
+                        </footer>
+                      </div>
+        </div>
+    </div>
+</body>
+
+</html>
