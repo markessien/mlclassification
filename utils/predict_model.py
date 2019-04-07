@@ -6,9 +6,9 @@ import os
 import keras
 import numpy as np
 import tensorflow as tf
+from keras.models import load_model
 
 from pathlib import Path
-from PIL import Image
 
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
