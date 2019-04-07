@@ -8,6 +8,8 @@ import argparse
 from utils.predict_model import test, import_model
 from utils.train_model import train
 
+from utils.model import model_delete
+
 file_name = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
@@ -74,12 +76,12 @@ def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict or train',
+        help='This can either be predict, train or delete',
         default='predict'
     )
     parser.add_argument(
         '--path',
-        help='A path to a folder or image(optional) e.g /hotels or newhotel.jpg'
+        help='A path to a folder or image e.g hotels or newhotel.jpg'
     )
     parser.add_argument(
         '-trp',
@@ -148,6 +150,13 @@ def main(argv=sys.argv):
         if input_type == 'folder':
             print(
                 f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
+    elif action == 'delete':
+        #check that model name is provided. 
+        if not model:
+            print("\n you must supply a model to delete")
+            return
+        model_delete(model)
+        return
 
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')

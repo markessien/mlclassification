@@ -8,17 +8,17 @@ import numpy as np
 import tensorflow as tf
 from keras.models import load_model
 
-from pathlib import Path
-
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
 from keras.models import Sequential, load_model
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
+from .constants import model_dir
+from .constants import model_default
 
-root_dir = Path(__file__).parents[1] # The root directory (mlclassification)
-model_dir = os.path.join(root_dir, "models") # the models directory
+
+
 
 
 train_datagen = ImageDataGenerator(
@@ -35,10 +35,10 @@ def all_models():
 
     all_models = [] # List of all the models in the models directory
 
-    for folder_name, folders, files in os.walk(model_dir):
+    for root, folders, files in os.walk(model_dir):
         for file in files:
             if file.split('.')[1].lower() == 'h5':
-                all_models.append(file)
+                all_models.append(os.path.join(root,file))
 
     return all_models
 

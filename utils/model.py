@@ -1,15 +1,14 @@
 import os
-import argparse,sys
+from .constants import model_default
+from .constants import model_extension
 
-model_default = "best_weight.h5"
-model_extensions = ["h5"]
 
 def model_delete(model_file):
     if os.path.isdir(model_file):
         print("This is a directory. Input a file name")
         return
     elif os.path.isfile(model_file):
-        if model_file.split('.')[1].lower() not in model_extensions:
+        if model_file.split('.')[1].lower()!=model_extension:
             print("Error: A model file is required. Try again\n")
             return
         if(model_file == model_default):
