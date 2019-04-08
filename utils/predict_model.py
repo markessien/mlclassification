@@ -4,14 +4,11 @@
 
 import os
 import numpy as np
+import shutil
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
-from keras.models import load_model
-from utils.constants import default_model, model_dir
-from utils.constants import model_extension, default_model
-
-file_name = 'classification_results.json'  # the file name
-image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
+from utils.constants import default_model, model_dir,model_extension,image_extensions,file_name
+from utils.model import model_delete,import_model,all_models
 
 # Use the default one if no one is supplied by the user
 def predictor(input_type, folder_or_image, model):

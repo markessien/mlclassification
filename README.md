@@ -96,10 +96,10 @@ Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQD
 ```
 
 ```
-Train Model: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set --model default_models
+Train Model: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set --model default_models
 Train with default dataset and model: python3 app.py train
 Train with custom model: python3 app.py train --model default_models
-Train with custom dataset: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set
+Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set
 ```
 
 ### APIs
@@ -107,10 +107,11 @@ Train with custom dataset: python3 app.py train -tep ./datasets/test_set -trp ./
 ```
 Retrieve Models: python3 app.py retrieve_models
 Delete Model: python3 app.py delete --model default_models
-Train Model: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set --model default_models
+Train Model:python3 app.py train --tep ./datasets/test_set --trp ./datasets/tr
+aining_set --model akinduko--model default_models
 Train with default dataset and model: python3 app.py
-Train with custom model: python3 app.py  --model default_models
-Train with custom dataset: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set
+Train with custom model: python3 app.py train --model default_model
+Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set
 Classification: python3 app.py predict --path /Users/src/assets/images/bg.png --model default_model
 ```
 

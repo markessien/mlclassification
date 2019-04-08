@@ -29,6 +29,30 @@ train_datagen = ImageDataGenerator(
 
 test_datagen = ImageDataGenerator(rescale=1./255)
 
+
+def train_model(train_folder_path,new_model,test_folder_path):
+    # Check that both train and test folders are present (Catch both orders)
+    if os.path.isdir(train_folder_path):
+
+        # If train folder is provided first, test folder must also be provided
+        if os.path.isdir(test_folder_path):
+            train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
+
+        print('\n You cannot provide only one folder. Provide both training and testing folder')
+        return # You must return  
+
+    # If test folder is provided, check is train folder is also provided
+    if os.path.isdir(test_folder_path):
+        if os.path.isdir(train_folder_path):
+            train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
+
+        print('\n You cannot provide only one folder. Provide both training and testing folder')
+        return # You must return
+    
+    # Means no folder was provided, run with default folders
+    train(new_model)
+
+
 def _generator(folder_path =None, is_train_set=True):
     """
     Accepts a training folder path and generate training set from it.

@@ -1,12 +1,12 @@
 import os
 from utils.constants import default_model, model_dir, model_extension
-
+from keras.models import load_model
 
 def model_delete(model_file):
 
-    model_file = os.path.join(model_dir, model_file)
+    _model_file = os.path.join(model_dir, model_file)
     
-    if os.path.isfile(model_file):
+    if os.path.isfile(_model_file):
         if not model_file.endswith(model_extension):
             print("Error: A .h5 model file is required. Try again\n")
             return

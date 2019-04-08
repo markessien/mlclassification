@@ -5,13 +5,11 @@ import os
 import json
 import sys
 import argparse
-
-import shutil
-
-from utils.train_model import train
+from utils.train_model import train_model
 from utils.predict_model import predictor
 from utils.model import model_delete,import_model,all_models
-from utils.constants import default_model, model_dir,model_extension,default_model
+from utils.constants import default_model, model_dir,model_extension,image_extensions,file_name,default_test_folder_path,default_train_folder_path
+
 
 
 def parse_args(argv):
@@ -22,31 +20,24 @@ def parse_args(argv):
         default='predict'
     )
     parser.add_argument(
-        '-p',
         '--path',
         help='A path to a folder or image e.g /foo or foobar.jpg'
 
     )
     parser.add_argument(
-        '-trp',
-        '--train_folder_path',
-        help = 'A training folder path e.g dataset/training_set'
-
+        '--trp',
+        help='A training folder path e.g dataset/training_set'
     )
     parser.add_argument(
-        '-tep',
-        '--test_folder_path',
-        help = 'A test folder path e.g dataset/test_set'
-
+        '--tep',
+        help='A test folder path e.g dataset/test_set'
     )
     parser.add_argument(
-        '-m',
         '--model',
-        help="A model name to use e.g catdogmodel or my_model (no need to add the extension)"
+        help='Selects a model to be used',
     )
 
     return parser.parse_args(argv[1:])
-
 
 def main(argv=sys.argv):
     """ The main script """
@@ -54,6 +45,9 @@ def main(argv=sys.argv):
     args = parse_args(argv)
 
     action = args.app_action
+    train_folder_path =args.trp
+    test_folder_path = args.tep
+    folder_or_image = "" if args.path is None else args.path
 
     # If the action is train, the model is the name of the new model
     # that is going to be trained; if it's predict, the model is the
@@ -64,44 +58,25 @@ def main(argv=sys.argv):
         # Instead of the folder_paths being None if they were not supplied
         # make them empty strings so the os.path functions below won't 
         # throw errors
-        train_folder_path = "" if args.train_folder_path is None else args.train_folder_path
-        test_folder_path = "" if args.test_folder_path is None else args.test_folder_path
-
+        new_model = model
         if not new_model:
-            print("Kindly give a name to save your model with")
-            return
+            new_model = default_model
+            print("No name provided: Using default model")
+            train_folder_path_used = default_train_folder_path if train_folder_path is None  else train_folder_path
+            test_folder_path_used = default_test_folder_path if test_folder_path is None  else test_folder_path
+            return train_model(train_folder_path_used,new_model,test_folder_path_used)
         
         new_model = model + model_extension
-        
         if new_model in all_models():
-            print("There's already a model with that name. Choose another name")
-            return
+            print("There's already a model with that name. Retraining")
+            train_folder_path_used = default_train_folder_path if train_folder_path is None  else train_folder_path
+            test_folder_path_used = default_test_folder_path if test_folder_path is None  else test_folder_path
+            return train_model(train_folder_path_used,new_model,test_folder_path_used)
                 
-        # Check that both train and test folders are present (Catch both orders)
-        if os.path.isdir(train_folder_path):
 
-            # If train folder is provided first, test folder must also be provided
-            if os.path.isdir(test_folder_path):
-                train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
-
-            print('\n You cannot provide only one folder. Provide both training and testing folder')
-            return # You must return  
-
-        # If test folder is provided, check is train folder is also provided
-        if os.path.isdir(test_folder_path):
-            if os.path.isdir(train_folder_path):
-                train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
-
-            print('\n You cannot provide only one folder. Provide both training and testing folder')
-            return # You must return
-        
-        # Means no folder was provided, run with default folders
-        train(new_model)
 
 
     elif action == 'predict':
-
-        folder_or_image = "" if args.path is None else args.path
 
         # If no model was given, use the default one
         if not model:
@@ -153,7 +128,7 @@ def main(argv=sys.argv):
 
         return
 
-    elif action == 'models':
+    elif action == 'retrieve_models':
 
         # List all models
         print(all_models())
@@ -163,7 +138,6 @@ def main(argv=sys.argv):
 
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
-
 
 if __name__ == '__main__':
     main()
