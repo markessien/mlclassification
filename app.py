@@ -1,14 +1,18 @@
-# Python 3.6.7
-
-
 import os
 import json
 import sys
 import argparse
 from utils.train_model import train_model
 from utils.predict_model import predictor
-from utils.model import model_delete,import_model,all_models
-from utils.constants import default_model, model_dir,model_extension,image_extensions,file_name,default_test_folder_path,default_train_folder_path
+from utils.model import model_delete
+from utils.model import import_model
+from utils.model import all_models
+from utils.constants import default_model
+from utils.constants import model_dir
+from utils.constants import model_extension
+from utils.constants import image_extensions
+from utils.constants import default_test_folder_path
+from utils.constants import default_train_folder_path
 
 
 
@@ -16,7 +20,7 @@ def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict, train, models or delete',
+        help='This can either be predict, train, retrieve_models or delete',
         default='predict'
     )
     parser.add_argument(

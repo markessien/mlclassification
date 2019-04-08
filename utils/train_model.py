@@ -1,7 +1,3 @@
-
-
-# Importing the Keras libraries and packages
-
 import os
 
 import keras
@@ -13,12 +9,16 @@ from keras.models import load_model
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.layers import Conv2D
+from keras.layers import MaxPooling2D
+from keras.layers import Flatten
+from keras.layers import Dense
 
 from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
 
 from .constants import model_dir
+
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
