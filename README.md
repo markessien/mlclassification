@@ -96,10 +96,23 @@ Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQD
 ```
 
 ```
-python3 train_model.py
-
+Train Model: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set --model default_models
+Train with default dataset and model: python3 app.py train
+Train with custom model: python3 app.py train --model default_models
+Train with custom dataset: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set
 ```
 
+### APIs
+
+```
+Retrieve Models: python3 app.py retrieve_models
+Delete Model: python3 app.py delete --model default_models
+Train Model: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set --model default_models
+Train with default dataset and model: python3 app.py
+Train with custom model: python3 app.py  --model default_models
+Train with custom dataset: python3 app.py train -tep ./datasets/test_set -trp ./datasets/training_set
+Classification: python3 app.py predict --path /Users/src/assets/images/bg.png --model default_model
+```
 
 ## Built With
 
