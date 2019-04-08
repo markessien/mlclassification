@@ -23,7 +23,6 @@ These instructions will get you a copy of the project up and running on your loc
 │   └── default_model.h5
 │   
 │   
-├── env
 ├── utils
 ├── requirements.txt
 ├── app.py
@@ -42,25 +41,25 @@ Anaconda
 
 Install Anaconda python distribution on your system
 
-If there is an app folder skip this step
 
 ```
-python -m venv app
+python -m venv env
 ```
 
-Activate the virtual environment (VENV)
+Activate the virtual environment
 
 ```
-LINUX/Mac: source app/bin/activate
+LINUX/Mac: source env/bin/activate
 
-Windows: app\Scripts\activate.bat
+Windows: env\Scripts\activate
 ```
 
-Install dependencies in VENV using requirements file
+Install dependencies using requirements file
 
 ```
-pip3 install -r  env/requirements.txt
+pip3 install -r requirements.txt
 ``` 
+**Note: Your virtual environment must always be activated before running any command**
 
 ## Deployment
 
