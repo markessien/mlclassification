@@ -72,6 +72,18 @@
             ipcRenderer
         } = require('electron')
 
+        ipcRenderer.on('testDatasets', (event,args)=> {
+            console.log(args)
+            var datasets = document.getElementById("testDatasets")
+            while(datasets.firstChild){
+                datasets.removeChild(datasets.firstChild);
+            }
+
+            args.forEach(element => {
+                datasets.innerHTML += (`<li>${element}</li>`)
+            });
+        })
+
         function testDatasetDialog() {
             console.log("showing")
             var path = dialog.showOpenDialog({
@@ -121,7 +133,7 @@
                     <h1 class="custom-title">
                         <b>Datasets:</b>
                     </h1>
-                    <ul>
+                    <ul id="testDatasets">
                         <li>Hotels</li>
                         <li>Non Hotels</li>
                     </ul>

@@ -18,7 +18,7 @@ ipcMain.on('testDatasetRecovery', (event, arg) => {
             results.push(file[file.length-1]);
         }
     })
-    return results;
+    event.sender.send('testDatasets',results)
 });
 
 function createWindow() {
