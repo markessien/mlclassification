@@ -148,13 +148,13 @@ def main(argv=sys.argv):
         train_folder_path = "" if args.train_folder_path is None else args.train_folder_path
         test_folder_path = "" if args.test_folder_path is None else args.test_folder_path
 
-        new_model = model
-
         if not new_model:
             print("Kindly give a name to save your model with")
             return
         
-        if new_model + model_extension in all_models():
+        new_model = model + model_extension
+        
+        if new_model in all_models():
             print("There's already a model with that name. Choose another name")
             return
                 
@@ -189,8 +189,10 @@ def main(argv=sys.argv):
             model = default_model
         
         else:
+            model = model + model_extension
+            
             # If one was supplied, check that it actually exists
-            if model + model_extension not in all_models():
+            if model not in all_models():
                 print("No such model has been trained")
                 return
 
@@ -221,8 +223,10 @@ def main(argv=sys.argv):
         if not model:
             print("\n You must supply a model to delete")
             return
+        
+        model = model + model_extension
             
-        if model + model_extension not in all_models():
+        if model not in all_models():
             print("That model does not exist")
             return
 
