@@ -41,6 +41,7 @@ def model_delete(model_file):
     return json.loads(result)
 
 
+
 def all_models():
 
     all_models = []  # List of all the models in the models directory
@@ -60,3 +61,13 @@ def import_model(model_name=model_name_default):
     classifier = load_model(model)
 
     return classifier
+
+def evaluate_model(model_name=model_name_default):
+    model = model_dir+'/'+model_name
+    classifier=import_model(model_name=model_default)
+    # estimate accuracy on whole dataset using loaded weights
+    scores =    classifier.evaluate(x=None, y=None, batch_size=None, verbose=1, sample_weight=None, steps=2000)
+    print(scores)
+
+
+evaluate_model()
