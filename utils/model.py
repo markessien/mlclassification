@@ -1,7 +1,5 @@
-
-
 import os
-from .constants import default_model, model_dir, model_extension
+from utils.constants import default_model, model_dir, model_extension
 
 
 def model_delete(model_file):
@@ -20,3 +18,26 @@ def model_delete(model_file):
         return
     print('Error: Invalid path. Kindly supply a valid model\n')
     return
+
+def all_models(default=False):
+
+    if default:
+        return default_model
+
+    all_models = [] # List of all the models in the models directory
+
+    for folder_name, folders, files in os.walk(model_dir):
+        for file in files:
+            if file.split('.')[1].lower() == 'h5':
+                all_models.append(file)
+                
+    return all_models
+
+
+def import_model(model_name):
+
+    model_path = os.path.join(model_dir, model_name)
+    classifier = load_model(model_path)
+
+    return classifier
+
