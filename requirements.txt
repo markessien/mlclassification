@@ -1,1 +1,5 @@
-venv
+pillow
+Ipython
+tensorflow
+keras
+numpy
