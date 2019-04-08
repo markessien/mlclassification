@@ -29,7 +29,7 @@
         }
 
         .card {
-            height: 33%;
+            min-height: 35%;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 4px;
             margin:1rem 0;
@@ -72,24 +72,36 @@
             ipcRenderer
         } = require('electron')
 
-        ipcRenderer.on('testDatasets', (event,args)=> {
+        ipcRenderer.on('trainingDatasets', (event,args)=> {
             console.log(args)
+            var datasets = document.getElementById("trainingDatasets")
+            clearAndAppend(datasets,args)
+        })
+
+        ipcRenderer.on('testDatasets', (event,args)=> {
             var datasets = document.getElementById("testDatasets")
+            clearAndAppend(datasets,args)
+        })
+
+        function clearAndAppend(datasets,datasetEntries){
             while(datasets.firstChild){
                 datasets.removeChild(datasets.firstChild);
             }
 
-            args.forEach(element => {
+            datasetEntries.forEach(element => {
                 datasets.innerHTML += (`<li>${element}</li>`)
             });
-        })
+        }
 
-        function testDatasetDialog() {
+        function getDataset(eventName) {
+            console.log(eventName)
             console.log("showing")
             var path = dialog.showOpenDialog({
                 properties: ['openDirectory']
             });
-            ipcRenderer.send('testDatasetRecovery', path)
+            if (path != null){
+                ipcRenderer.send(eventName, path)
+            }
         }
 
         function showDialog() {
@@ -109,16 +121,14 @@
                 <header class="card-header-title is-centered">
                     Upload Training Data
                 </header>
-                <button class="button custom-button" onclick="testDatasetDialog()">
+                <button class="button custom-button" onclick="getDataset('trainingDatasetRecovery')">
                     Upload Training Data
                 </button>
                 <div class="card-content">
                     <h1 class="custom-title">
                         <b>Datasets:</b>
                     </h1>
-                    <ul>
-                        <li>Hotels</li>
-                        <li>Non Hotels</li>
+                    <ul id="trainingDatasets">
                     </ul>
                 </div>
             </div>
@@ -126,7 +136,7 @@
                 <header class="card-header-title is-centered">
                     Upload Test Data
                 </header>
-                <button class="button custom-button" onclick="testDatasetDialog()">
+                <button class="button custom-button" onclick="getDataset('testDatasetRecovery')">
                     Upload Test Data
                 </button>
                 <div class="card-content">
@@ -134,8 +144,6 @@
                         <b>Datasets:</b>
                     </h1>
                     <ul id="testDatasets">
-                        <li>Hotels</li>
-                        <li>Non Hotels</li>
                     </ul>
                 </div>
             </div>

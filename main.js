@@ -4,6 +4,23 @@ let { PythonShell }= require('python-shell')
 const {ipcMain} = require('electron')
 const path = require('path')
 
+ipcMain.on('trainingDatasetRecovery', (event, arg) => {
+    var dir = arg[0]
+    console.log(dir)
+    var results = [];
+    var list = fs.readdirSync(dir);
+
+    list.forEach(function (file) {
+        file = path.resolve(dir, file);
+        var fileStats = fs.statSync(file);
+        if (fileStats.isDirectory()){
+            file = file.split('/');
+            results.push(file[file.length-1]);
+        }
+    })
+    event.sender.send('trainingDatasets',results)
+});
+
 ipcMain.on('testDatasetRecovery', (event, arg) => {
     var dir = arg[0]
     console.log(dir)
