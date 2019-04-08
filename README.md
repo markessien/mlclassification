@@ -41,6 +41,7 @@ Anaconda
 
 Install Anaconda python distribution on your system
 
+Create a virtual environment called env.
 
 ```
 python -m venv env
@@ -54,10 +55,16 @@ LINUX/Mac: source env/bin/activate
 Windows: env\Scripts\activate
 ```
 
+Upgrade to the latest pip
+
+```
+pip install --upgrade pip
+```
+
 Install dependencies using requirements file
 
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ``` 
 **Note: Your virtual environment must always be activated before running any command**
 
