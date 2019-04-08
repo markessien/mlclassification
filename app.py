@@ -5,13 +5,11 @@ import os
 import json
 import sys
 import argparse
+from controllers.train_model import train_model
 from controllers.predict_model import predictor
-from controllers.train_model import train
-from utils.model_event import import_model, all_models, model_delete
-from utils.constants import model_extension, default_model
+from utils.model import model_delete,import_model,all_models
+from utils.constants import default_model, model_dir,model_extension,image_extensions,file_name,default_test_folder_path,default_train_folder_path
 
-file_name = 'classification_results.json'  # the file name
-image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 
 
 def parse_args(argv):
@@ -22,94 +20,124 @@ def parse_args(argv):
         default='predict'
     )
     parser.add_argument(
-        '-p',
         '--path',
         help='A path to a folder or image e.g /foo or foobar.jpg'
 
     )
     parser.add_argument(
-        '-trp',
+        '--trp',
         help='A training folder path e.g dataset/training_set'
     )
     parser.add_argument(
-        '-tep',
+        '--tep',
         help='A test folder path e.g dataset/test_set'
     )
     parser.add_argument(
-        '-m',
         '--model',
         help='Selects a model to be used',
     )
 
     return parser.parse_args(argv[1:])
 
-
 def main(argv=sys.argv):
     """ The main script """
 
     args = parse_args(argv)
-    folder_or_image = args.path
-    action = args.app_action
-    train_folder_path = args.trp
-    test_folder_path = args.tep
-    model_name = "{}.h5".format(args.model)
-    all_model_path = "./models/"
 
-    if action == 'train':
-        # Check that both train and test folders are present
-        if train_folder_path and test_folder_path:
-            train(model_name, train_folder=train_folder_path,
-                  test_folder=test_folder_path)
-        else:
-            # Means no folder was provided, run with default
-            train(model_name)
+    action = args.app_action
+    train_folder_path =args.trp
+    test_folder_path = args.tep
+    folder_or_image = "" if args.path is None else args.path
+
+    # If the action is train, the model is the name of the new model
+    # that is going to be trained; if it's predict, the model is the
+    # name of the model to use for prediction
+    model = args.model 
+
+    if action == 'train': 
+        # Instead of the folder_paths being None if they were not supplied
+        # make them empty strings so the os.path functions below won't 
+        # throw errors
+        new_model = model
+        if not new_model:
+            new_model = default_model
+            print("No name provided: Using default model")
+            train_folder_path_used = default_train_folder_path if train_folder_path is None  else train_folder_path
+            test_folder_path_used = default_test_folder_path if test_folder_path is None  else test_folder_path
+            return train_model(train_folder_path_used,new_model,test_folder_path_used)
+        
+        new_model = model + model_extension
+        if new_model in all_models():
+            print("There's already a model with that name. Retraining")
+            train_folder_path_used = default_train_folder_path if train_folder_path is None  else train_folder_path
+            test_folder_path_used = default_test_folder_path if test_folder_path is None  else test_folder_path
+            return train_model(train_folder_path_used,new_model,test_folder_path_used)
+                
+
+
+
     elif action == 'predict':
-        if model_name not in os.listdir(all_model_path):
-            print('\nModel does not exist. Please choose a model.')
-            result = json.dumps(
-                {"error": "true", "message": "Model does not exist. Please choose a model."})
-            return json.loads(result)
+
+        # If no model was given, use the default one
+        if not model:
+            model = default_model
+        
+        else:
+            model = model + model_extension
+            
+            # If one was supplied, check that it actually exists
+            if model not in all_models():
+                print("No such model has been trained")
+                return
+
         # if it's not a folder that was supplied, check if it's a file
         if not os.path.isdir(folder_or_image):
             if os.path.isfile(folder_or_image):
                 if not folder_or_image.endswith(image_extensions):
                     print("\nError: An image file is required. Try again\n")
-                    result = json.dumps(
-                        {"error": "true", "message": "An image file is required. Try again"})
-                    return json.loads(result)
+                    return
                 input_type = 'file'
                 # add logic before here to pass in the model we want to use in the predictor
-                predictor(input_type, folder_or_image, model_name)
+                predictor(input_type, folder_or_image, model)
                 return
             print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
-            result = json.dumps(
-                {"error": "true", "message": "Invalid path. Kindly supply a valid folder or image path"})
-            return json.loads(result)
+            return
 
         input_type = 'folder'
+
         # add logic before here to pass in the model we want to use in the predictor
-        predictor(input_type, folder_or_image, model_name)
+        predictor(input_type, folder_or_image, model)
         if input_type == 'folder':
             print(
-                f"\nDone! The '{file_name}' file has been written to respective folders in {folder_or_image}")
-            result = json.dumps(
-                {"error": "false", "message":  f"Done! The '{file_name}' file has been written to respective folders in {folder_or_image}"})
-            return json.loads(result)
+                f"\nDone! The results are in {folder_or_image}")
+
     elif action == 'delete':
-        if model_name not in os.listdir(all_model_path):
-            print('\nModel does not exist. Please choose a model.')
-            result = json.dumps(
-                {"error": "true", "message": "Model does not exist. Please choose a model."})
-            return json.loads(result)
-        return model_delete(model_name)
+        # Check that model name is provided. 
+
+        if not model:
+            print("\n You must supply a model to delete")
+            return
+        
+        model = model + model_extension
+            
+        if model not in all_models():
+            print("That model does not exist")
+            return
+
+        model_delete(model)
+
+        return
+
     elif action == 'retrieve_models':
-        return all_models()
+
+        # List all models
+        print(all_models())
+
+        return
+
+
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
-        result = json.dumps(
-            {"error": "true", "message": "Action command is not supported for help: run python3 app.py -h"})
-        return json.loads(result)
-
 
 if __name__ == '__main__':
     main()

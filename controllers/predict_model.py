@@ -1,54 +1,22 @@
-
-
 # Importing the Keras libraries and packages
 
 import os
-import json
-import keras
 import numpy as np
-import tensorflow as tf
-from keras.models import load_model
 import shutil
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential, load_model
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
-from utils.model_event import all_models,import_model
-from utils.model_event import import_model, all_models
-
-
-
-
-
-train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True
-)
-
-test_datagen = ImageDataGenerator(rescale=1./255)
-
-file_name = 'classification_results.json'  # the file name
-image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
-
-
+from utils.constants import default_model, model_dir,model_extension,image_extensions,file_name
+from utils.model import model_delete,import_model,all_models
 
 # Use the default one if no one is supplied by the user
-def predictor(input_type, folder_or_image, model_name):
+def predictor(input_type, folder_or_image, model):
     """
-    Accepts either a folder or an image. Optionally accepts a model argument
-    that's the ML model to use for the predictor. If not given, then one of the
-    pretrained models from Keras or whatever library is used.
-    If an image is given as input, predicts whether the image is a hotel or not
-    and prints to the terminal
-    If a folder is supplied, loops through all the files in the folder and
-    creates a .json file containing a list of all images that are hotels and
-    not hotels
+    Accepts either a folder or an image, and a model argument that's the ML model
+    to use for the function. 
     """
 
-    # Load the user-supplied model or the default one
-    classifier = import_model(model_name)
+    # Load the model
+    classifier = import_model(model)
 
     if input_type == 'file':
 
@@ -121,11 +89,12 @@ def test(classifier, test_img):
     result = classifier.predict(test_image)
     return printResult(result)
 
-
 def prepImage(testImage):
+
     test_image = image.load_img(testImage, target_size=(64, 64))
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
+
     return test_image
 
 
@@ -134,4 +103,5 @@ def printResult(result):
         prediction = True
     else:
         prediction = False
+
     return prediction

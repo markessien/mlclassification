@@ -105,4 +105,8 @@ __pycache__
 .vscode
 settings.json
 app/
+<<<<<<< HEAD
 datasets
+=======
+datasets/
+>>>>>>> new_backend
