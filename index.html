@@ -6,9 +6,18 @@
     <link rel="stylesheet" href="./html_assets/fonts/questrial/style.css">
     <link rel="stylesheet" href="./html_assets/fonts/ubuntu/style.css">
     <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
+    <link rel="stylesheet" href="css/circle.css">
     <style>
         .custom-title {
             font-family: "Ubuntu"
+        }
+        .columns:nth-child(1) {
+            margin: 1rem;
+        }
+        .main-column {
+            margin:0.5rem;
+            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+            border-radius: 0px 0px 20px 20px;
         }
         .custom-button {
             background: #11998E;
@@ -24,27 +33,14 @@
             background: #1BB9AC;
             color: white;
         }
-        .card {
-            min-height: 35%;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 4px;
-            margin:1rem 0;
+        .is-right-spaced {
+            padding-right: 0.25rem;
         }
         .card-content {
             padding: 0.75rem;
         }
-        .card-content > p {
+        .card-content>p {
             padding: 0.5rem;
-        }
-        .progress {
-            height: 30px;
-            background: #EDEDED;
-            position: absolute;
-            width: 200px;
-            margin-top: 0.75rem;
-            border-radius: 4px;
-            box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.5);
-            margin: 0 auto;
         }
         #myBar {
             position: absolute;
@@ -52,8 +48,148 @@
             height: 30px;
             background-color: #11998E;
         }
+        #footer {
+            background: #084482;
+            height: 50px;
+            color: #EDEDED;
+            text-align: right;
+        }
+        .custom-border {
+            box-shadow: none;
+            border: 3px solid #d4d4d4;
+            border-radius: 4px;
+        }
+        .custom-border2 {
+            padding-top: 40px;
+            box-shadow: none;
+            border: 0px solid #d4d4d4;
+            border-radius: 4px;
+        }
+        .progress::-moz-progress-bar {
+            background-color: #252939;
+            border-radius: 6px;
+        }
+        .progress::-webkit-progress-value {
+            background-color: #252939;
+            border-radius: 6px;
+        }
+        .progress {
+            background-color: #252939;
+            border-radius: 6px;
+        }
+        .custom-card-header {
+            margin-top: -2.5rem;
+            margin-left: 1rem;
+            background: white;
+        }
+        .wrapper {
+            margin: 1rem;
+        }
+        .b{
+            font-family: Ubuntu;
+            font-size: 24px;
+        }
+        .h3-pred{
+            font-family:Ubuntu;
+            float: left;
+            font-size: 24px;
+            font-weight: bold;
+            padding-top: 28px;
+            padding-left: 75px;
+        }
+        #nav {
+            width: 1920px;
+            height: 50px;
+            left: 0px;
+            top: 0px;
+            text-align: left;
+            background: #084482;
+        }
+        
+        .progress--circle {
+        position: relative;
+        display: inline-block;
+        margin: 1rem;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #ddd;
+        }
+        .progress--circle:before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 50px;
+        height: 50px;
+
+        border-radius: 50%;
+        background-color: white;
+        }
+        .progress--circle:after {
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+
+        border-radius: 50%;
+        background-color: #143b7a;
+        }
+
+    .progress__number {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    line-height: 1;
+    margin-top: -0.75rem;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #777;
+    }
+    .progress--circle.progress--25:after {
+      background-image: linear-gradient(0deg, 
+      #ddd 50%, transparent 50%, transparent), 
+      linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+    }
+
+    .figure{
+    width:relative;
+    height:230px;
+    background:transparent url(https://www.leonardo-hotels.it/octopus/Upload/images/Pages/mulhwcc01mai17800x600.jpg) no-repeat;  
+    padding-top: 80px;
+    }
+
+    a 
+    {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    opacity: 0.5;
+    }
+
+    a:hover {
+    background-color: #ddd;
+    color: black;
+    }
+
+    .previous {
+    background-color: #f1f1f1;
+    color: black;
+    float: left;
+    }
+
+    .next {
+    float: right;    
+    background-color: #f1f1f1;
+    color: black;
+    }
+
+    .round {
+    border-radius: 50%;
+    }
+        
     </style>
-    <title>Hello Python from Electron!</title>
+    <title>ClassiFi</title>
     <script>
         // Code for electron dialog
         const {
@@ -62,17 +198,17 @@
         const {
             ipcRenderer
         } = require('electron')
-        ipcRenderer.on('trainingDatasets', (event,args)=> {
+        ipcRenderer.on('trainingDatasets', (event, args) => {
             console.log(args)
             var datasets = document.getElementById("trainingDatasets")
-            clearAndAppend(datasets,args)
+            clearAndAppend(datasets, args)
         })
-        ipcRenderer.on('testDatasets', (event,args)=> {
+        ipcRenderer.on('testDatasets', (event, args) => {
             var datasets = document.getElementById("testDatasets")
-            clearAndAppend(datasets,args)
+            clearAndAppend(datasets, args)
         })
-        function clearAndAppend(datasets,datasetEntries){
-            while(datasets.firstChild){
+        function clearAndAppend(datasets, datasetEntries) {
+            while (datasets.firstChild) {
                 datasets.removeChild(datasets.firstChild);
             }
             datasetEntries.forEach(element => {
@@ -85,7 +221,7 @@
             var path = dialog.showOpenDialog({
                 properties: ['openDirectory']
             });
-            if (path != null){
+            if (path != null) {
                 ipcRenderer.send(eventName, path)
             }
         }
@@ -100,93 +236,102 @@
 </head>
 
 <body>
-    <div class="columns is-centered">
-        <div class="column is-centered has-text-centered">
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Upload Training Data
-                </header>
-                <button class="button custom-button" onclick="getDataset('trainingDatasetRecovery')">
-                    Upload Training Data
-                </button>
-                <div class="card-content">
-                    <h1 class="custom-title">
-                        <b>Datasets:</b>
-                    </h1>
-                    <ul id="trainingDatasets">
-                    </ul>
-                </div>
-            </div>
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Upload Test Data
-                </header>
-                <button class="button custom-button" onclick="getDataset('testDatasetRecovery')">
-                    Upload Test Data
-                </button>
-                <div class="card-content">
-                    <h1 class="custom-title">
-                        <b>Datasets:</b>
-                    </h1>
-                    <ul id="testDatasets">
-                    </ul>
-                </div>
-            </div>
-            <br />
-            <h1><b>Upload Prediction Folder</b></h1>
-            <button class="button custom-button">Select Directory</button>
-            <div>
-                <br />
-                <b class="button custom-button action-button .custom-title" onclick="showDialog()">
-                    TRAIN
-                </b>
-                <b class="button is-primary action-button .custom-title" onclick="showDialog()">
-                    PREDICT
-                </b>
-            </div>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation" id="nav">
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+            data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="navbar-menu" id="navbarBasicExample">
+            <a class="navbar-item has-text-white"><strong>ClassiFi</strong> </a>
+
         </div>
-        <div>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div class="column has-text-centered is-vcentered">
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Status
-                </header>
-                <div class="card-content">
-                    <p class="custom-title">
-                        <b>Accuracy:</b>{{value}}
-                    </p>
-                    <p class="custom-title">
-                        <b>Training ETA:</b>{{value}}
-                    </p>
-                    <p class="custom-title">
-                            <b>Loss:</b>{{value}}
-                        </p>
-                </div>
-            </div>
+    </nav>
+
+    <div class="wrapper">
+            <div class="columns ">
+
+                    <div class="column is-half has text has-text-centered main-column">
             
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Prediction
-                </header>
-                <div class="card-content">
-                    <p class="custom-title">
-                        <b>Status:</b>{{Success.message}}
-                    </p>
-                    <p class="custom-title">
-                        <b>ETA:</b>{{value}}
-                    </p>
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title is-centered">
+                                    Train
+                                </p>
+            
+                            </header>
+                        </div>
+                    </div>
+            
+                    <div class="column is-half has-text-centered main-column">
+            
+                        <p class="is-centered custom-title is-size-3">
+                            <b>Prediction</b>
+                        </p>
+                        <br />
+                        <div class="card custom-border">
+                            <header class="custom-card-header is-pulled-left">
+                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                                    <b>
+                                        Images
+                                    </b>
+                                </p>
+                            </header>
+                            <br />
+                            <div class="card-content">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="No file selected">
+                                    </div>
+                                    <div class="control">
+                                        <a class="button has-background-black has-text-white">
+                                            Choose File
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="columns is-vcentered has-text-centered">
+                                    <div class="column is-three-fifths">
+                                        <progress class="progress" value="15" max="100">15%</progress>
+                                    </div>
+                                    <div class="column">
+                                        <div class="level">
+                                            <div class="level-item is-narrow">
+                                                <p class="is-right-spaced"><b>20%</b></p>
+                                                <a class="button has-background-black has-text-white">
+                                                    Predict
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                            
+                        </div>
+                        <div class="card custom-border2">
+                            <div class='figure'>                          
+                                <a href="#" class="previous round">&#8249;</a>
+                                <a href="#" class="next round">&#8250;</a>
+                            </div>
+                            <div>                          
+                                <h3 class='h3-pred'>Confidence: </h3>
+                                <div class="progress--circle progress--25">
+                                <div class="progress__number">80%</div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="progress" style="right:15%">
-                <div id="myBar"></div>
-            </div>
-        </div>
     </div>
+
+    </div>
+
+    <footer id="footer">
+        <p class="container">HNG Internship 5</p>
+    </footer>
 </body>
 
 </html>
