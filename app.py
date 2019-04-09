@@ -111,9 +111,6 @@ def main(argv=sys.argv):
         print("\n Both training folder and test folder arguments are required")
         return 
                 
-
-
-
     elif action == 'predict':
 
         # If no model was given, use the default one
