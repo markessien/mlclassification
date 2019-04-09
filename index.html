@@ -106,6 +106,9 @@
             text-align: left;
             background: #084482;
         }
+        .custom-label {
+            margin-right: 1rem;
+        }
     </style>
     <title>Hello Python from Electron!</title>
     <script>
@@ -179,14 +182,47 @@
             <div class="columns ">
 
                     <div class="column is-half has text has-text-centered main-column">
-            
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title is-centered">
-                                    Train
+                        <p class="is-centered custom-title is-size-3">
+                            <b>Training</b>
+                        </p>
+                        <br />
+                        <div class="card custom-border">
+                            <header class="custom-card-header is-pulled-left">
+                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                                    <b>
+                                        Images
+                                    </b>
                                 </p>
-            
                             </header>
+                            <br />
+                            <div class="card-content">
+                                <div class="field has-addons">
+                                        <div class="control">
+                                            <label class="custom-label">Group A</label>
+                                        </div>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="No file selected">
+                                    </div>
+                                    <div class="control">
+                                        <a class="button has-background-black has-text-white">
+                                            Choose File
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="field has-addons">
+                                        <div class="control">
+                                            <label class="custom-label">Group B</label>
+                                        </div>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="No file selected">
+                                    </div>
+                                    <div class="control">
+                                        <a class="button has-background-black has-text-white">
+                                            Choose File
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
             
