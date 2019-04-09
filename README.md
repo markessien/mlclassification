@@ -110,16 +110,54 @@ Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp 
 
 ### APIs
 
+This are command options in full:
+
 ```
-Retrieve Models: python3 app.py retrieve_models
-Delete Model: python3 app.py delete --model default_models
-Train Model:python3 app.py train --tep ./datasets/test_set --trp ./datasets/tr
-aining_set --model akinduko--model default_models
-Train with default dataset and model: python3 app.py
-Train with custom model: python3 app.py train --model default_model
-Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set
-Classification: python3 app.py predict --path /Users/src/assets/images/bg.png --model default_model
+These are common commands to for this app.
+
+positional arguments:
+  app_action            This can either be predict, train, retrieve_models or
+                        delete
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -path PATH, --path PATH
+                        A path to a folder or image e.g foo or foobar.jpg
+  -trp TRP, --trp TRP   A training folder path e.g dataset/training_set
+  -tep TEP, --tep TEP   A test folder path e.g dataset/test_set
+  -model MODEL, --model MODEL
+                        Selects a model to be used
+  -gen_name GEN_NAME, --gen_name GEN_NAME
+                        A boolean to generate model name e.g yes or no
 ```
+Below is specifics
+
+**Retrieve Models:**
+```python app.py retrieve_models```
+
+**Delete Model:**
+```python app.py delete -model modelname``` 
+or:
+```python app.py delete --model modelname```
+
+**Train Model with custom dataset and model:**
+```python app.py train --tep datasets/test_set --trp datasets/training_set --model cat_dogmodel```
+or:
+```python app.py train -tep datasets/test_set -trp datasets/training_set -model cat_dogmodel```
+
+**Train with default dataset and model:**
+If the default model already exists, delete it before proceeding
+```python app.py train```
+
+
+**Classification with default model:**
+```python app.py predict --path /Users/src/assets/images/bg.png```
+or:
+```python app.py predict -path /Users/src/assets/images/bg.png```
+**Classification with custom model:**
+```python app.py predict --path /Users/src/assets/images/bg.png --model modelname```
+or:
+```python app.py predict -path /Users/src/assets/images/bg.png -model modelname```
 
 ## Built With
 
