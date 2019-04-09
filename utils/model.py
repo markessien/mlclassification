@@ -43,3 +43,29 @@ def import_model(model_name):
 
     return classifier
 
+
+def disambiguate_name(name):
+    parts = name.split('-')
+    if len(parts) > 1:
+        try:
+            index = int(parts[-1])
+        except ValueError:
+            parts.append('1')
+        else:
+            parts[-1] = ""+str(index + 1)
+
+    else:
+        parts.append('1')
+    return '-'.join(parts)
+
+def generate_name(train_folder_path):
+    backlist = [name.split('.')[0] for name in all_models()] #strip out extensions
+    #check if train_folder_path is directory
+    if os.path.isdir(train_folder_path):
+        name1 = os.path.basename(train_folder_path)
+        name = name1+'_not'+name1
+        while name in backlist:
+            name = disambiguate_name(name)
+        return name+model_extension
+    print("Provided path is not a directory")
+    return

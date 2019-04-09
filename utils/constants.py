@@ -9,3 +9,5 @@ json_file = 'classification_results.json'  # the file name
 image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
 default_train_folder_path='./datasets/training_set'
 default_test_folder_path='./datasets/test_set'
+truth_values = ['yes', 'y','true']
+false_values = ['no','n', 'false']

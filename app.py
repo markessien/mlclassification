@@ -2,17 +2,18 @@ import os
 import json
 import sys
 import argparse
-from utils.train_model import train_model
+from utils.train_model import train
+from utils.train_model import train_model #Validator for train function
 from utils.predict_model import predictor
 from utils.model import model_delete
 from utils.model import import_model
 from utils.model import all_models
+from utils.model import generate_name
 from utils.constants import default_model
 from utils.constants import model_dir
 from utils.constants import model_extension
 from utils.constants import image_extensions
-from utils.constants import default_test_folder_path
-from utils.constants import default_train_folder_path
+from utils.constants import truth_values
 
 
 
@@ -40,6 +41,11 @@ def parse_args(argv):
         '--model',
         help='Selects a model to be used',
     )
+    parser.add_argument(
+        '--gen_name',
+        help = 'A boolean to generate model name e.g yes or no',
+        default = 'no'
+    )
 
     return parser.parse_args(argv[1:])
 
@@ -52,6 +58,8 @@ def main(argv=sys.argv):
     train_folder_path =args.trp
     test_folder_path = args.tep
     folder_or_image = "" if args.path is None else args.path
+    #Any arg supplied to this will be seen as True, no arg means False
+    generate_model_name = args.gen_name 
 
     # If the action is train, the model is the name of the new model
     # that is going to be trained; if it's predict, the model is the
@@ -59,23 +67,49 @@ def main(argv=sys.argv):
     model = args.model 
 
     if action == 'train': 
-        # Instead of the folder_paths being None if they were not supplied
-        # make them empty strings so the os.path functions below won't 
-        # throw errors
+        
         new_model = model
         if not new_model:
+            if generate_model_name in truth_values:
+                #The user want us to generate model name for them
+                #trp and tep args are required args implicitly for users from app
+                if train_folder_path and test_folder_path:
+                    #Means user fulfilled the requirement. we can proceed now
+                    #generate name
+                    new_model = generate_name(train_folder_path)
+                    train_model(new_model, train_folder_path, test_folder_path)
+                    return
+                #Here, the user might have supplied one folder argument or None at all
+                print("\n Both training folder and test folder arguments are required")
+                return
+            #The user did not supply model name and did not ask us to generate one. So definitely, 
+            # we are the one running this from console app
+            #We don't want to retrain our default model. Better to delete. So we have to check if we
+            #have trained our default model before. If default model exist, return
+            if default_model in all_models():
+                print("Retraining the default model is forbidden. Supply model name or Delete the default model manually and proceed")
+                return
+                
+            #Training our default model now
             new_model = default_model
-            print("No name provided: Using default model")
-            train_folder_path_used = default_train_folder_path if train_folder_path is None  else train_folder_path
-            test_folder_path_used = default_test_folder_path if test_folder_path is None  else test_folder_path
-            return train_model(train_folder_path_used,new_model,test_folder_path_used)
+            print("Training the default model now...")
+            #We use train function directly here for obvious reasons
+            return train(new_model)
         
+        #Model name supplied
         new_model = model + model_extension
         if new_model in all_models():
-            print("There's already a model with that name. Retraining")
-            train_folder_path_used = default_train_folder_path if train_folder_path is None  else train_folder_path
-            test_folder_path_used = default_test_folder_path if test_folder_path is None  else test_folder_path
-            return train_model(train_folder_path_used,new_model,test_folder_path_used)
+            print("There's already a model with that name. Please choose another name"
+             " or find a model with name {}. Delete it and try again".format(new_model))
+            return
+        #From here on, we expect user to supply training dataset and test dataset. 
+        #trp and tep args are required args implicitly for users from app
+        if train_folder_path and test_folder_path:
+            #Means user fulfilled the requirement. we can proceed now   
+            return train_model(new_model, train_folder_path, test_folder_path)
+        #Here, the user might have supplied one folder argument or None at all
+        print("\n Both training folder and test folder arguments are required")
+        return 
                 
 
 

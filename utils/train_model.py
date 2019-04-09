@@ -18,7 +18,8 @@ from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
 
 from .constants import model_dir
-
+from .constants import default_test_folder_path
+from .constants import default_train_folder_path
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -30,27 +31,19 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 
-def train_model(train_folder_path,new_model,test_folder_path):
+def train_model(new_model,train_folder_path,test_folder_path):
     # Check that both train and test folders are present (Catch both orders)
     if os.path.isdir(train_folder_path):
 
-        # If train folder is provided first, test folder must also be provided
+        # test_folder_path must also be a directory
         if os.path.isdir(test_folder_path):
             train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
 
-        print('\n You cannot provide only one folder. Provide both training and testing folder')
+        print('\n The provided test folder is not a directory')
         return # You must return  
-
-    # If test folder is provided, check is train folder is also provided
-    if os.path.isdir(test_folder_path):
-        if os.path.isdir(train_folder_path):
-            train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
-
-        print('\n You cannot provide only one folder. Provide both training and testing folder')
-        return # You must return
-    
-    # Means no folder was provided, run with default folders
-    train(new_model)
+    #Means train_folder_path is not a directory
+    print('\n The provided train folder is not a directory')
+    return
 
 
 def _generator(folder_path =None, is_train_set=True):
@@ -58,17 +51,19 @@ def _generator(folder_path =None, is_train_set=True):
     Accepts a training folder path and generate training set from it.
 
     if a folder is not supplied, defaults to using ./datasets/training_set
+
+    No need to make default dataset folder constant because it's only used here
     """
     if is_train_set:
         if folder_path is None:
-            folder_path = './datasets/training_set'
+            folder_path = default_train_folder_path
         return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
 
       
     if folder_path is None:
-        folder_path = './datasets/test_set'
+        folder_path = default_test_folder_path
     return test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
