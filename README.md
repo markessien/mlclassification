@@ -6,6 +6,29 @@ This project is carried out for the purpose of building a machine learning model
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### Project Structure
+
+```
+.
+├── datasets
+│   ├── test_set
+│   │   ├── hotels
+│   │   └── not-hotels
+│   │            
+│   │             
+│   └── training_set
+├       ├── hotels
+├       └── not-hotels
+├── model
+│   └── default_model.h5
+│   
+│   
+├── utils
+├── requirements.txt
+├── app.py
+└── README.md
+```
+
 ### Prerequisites
 
 Python distribution
@@ -18,52 +41,146 @@ Anaconda
 
 Install Anaconda python distribution on your system
 
-Use the pip package to create virtual environment (VENV) using the requirements file
+Create a virtual environment called env.
 
 ```
-pip3 install requirements.txt
+python -m venv env
 ```
 
-If there is an app folder skip this step
+Activate the virtual environment
 
 ```
-python3 -m venv app
+LINUX/Mac: source env/bin/activate
+
+Windows: env\Scripts\activate
 ```
 
-Activate the virtual environment (VENV)
+Upgrade to the latest pip
 
 ```
-LINUX/Mac: source app/bin/activate
-
-Windows: app\Scripts\activate.bat
+pip install --upgrade pip
 ```
 
-Install dependencies in VENV using requirements file
+Install dependencies using requirements file
 
 ```
-pip3 install -r  env/requirements.txt
+pip install -r requirements.txt
 ``` 
+**Note: Your virtual environment must always be activated before running any command**
 
 ## Deployment
 
 Start app (Make sure to enter a valid path to a file or a folder)
 
-```
-python3 app.py filepath
-```
 
-Example of valid path
+Example of valid commands
 
 ```
-python3 app.py ./kimono-1986491_640.jpg
-python3 app.py ./predict
+python app.py predict --path kimono-1986491_640.jpg
+python app.py predict --path predict
 ```
 
 ### Train App
 
+Make sure you have a dataset folder with the below structure in the root folder of the app
+
+A trained model weight file can be found [here](https://drive.google.com/drive/folders/1rYweIKMNjQiKC-D92BPEcK7CSPd_jDPb?usp=sharing), download and put it in the models folder.
+
+Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQDM7ROxBdwohbxa5b_Lx/view?usp=sharing) to the root folder of the project or you can train your own model by providing a dataset folder in the root folder of the project with  below structure.
+
 ```
-python3 train_model.py
+.
+├── datasets
+│   ├── test_set
+│   │   ├── valid_case
+│   │   └── not_valid_case
+│   │            
+│   │             
+│   └── training_set
+├       ├── valid_case
+├       └── not_valid_case
 ```
+
+
+
+### APIs
+
+This are command options in full:
+
+```
+These are common commands for this app.
+
+positional arguments:
+  app_action            This can either be predict, train, retrieve_models or
+                        delete
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -path PATH, --path PATH
+                        A path to a folder or image e.g foo or foobar.jpg
+  -trp TRP, --trp TRP   A training folder path e.g dataset/training_set
+  -tep TEP, --tep TEP   A test folder path e.g dataset/test_set
+  -model MODEL, --model MODEL
+                        Selects a model to be used
+  -gen_name GEN_NAME, --gen_name GEN_NAME
+                        A boolean to generate model name e.g yes or no
+```
+Below is specifics
+
+**Retrieve Models:**
+
+```python app.py retrieve_models```
+
+**Delete Model:**
+
+```python app.py delete -model modelname``` 
+
+or:
+
+```python app.py delete --model modelname```
+
+**Train Model with custom dataset and model:**
+
+```python app.py train --tep datasets/test_set --trp datasets/training_set --model cat_dogmodel```
+
+or:
+
+```python app.py train -tep datasets/test_set -trp datasets/training_set -model cat_dogmodel```
+
+**Train with default dataset and model:**
+
+If the default model already exists, delete it before proceeding
+
+```python app.py train```
+
+**Classification with default model:**
+
+with image file:
+
+```python app.py predict --path /path/to/image.png```
+
+with folder:
+
+```python app.py predict --path /path/to/folder```
+
+or:
+
+with image file:
+
+```python app.py predict -path /path/to/image.png```
+
+with folder:
+
+```python app.py predict -path /path/to/folder```
+
+
+**Classification with custom model:**
+
+```python app.py predict --path /Users/src/assets/images/bg.png --model modelname```
+
+or:
+
+```python app.py predict -path /Users/src/assets/images/bg.png -model modelname```
 
 ## Built With
 
@@ -76,7 +193,7 @@ Read documentation [here](https://docs.google.com/document/d/1rmpzDJTY0VO4IIhxTE
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details
 
 ## Acknowledgments
 

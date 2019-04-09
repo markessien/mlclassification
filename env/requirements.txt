@@ -1,5 +1,0 @@
-pillow
-tensorflow
-keras
-IPython
-numpy
