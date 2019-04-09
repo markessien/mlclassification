@@ -24,7 +24,7 @@ def parse_args(argv):
         description=textwrap.dedent('''\
             A command line utility for image classification.
             -----------------------------------------------
-            These are common commands to for this app.'''))
+            These are common commands for this app.'''))
     parser.add_argument(
         'app_action',
         help='This can either be predict, train, retrieve_models or delete'

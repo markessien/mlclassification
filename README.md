@@ -113,7 +113,7 @@ Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp 
 This are command options in full:
 
 ```
-These are common commands to for this app.
+These are common commands for this app.
 
 positional arguments:
   app_action            This can either be predict, train, retrieve_models or
