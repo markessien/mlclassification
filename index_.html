@@ -1,0 +1,218 @@
+<DoctypeHTML>
+<html>
+<head>
+<style>
+.well {
+  min-height: 20px;
+  padding: 19px;
+
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+
+.well-line {
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+		  background: blue;
+		  height: 38px;
+}
+
+.thumbnails {
+  margin-left: -20px;
+  list-style: none;
+  *zoom: 1;
+}
+
+.thumbnails:before,
+.thumbnails:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.thumbnails:after {
+  clear: both;
+}
+
+
+.thumbnails > li {
+  float: left;
+  margin-left: 20px;
+ position:relative; left:4vw;
+		
+}
+
+.thumbnail {
+  display: block;
+  padding: 4px;
+  line-height: 20px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -webkit-transition: all 0.2s ease-in-out;
+     -moz-transition: all 0.2s ease-in-out;
+       -o-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+		 
+}
+
+.thumbnail:hover,
+thumbnail:focus {
+  border-color: #0088cc;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+     -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+          box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+
+.thumbnail{
+  padding: 9px;
+  color: #555555;
+  width:500px;
+  }
+.span{
+	width: 400px;
+	position:relative;
+	right:-30px;
+
+}
+.sectionLabel{
+	font-size: 20px;
+	position:relative;
+	top:-32px;
+	right: -30px;
+}
+*********/ the loader********/
+.circle-wrap {
+  margin: 50px auto;
+  width: 150px;
+  height: 150px;
+  background: #e6e2e7;
+  border-radius: 50%;
+}
+
+.circle-wrap .circle .mask,
+.circle-wrap .circle .fill {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle-wrap .circle .mask {
+  clip: rect(0px, 150px, 150px, 75px);
+}
+
+.circle-wrap .circle .mask .fill {
+  clip: rect(0px, 75px, 150px, 0px);
+  background-color: #9e00b1;
+}
+
+.circle-wrap .circle .mask.full,
+.circle-wrap .circle .fill {
+  animation: fill ease-in-out 3s;
+  transform: rotate(126deg);
+}
+
+@keyframes fill {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(126deg);
+  }
+}
+
+.circle-wrap .inside-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 150%;
+  background: #fff;
+  line-height: 130px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  position: absolute;
+
+  font-weight: 700;
+  font-size: 2em;
+}
+
+</style>
+
+<title>UI
+</title>
+
+</head>
+<body>
+<hr class="well-line"/>
+<div class="well">
+		<ul class="thumbnails" style="">
+			<li class="">
+			  <div class="thumbnail"  style="height:370px;" >
+				<center>TRAINING</center><br>
+				<div class = "well span">
+						<b class="sectionLabel">IMAGES</b>
+						<br />
+						<form action="BACKEND HERE" method="post" enctype="BACKEND HERE">
+							GROUP A 
+								<input class="" style="width:200px; height:40px;" type="file" name="fileToUpload" id="fileToUpload"><br />				
+							GROUP B
+								<input class="" style="width:200px; height:40px;"  id="fileToUpload" name="fileToUpload" type="file" ></div><br>
+								<div class="well span">
+								<b class="sectionLabel">MODEL</b><br /><br />	
+								<input style="position:relative; left:280px; top:10px" type="submit" value="START TRAINING" name="submit">
+								</div>								
+						</form>	<center><br />	
+						<progress value="22" max="100"></progress>	<button>save Model </button></center>
+				</div>
+			</li>
+			<li class="">
+			
+				<div class="thumbnail" style="height:370px;">
+					<center>PREDICTIONS </center>
+					<br>
+					<div class = "well span">
+						<b class="sectionLabel">IMAGES</b>
+						<center> 
+						<br>
+						<form action="BACKEND HERE" method="post" enctype="BACKEND HERE">
+							
+								<input class="" style="width:200px; height:40px;" type="file" name="fileToUpload" id="fileToUpload">
+								<br />
+								<br />								
+											
+							<progress value="22" max="100"></progress>	<button>PREDICT </button></center>
+						</form>
+					</div>
+						<!--div class="circle-wrap" style="">
+							<div class="circle">
+								<div class="mask full">
+									  <div class="fill"></div>
+								</div>
+								<div class="mask half">
+									  <div class="fill"></div>
+								</div>
+								<div class="inside-circle">
+									  70%
+								</div-->
+									 
+				</div>
+			</li>
+		</ul>
+</div>
+<hr  class="well-line"/>
+</body>
+</html>
