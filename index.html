@@ -1,12 +1,192 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>Hello Python from Electron!</title>
-      <script>
-      </script>
-    </head>
-    <body>
-      <h1>Hello Python!</h1>
-    </body>
-  </html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./html_assets/fonts/questrial/style.css">
+    <link rel="stylesheet" href="./html_assets/fonts/ubuntu/style.css">
+    <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
+    <style>
+        .custom-title {
+            font-family: "Ubuntu"
+        }
+        .custom-button {
+            background: #11998E;
+            color: white;
+            font-family: "Questrial", sans-serif;
+            transition: 0.15s all ease-in-out;
+        }
+        .custom-button:hover {
+            background: #1BB9AC;
+            color: white;
+        }
+        .custom-button:focus {
+            background: #1BB9AC;
+            color: white;
+        }
+        .card {
+            min-height: 35%;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+            margin:1rem 0;
+        }
+        .card-content {
+            padding: 0.75rem;
+        }
+        .card-content > p {
+            padding: 0.5rem;
+        }
+        .progress {
+            height: 30px;
+            background: #EDEDED;
+            position: absolute;
+            width: 200px;
+            margin-top: 0.75rem;
+            border-radius: 4px;
+            box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+        }
+        #myBar {
+            position: absolute;
+            width: 50%;
+            height: 30px;
+            background-color: #11998E;
+        }
+    </style>
+    <title>Hello Python from Electron!</title>
+    <script>
+        // Code for electron dialog
+        const {
+            dialog
+        } = require('electron').remote;
+        const {
+            ipcRenderer
+        } = require('electron')
+        ipcRenderer.on('trainingDatasets', (event,args)=> {
+            console.log(args)
+            var datasets = document.getElementById("trainingDatasets")
+            clearAndAppend(datasets,args)
+        })
+        ipcRenderer.on('testDatasets', (event,args)=> {
+            var datasets = document.getElementById("testDatasets")
+            clearAndAppend(datasets,args)
+        })
+        function clearAndAppend(datasets,datasetEntries){
+            while(datasets.firstChild){
+                datasets.removeChild(datasets.firstChild);
+            }
+            datasetEntries.forEach(element => {
+                datasets.innerHTML += (`<li>${element}</li>`)
+            });
+        }
+        function getDataset(eventName) {
+            console.log(eventName)
+            console.log("showing")
+            var path = dialog.showOpenDialog({
+                properties: ['openDirectory']
+            });
+            if (path != null){
+                ipcRenderer.send(eventName, path)
+            }
+        }
+        function showDialog() {
+            console.log("showing")
+            var path = dialog.showOpenDialog({
+                properties: ['openDirectory']
+            });
+            ipcRenderer.send('datasetRecovery', path)
+        }
+    </script>
+</head>
+
+<body>
+    <div class="columns is-centered">
+        <div class="column is-centered has-text-centered">
+            <div class="card has-text-centered">
+                <header class="card-header-title is-centered">
+                    Upload Training Data
+                </header>
+                <button class="button custom-button" onclick="getDataset('trainingDatasetRecovery')">
+                    Upload Training Data
+                </button>
+                <div class="card-content">
+                    <h1 class="custom-title">
+                        <b>Datasets:</b>
+                    </h1>
+                    <ul id="trainingDatasets">
+                    </ul>
+                </div>
+            </div>
+            <div class="card has-text-centered">
+                <header class="card-header-title is-centered">
+                    Upload Test Data
+                </header>
+                <button class="button custom-button" onclick="getDataset('testDatasetRecovery')">
+                    Upload Test Data
+                </button>
+                <div class="card-content">
+                    <h1 class="custom-title">
+                        <b>Datasets:</b>
+                    </h1>
+                    <ul id="testDatasets">
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <h1><b>Upload Prediction Folder</b></h1>
+            <button class="button custom-button">Select Directory</button>
+            <div>
+                <br />
+                <b class="button custom-button action-button .custom-title" onclick="showDialog()">
+                    TRAIN
+                </b>
+                <b class="button is-primary action-button .custom-title" onclick="showDialog()">
+                    PREDICT
+                </b>
+            </div>
+        </div>
+        <div>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="column has-text-centered is-vcentered">
+            <div class="card has-text-centered">
+                <header class="card-header-title is-centered">
+                    Status
+                </header>
+                <div class="card-content">
+                    <p class="custom-title">
+                        <b>Accuracy:</b>{{value}}
+                    </p>
+                    <p class="custom-title">
+                        <b>Training ETA:</b>{{value}}
+                    </p>
+                    <p class="custom-title">
+                            <b>Loss:</b>{{value}}
+                        </p>
+                </div>
+            </div>
+            
+            <div class="card has-text-centered">
+                <header class="card-header-title is-centered">
+                    Prediction
+                </header>
+                <div class="card-content">
+                    <p class="custom-title">
+                        <b>Status:</b>{{Success.message}}
+                    </p>
+                    <p class="custom-title">
+                        <b>ETA:</b>{{value}}
+                    </p>
+                </div>
+            </div>
+            <div class="progress" style="right:15%">
+                <div id="myBar"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

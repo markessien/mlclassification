@@ -22,6 +22,7 @@
     "electron": "^4.1.4"
   },
   "dependencies": {
-    "python-shell": "^1.0.7"
+    "python-shell": "^1.0.7",
+    "react-toggle-switch": "^3.0.4"
   }
 }
