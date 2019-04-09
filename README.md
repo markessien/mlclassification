@@ -101,12 +101,7 @@ Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQD
 ├       └── not_valid_case
 ```
 
-```
-Train Model: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set --model default_models
-Train with default dataset and model: python3 app.py train
-Train with custom model: python3 app.py train --model default_models
-Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set
-```
+
 
 ### APIs
 
@@ -133,30 +128,45 @@ optional arguments:
 Below is specifics
 
 **Retrieve Models:**
+
 ```python app.py retrieve_models```
 
 **Delete Model:**
+
 ```python app.py delete -model modelname``` 
+
 or:
+
 ```python app.py delete --model modelname```
 
 **Train Model with custom dataset and model:**
+
 ```python app.py train --tep datasets/test_set --trp datasets/training_set --model cat_dogmodel```
+
 or:
+
 ```python app.py train -tep datasets/test_set -trp datasets/training_set -model cat_dogmodel```
 
 **Train with default dataset and model:**
+
 If the default model already exists, delete it before proceeding
+
 ```python app.py train```
 
-
 **Classification with default model:**
+
 ```python app.py predict --path /Users/src/assets/images/bg.png```
+
 or:
+
 ```python app.py predict -path /Users/src/assets/images/bg.png```
+
 **Classification with custom model:**
+
 ```python app.py predict --path /Users/src/assets/images/bg.png --model modelname```
+
 or:
+
 ```python app.py predict -path /Users/src/assets/images/bg.png -model modelname```
 
 ## Built With
