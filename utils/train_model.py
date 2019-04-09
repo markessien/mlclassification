@@ -60,8 +60,6 @@ def _generator(folder_path =None, is_train_set=True):
         return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
-
-      
     if folder_path is None:
         folder_path = default_test_folder_path
     return test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
@@ -118,9 +116,14 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
                              validation_data=test_set,
                              validation_steps=2000,
                              callbacks=callbacks_list)
-        
-    # training_set.class_indices
-    
+    #Model confidence
+    x, y = zip(*(test_set[i] for i in range(len(test_set))))  
+    x_test, y_test = np.vstack(x), np.vstack(y)
+    eveluator =classifier
+    loss, acc = eveluator.evaluate(x_test, y_test.ravel(), batch_size=64)
+    print("Confidence: " ,round(acc*100),'%')
+    #print("Loss: ", loss)
+    # training_set.class_indices    
     classifier.save(model_path)
 
 
