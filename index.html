@@ -88,6 +88,10 @@
             border-radius: 6px;
         }
 
+        .progress-left {
+            background-color: #084482;
+        }
+
         .custom-card-header {
             margin-top: -2.5rem;
             margin-left: 1rem;
@@ -108,6 +112,10 @@
         }
         .custom-label {
             margin-right: 1rem;
+        }
+
+        .right {
+            float: right;
         }
     </style>
     <title>Hello Python from Electron!</title>
@@ -224,6 +232,46 @@
                                 </div>
                             </div>
                         </div>
+                        <br/><br/><br/>
+                        <div class="card custom-border">
+                                <header class="custom-card-header is-pulled-left">
+                                    <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                                        <b>
+                                            Model
+                                        </b>
+                                    </p>
+                                </header>
+                                <br />
+                                <div class="card-content">
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <textarea rows="4" cols="70" name="comment" placeholder="Placeholder Text"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="control">
+                                    <a class="button has-background-black has-text-white right">
+                                        Start Training
+                                    </a>
+                                </div>
+                                <br/><br/>
+                                <div class="columns is-vcentered has-text-centered">
+                                        <div class="column is-three-fifths">
+                                            <progress class="progress-left progress" value="40" max="100"></progress>
+                                        </div>
+                                        <div class="column">
+                                                <p class="is-right-spaced"><b>40%</b></p>
+                                            </div>
+                                        <div class="column">
+                                            <div class="control">
+                                                    <a class="button has-background-black has-text-white right">
+                                                        Save Model
+                                                    </a>
+                                                </div>
+                                        </div>
+                                    </div>
                     </div>
             
                     <div class="column is-half has-text-centered main-column">
