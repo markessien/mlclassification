@@ -105,5 +105,4 @@ env/
 __pycache__
 .vscode
 settings.json
-app/
-datasets/
+.DS_Store
