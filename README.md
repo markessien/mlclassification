@@ -183,7 +183,9 @@ or:
 
 with image file:
 
-```python app.py predict -path /path/to/image.png```
+```
+python app.py predict -path /path/to/image.png
+```
 
 with folder:
 
