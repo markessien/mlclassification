@@ -45,7 +45,7 @@ function createWindow() {
     //     console.log('results', results);
     // });
     window = new BrowserWindow({
-        width: 800,
+        width: 1000,
         height: 600
     });
     window.loadFile("index.html");
