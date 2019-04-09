@@ -1,7 +1,3 @@
-
-
-# Importing the Keras libraries and packages
-
 import os
 
 import keras
@@ -13,12 +9,17 @@ from keras.models import load_model
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.layers import Conv2D
+from keras.layers import MaxPooling2D
+from keras.layers import Flatten
+from keras.layers import Dense
 
 from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
 
 from .constants import model_dir
+from .constants import default_test_folder_path
+from .constants import default_train_folder_path
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -29,22 +30,40 @@ train_datagen = ImageDataGenerator(
 
 test_datagen = ImageDataGenerator(rescale=1./255)
 
+
+def train_model(new_model,train_folder_path,test_folder_path):
+    # Check that both train and test folders are present (Catch both orders)
+    if os.path.isdir(train_folder_path):
+
+        # test_folder_path must also be a directory
+        if os.path.isdir(test_folder_path):
+            train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
+
+        print('\n The provided test folder is not a directory')
+        return # You must return  
+    #Means train_folder_path is not a directory
+    print('\n The provided train folder is not a directory')
+    return
+
+
 def _generator(folder_path =None, is_train_set=True):
     """
     Accepts a training folder path and generate training set from it.
 
     if a folder is not supplied, defaults to using ./datasets/training_set
+
+    No need to make default dataset folder constant because it's only used here
     """
     if is_train_set:
         if folder_path is None:
-            folder_path = './datasets/training_set'
+            folder_path = default_train_folder_path
         return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
 
       
     if folder_path is None:
-        folder_path = './datasets/test_set'
+        folder_path = default_test_folder_path
     return test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')

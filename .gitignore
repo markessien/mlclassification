@@ -106,3 +106,4 @@ __pycache__
 .vscode
 settings.json
 app/
+datasets/

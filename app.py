@@ -1,133 +1,53 @@
-# Python 3.6.7
-
-
 import os
 import json
 import sys
 import argparse
-
-import shutil
-
 from utils.train_model import train
-from utils.predict_model import test, import_model, all_models
+from utils.train_model import train_model #Validator for train function
+from utils.predict_model import predictor
 from utils.model import model_delete
+from utils.model import import_model
+from utils.model import all_models
+from utils.model import generate_name
+from utils.constants import default_model
+from utils.constants import model_dir
+from utils.constants import model_extension
+from utils.constants import image_extensions
+from utils.constants import truth_values
 
-from utils.constants import model_extension, default_model
-
-file_name = 'classification_results.json'  # the file name
-image_extensions = ('jpeg', 'png', 'jpg', 'tiff', 'gif')  # add others
-
-
-# Use the default one if no one is supplied by the user
-def predictor(input_type, folder_or_image, model):
-    """
-    Accepts either a folder or an image, and a model argument that's the ML model
-    to use for the function. 
-
-    """
-
-    # Load the model
-    classifier = import_model(model)
-
-    if input_type == 'file':
-
-        # Removed the file type vaildation that was here before because it's already done in the argparser place.
-        # No need for redundancy
-        outcome = test(classifier, folder_or_image)
-
-        if outcome == True:
-            print('\nNot Hotel')
-            return
-
-        print('\nHotel')
-
-        return  # important. Must return
-
-    # It's implicit that the input type is a folder from here on
-
-    prediction = []  # list of file names that are the prediction
-    not_prediction = []  # list of file names that are not the prediction
-
-    for folder_name, folders, files in os.walk(folder_or_image):
-
-        # Make the prediction and not prediction folders (just thier paths)
-        # I used some form of dynamic naming here to create the folder names
-        # Please feel free to change it to something more suitable.
-        # I simply used the folder name of the current folder being checked as
-        # the prediction folder and then added 'not_' to that name for the
-        # not_prediction folder. So if 'hotels' was being checked, the folder
-        # names for the predictions would be 'hotels' and 'not_hotels'
-        # Kindly change as deemed.
-        prediction_folder = os.path.join(
-            folder_name, os.path.basename(folder_name))
-        not_prediction_folder = os.path.join(
-            folder_name, 'not_' + os.path.basename(folder_name))
-
-        # Create the folders using their paths
-        os.mkdir(prediction_folder)
-        os.mkdir(not_prediction_folder)
-
-        for file in files:
-
-            # Didn't remove the file-type validation here as some files in the supplied
-            # directory may not be images, unlike up where only an image is supplied.
-            if file.lower().endswith(image_extensions):
-                outcome = test(classifier, os.path.join(folder_name, file))
-
-                # Add to JSON list and then copy it to its respective folder
-                if outcome == True:
-                    not_prediction.append(file)
-                    shutil.copy(os.path.join(folder_name, file),
-                                not_prediction_folder)
-                else:
-                    prediction.append(file)
-                    shutil.copy(os.path.join(folder_name, file),
-                                prediction_folder)
-
-        # Then actually write to JSON (Since we are still using JSON)
-        with open(os.path.join(folder_name, file_name), 'w') as f:
-            json.dump({os.path.basename(folder_name): prediction,
-                       'not_' + os.path.basename(folder_name): not_prediction}, f)
-       
-        prediction.clear() # clear the list containing the prediction names for use in the next iterated folder
-        not_prediction.clear()  # Do the same for the not_prediction list
-
-    return
 
 
 def parse_args(argv):
     parser = argparse.ArgumentParser("")
     parser.add_argument(
         'app_action',
-        help='This can either be predict, train, models or delete',
+        help='This can either be predict, train, retrieve_models or delete',
         default='predict'
     )
     parser.add_argument(
-        '-p',
         '--path',
         help='A path to a folder or image e.g /foo or foobar.jpg'
 
     )
     parser.add_argument(
-        '-trp',
-        '--train_folder_path',
-        help = 'A training folder path e.g dataset/training_set'
-
+        '--trp',
+        help='A training folder path e.g dataset/training_set'
     )
     parser.add_argument(
-        '-tep',
-        '--test_folder_path',
-        help = 'A test folder path e.g dataset/test_set'
-
+        '--tep',
+        help='A test folder path e.g dataset/test_set'
     )
     parser.add_argument(
-        '-m',
         '--model',
-        help="A model name to use e.g catdogmodel or my_model (no need to add the extension)"
+        help='Selects a model to be used',
+    )
+    parser.add_argument(
+        '--gen_name',
+        help = 'A boolean to generate model name e.g yes or no',
+        default = 'no'
     )
 
     return parser.parse_args(argv[1:])
-
 
 def main(argv=sys.argv):
     """ The main script """
@@ -135,6 +55,11 @@ def main(argv=sys.argv):
     args = parse_args(argv)
 
     action = args.app_action
+    train_folder_path =args.trp
+    test_folder_path = args.tep
+    folder_or_image = "" if args.path is None else args.path
+    #Any arg supplied to this will be seen as True, no arg means False
+    generate_model_name = args.gen_name 
 
     # If the action is train, the model is the name of the new model
     # that is going to be trained; if it's predict, the model is the
@@ -142,55 +67,61 @@ def main(argv=sys.argv):
     model = args.model 
 
     if action == 'train': 
-        # Instead of the folder_paths being None if they were not supplied
-        # make them empty strings so the os.path functions below won't 
-        # throw errors
-        train_folder_path = "" if args.train_folder_path is None else args.train_folder_path
-        test_folder_path = "" if args.test_folder_path is None else args.test_folder_path
-
+        
         new_model = model
-
         if not new_model:
-            print("Kindly give a name to save your model with")
-            return
-        
-        if new_model + model_extension in all_models():
-            print("There's already a model with that name. Choose another name")
-            return
+            if generate_model_name in truth_values:
+                #The user want us to generate model name for them
+                #trp and tep args are required args implicitly for users from app
+                if train_folder_path and test_folder_path:
+                    #Means user fulfilled the requirement. we can proceed now
+                    #generate name
+                    new_model = generate_name(train_folder_path)
+                    train_model(new_model, train_folder_path, test_folder_path)
+                    return
+                #Here, the user might have supplied one folder argument or None at all
+                print("\n Both training folder and test folder arguments are required")
+                return
+            #The user did not supply model name and did not ask us to generate one. So definitely, 
+            # we are the one running this from console app
+            #We don't want to retrain our default model. Better to delete. So we have to check if we
+            #have trained our default model before. If default model exist, return
+            if default_model in all_models():
+                print("Retraining the default model is forbidden. Supply model name or Delete the default model manually and proceed")
+                return
                 
-        # Check that both train and test folders are present (Catch both orders)
-        if os.path.isdir(train_folder_path):
-
-            # If train folder is provided first, test folder must also be provided
-            if os.path.isdir(test_folder_path):
-                train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
-
-            print('\n You cannot provide only one folder. Provide both training and testing folder')
-            return # You must return  
-
-        # If test folder is provided, check is train folder is also provided
-        if os.path.isdir(test_folder_path):
-            if os.path.isdir(train_folder_path):
-                train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
-
-            print('\n You cannot provide only one folder. Provide both training and testing folder')
-            return # You must return
+            #Training our default model now
+            new_model = default_model
+            print("Training the default model now...")
+            #We use train function directly here for obvious reasons
+            return train(new_model)
         
-        # Means no folder was provided, run with default folders
-        train(new_model)
-
-
+        #Model name supplied
+        new_model = model + model_extension
+        if new_model in all_models():
+            print("There's already a model with that name. Please choose another name"
+             " or find a model with name {}. Delete it and try again".format(new_model))
+            return
+        #From here on, we expect user to supply training dataset and test dataset. 
+        #trp and tep args are required args implicitly for users from app
+        if train_folder_path and test_folder_path:
+            #Means user fulfilled the requirement. we can proceed now   
+            return train_model(new_model, train_folder_path, test_folder_path)
+        #Here, the user might have supplied one folder argument or None at all
+        print("\n Both training folder and test folder arguments are required")
+        return 
+                
     elif action == 'predict':
-
-        folder_or_image = "" if args.path is None else args.path
 
         # If no model was given, use the default one
         if not model:
             model = default_model
         
         else:
+            model = model + model_extension
+            
             # If one was supplied, check that it actually exists
-            if model + model_extension not in all_models():
+            if model not in all_models():
                 print("No such model has been trained")
                 return
 
@@ -221,8 +152,10 @@ def main(argv=sys.argv):
         if not model:
             print("\n You must supply a model to delete")
             return
+        
+        model = model + model_extension
             
-        if model + model_extension not in all_models():
+        if model not in all_models():
             print("That model does not exist")
             return
 
@@ -230,7 +163,7 @@ def main(argv=sys.argv):
 
         return
 
-    elif action == 'models':
+    elif action == 'retrieve_models':
 
         # List all models
         print(all_models())
@@ -240,7 +173,6 @@ def main(argv=sys.argv):
 
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
-
 
 if __name__ == '__main__':
     main()

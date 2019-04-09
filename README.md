@@ -23,7 +23,6 @@ These instructions will get you a copy of the project up and running on your loc
 │   └── default_model.h5
 │   
 │   
-├── env
 ├── utils
 ├── requirements.txt
 ├── app.py
@@ -42,25 +41,32 @@ Anaconda
 
 Install Anaconda python distribution on your system
 
-If there is an app folder skip this step
+Create a virtual environment called env.
 
 ```
-python -m venv app
+python -m venv env
 ```
 
-Activate the virtual environment (VENV)
+Activate the virtual environment
 
 ```
-LINUX/Mac: source app/bin/activate
+LINUX/Mac: source env/bin/activate
 
-Windows: app\Scripts\activate.bat
+Windows: env\Scripts\activate
 ```
 
-Install dependencies in VENV using requirements file
+Upgrade to the latest pip
 
 ```
-pip3 install -r  env/requirements.txt
+pip install --upgrade pip
+```
+
+Install dependencies using requirements file
+
+```
+pip install -r requirements.txt
 ``` 
+**Note: Your virtual environment must always be activated before running any command**
 
 ## Deployment
 
@@ -96,10 +102,24 @@ Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQD
 ```
 
 ```
-python3 train_model.py
-
+Train Model: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set --model default_models
+Train with default dataset and model: python3 app.py train
+Train with custom model: python3 app.py train --model default_models
+Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set
 ```
 
+### APIs
+
+```
+Retrieve Models: python3 app.py retrieve_models
+Delete Model: python3 app.py delete --model default_models
+Train Model:python3 app.py train --tep ./datasets/test_set --trp ./datasets/tr
+aining_set --model akinduko--model default_models
+Train with default dataset and model: python3 app.py
+Train with custom model: python3 app.py train --model default_model
+Train with custom dataset: python3 app.py train --tep ./datasets/test_set --trp ./datasets/training_set
+Classification: python3 app.py predict --path /Users/src/assets/images/bg.png --model default_model
+```
 
 ## Built With
 
