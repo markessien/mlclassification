@@ -45,7 +45,7 @@
 
 .thumbnails > li {
   float: left;
-  margin-left: 20px;
+  margin-left: 80px;
  position:relative; left:4vw;
 		
 }
@@ -65,6 +65,7 @@
      -moz-transition: all 0.2s ease-in-out;
        -o-transition: all 0.2s ease-in-out;
           transition: all 0.2s ease-in-out;
+		  height:450px;
 		 
 }
 
@@ -86,6 +87,7 @@ thumbnail:focus {
 	width: 400px;
 	position:relative;
 	right:-30px;
+	height:150px;
 
 }
 .sectionLabel{
@@ -150,6 +152,34 @@ thumbnail:focus {
   font-size: 2em;
 }
 
+*{
+  margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    -webkit-box-sizing: border-box;
+}
+*:before,
+*:after{
+    -webkit-box-sizing: border-box;
+}
+.clearfix {
+  *zoom: 1;
+  background-color:blue;
+}
+
+
+/*********************************/
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
 </style>
 
 <title>UI
@@ -157,11 +187,19 @@ thumbnail:focus {
 
 </head>
 <body>
-<hr class="well-line"/>
+
+    
+<div class="clearfix">
+	<h1>top </h1>
+</div>
+           
+		
+
+	
 <div class="well">
 		<ul class="thumbnails" style="">
 			<li class="">
-			  <div class="thumbnail"  style="height:370px;" >
+			  <div class="thumbnail"  style="" >
 				<center>TRAINING</center><br>
 				<div class = "well span">
 						<b class="sectionLabel">IMAGES</b>
@@ -172,16 +210,23 @@ thumbnail:focus {
 							GROUP B
 								<input class="" style="width:200px; height:40px;"  id="fileToUpload" name="fileToUpload" type="file" ></div><br>
 								<div class="well span">
-								<b class="sectionLabel">MODEL</b><br /><br />	
-								<input style="position:relative; left:280px; top:10px" type="submit" value="START TRAINING" name="submit">
+								
+								
+								<b class="sectionLabel">MODEL</b><br /><br />									
+									  <input type="text" name="fname" placeholder="placeholder text" style="height:70"><br>							  
+									    
+									
+								
 								</div>								
-						</form>	<center><br />	
-						<progress value="22" max="100"></progress>	<button>save Model </button></center>
+						<center><br />	
+						<input style="position:relative; left:140px;" type="submit" value="START TRAINING" name="submit"><br><br>
+						</form> 
+						<progress value="22" max="100"></progress>  20%	<button>save Model </button></center>
 				</div>
 			</li>
 			<li class="">
 			
-				<div class="thumbnail" style="height:370px;">
+				<div class="thumbnail">
 					<center>PREDICTIONS </center>
 					<br>
 					<div class = "well span">
@@ -194,9 +239,21 @@ thumbnail:focus {
 								<br />
 								<br />								
 											
-							<progress value="22" max="100"></progress>	<button>PREDICT </button></center>
+							<progress value="22" max="100"></progress> 20%	<button>PREDICT </button></center>
 						</form>
+					</div><br />
+					
+					<div class="well span">
+					<center>
+					<img src=".jpg" height="80" width="200" alt="IMAGE" title=""/>
+						</center>
 					</div>
+					
+					<div>
+						<center>confidence </center>
+					 
+					</div>
+					
 						<!--div class="circle-wrap" style="">
 							<div class="circle">
 								<div class="mask full">
@@ -213,6 +270,8 @@ thumbnail:focus {
 			</li>
 		</ul>
 </div>
-<hr  class="well-line"/>
+<div class="clearfix">
+	<h1>base </h1>
+</div>
 </body>
 </html>
