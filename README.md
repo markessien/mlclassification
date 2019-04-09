@@ -155,11 +155,24 @@ If the default model already exists, delete it before proceeding
 
 **Classification with default model:**
 
-```python app.py predict --path /Users/src/assets/images/bg.png```
+with image file:
+
+```python app.py predict --path /path/to/image.png```
+
+with folder:
+
+```python app.py predict --path /path/to/folder```
 
 or:
 
-```python app.py predict -path /Users/src/assets/images/bg.png```
+with image file:
+
+```python app.py predict -path /path/to/image.png```
+
+with folder:
+
+```python app.py predict -path /path/to/folder```
+
 
 **Classification with custom model:**
 
