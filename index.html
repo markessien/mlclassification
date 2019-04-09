@@ -98,6 +98,10 @@
             border-radius: 6px;
         }
 
+        .progress-left::-webkit-progress-value {
+            background-color: #084482;
+            border-radius: 6px;
+        }
         .progress-left {
             background-color: #084482;
         }
@@ -268,21 +272,21 @@
                             </div>
                             <br/>
                             <div class="control">
-                                    <a class="button has-background-black has-text-white right">
+                                    <a class="button custom-button right">
                                         Start Training
                                     </a>
                                 </div>
                                 <br/><br/>
                                 <div class="columns is-vcentered has-text-centered">
                                         <div class="column is-three-fifths">
-                                            <progress class="progress-left progress" value="40" max="100"></progress>
+                                            <progress class="progress progress-left" value="40" max="100"></progress>
                                         </div>
                                         <div class="column">
-                                                <p class="is-right-spaced"><b>40%</b></p>
+                                                <p><b>40%</b></p>
                                             </div>
                                         <div class="column">
                                             <div class="control">
-                                                    <a class="button has-background-black has-text-white right">
+                                                    <a class="button custom-button right">
                                                         Save Model
                                                     </a>
                                                 </div>
