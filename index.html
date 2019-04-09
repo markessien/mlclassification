@@ -1,6 +1,5 @@
-<!DOCTYPE html>
+<!DoctypeHTML>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./html_assets/fonts/questrial/style.css">
@@ -8,7 +7,14 @@
     <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
     <style>
         .custom-title {
-            font-family: "Ubuntu"
+            font-family: "Ubuntu";
+            font-style: normal;
+            font-weight: bold;
+            font-size: 36px;
+            line-height: normal;
+            text-align: center;
+
+            color: #000000;
         }
 
         .columns:nth-child(1) {
@@ -22,9 +28,13 @@
         }
 
         .custom-button {
-            background: #11998E;
-            color: white;
-            font-family: "Questrial", sans-serif;
+            background: #252939;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            text-align: center;
+            color: #FFFFFF;
             transition: 0.15s all ease-in-out;
         }
 
@@ -62,7 +72,7 @@
             background: #084482;
             height: 50px;
             color: #EDEDED;
-
+            padding-top: 12.5px;
             text-align: right;
 
         }
@@ -112,6 +122,15 @@
         }
         .custom-label {
             margin-right: 1rem;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: normal;
+            color: #000000;
+        }
+        .custom-input {
+            border-radius: 5px 0px 0px 5px !important;
         }
 
         .right {
@@ -170,7 +189,6 @@
         }
     </script>
 </head>
-
 <body>
 
     <nav class="navbar" role="navigation" aria-label="main navigation" id="nav">
@@ -189,43 +207,41 @@
     <div class="wrapper">
             <div class="columns ">
 
-                    <div class="column is-half has text has-text-centered main-column">
+                    <div class="column is-half has-text-centered main-column">
                         <p class="is-centered custom-title is-size-3">
-                            <b>Training</b>
+                            Training
                         </p>
                         <br />
                         <div class="card custom-border">
                             <header class="custom-card-header is-pulled-left">
                                 <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
-                                    <b>
-                                        Images
-                                    </b>
+                                    Images
                                 </p>
                             </header>
                             <br />
                             <div class="card-content">
                                 <div class="field has-addons">
-                                        <div class="control">
-                                            <label class="custom-label">Group A</label>
-                                        </div>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="No file selected">
+                                    <div>
+                                        <label class="custom-label">Group A</label>
                                     </div>
                                     <div class="control">
-                                        <a class="button has-background-black has-text-white">
+                                        <input class="input custom-input" type="text" placeholder="No file selected">
+                                    </div>
+                                    <div class="control">
+                                        <a class="button custom-button has-text-white">
                                             Choose File
                                         </a>
                                     </div>
                                 </div>
                                 <div class="field has-addons">
-                                        <div class="control">
+                                        <div>
                                             <label class="custom-label">Group B</label>
                                         </div>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="No file selected">
+                                        <input class="input custom-input" type="text" placeholder="No file selected">
                                     </div>
                                     <div class="control">
-                                        <a class="button has-background-black has-text-white">
+                                        <a class="button custom-button has-text-white">
                                             Choose File
                                         </a>
                                     </div>
@@ -295,7 +311,7 @@
                                         <input class="input" type="text" placeholder="No file selected">
                                     </div>
                                     <div class="control">
-                                        <a class="button has-background-black has-text-white">
+                                        <a class="button custom-button has-text-white">
                                             Choose File
                                         </a>
                                     </div>
@@ -308,7 +324,7 @@
                                         <div class="level">
                                             <div class="level-item is-narrow">
                                                 <p class="is-right-spaced"><b>20%</b></p>
-                                                <a class="button has-background-black has-text-white">
+                                                <a class="button custom-button has-text-white">
                                                     Predict
                                                 </a>
                                             </div>
@@ -329,5 +345,4 @@
         <p class="container">HNG Internship 5</p>
     </footer>
 </body>
-
 </html>
