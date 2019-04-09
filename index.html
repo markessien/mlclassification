@@ -60,6 +60,24 @@
             height: 30px;
             background-color: #11998E;
         }
+        #footer {
+            background: #084482;
+            height: 50px;
+            color: #EDEDED;
+            
+            text-align: right;
+            
+        }
+        #nav {
+            width: 1920px;
+            height: 50px;
+            left: 0px;
+            top: 0px;
+            text-align: left;
+            background: #084482;
+        }
+
+               
     </style>
     <title>Hello Python from Electron!</title>
     <script>
@@ -115,86 +133,53 @@
 </head>
 
 <body>
+    
+    <nav class="navbar" role="navigation" aria-label="main navigation" id="nav">
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>    
+        <div class="navbar-menu" id="navbarBasicExample">
+                <a class="navbar-item has-text-white" ><strong>ClassiFi</strong> </a>
+            
+        </div>
+    </nav>
+    
     <div class="columns is-centered">
-        <div class="column is-centered has-text-centered">
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Upload Training Data
+            
+        <div class="column is-half has text has-text-centered">
+            
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title is-centered">
+                        Train
+                    </p>
+                            
                 </header>
-                <button class="button custom-button" onclick="getDataset('trainingDatasetRecovery')">
-                    Upload Training Data
-                </button>
-                <div class="card-content">
-                    <h1 class="custom-title">
-                        <b>Datasets:</b>
-                    </h1>
-                    <ul id="trainingDatasets">
-                    </ul>
-                </div>
-            </div>
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Upload Test Data
-                </header>
-                <button class="button custom-button" onclick="getDataset('testDatasetRecovery')">
-                    Upload Test Data
-                </button>
-                <div class="card-content">
-                    <h1 class="custom-title">
-                        <b>Datasets:</b>
-                    </h1>
-                    <ul id="testDatasets">
-                    </ul>
-                </div>
-            </div>
-            <br />
-            <h1><b>Upload Prediction Folder</b></h1>
-            <button class="button custom-button">Select Directory</button>
-            <div>
-                <br />
-                <b class="button custom-button action-button .custom-title" onclick="showDialog()">
-                    TRAIN
-                </b>
-                <b class="button is-primary action-button .custom-title" onclick="showDialog()">
-                    PREDICT
-                </b>
             </div>
         </div>
-        <div class="column has-text-centered is-vcentered">
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Status
+            
+        <div class="column is-half has-text-centered">
+            
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title is-centered">
+                        Prediction
+                    </p>
+                                
                 </header>
-                <div class="card-content">
-                    <p class="custom-title">
-                        <b>Accuracy:</b>{{value}}
-                    </p>
-                    <p class="custom-title">
-                        <b>Training ETA:</b>{{value}}
-                    </p>
-                    <p class="custom-title">
-                            <b>Loss:</b>{{value}}
-                        </p>
-                </div>
             </div>
-            <div class="card has-text-centered">
-                <header class="card-header-title is-centered">
-                    Prediction
-                </header>
-                <div class="card-content">
-                    <p class="custom-title">
-                        <b>Status:</b>{{Success.message}}
-                    </p>
-                    <p class="custom-title">
-                        <b>ETA:</b>{{value}}
-                    </p>
-                </div>
-            </div>
-            <div class="progress" style="right:15%">
-                <div id="myBar"></div>
-            </div>
-        </div>
+        </div>            
     </div>
+
+    
+
+    </div>
+    
+    <footer id="footer">
+        <p class="container">HNG Internship 5</p>
+    </footer>
 </body>
 
 </html>
