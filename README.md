@@ -129,39 +129,55 @@ Below is specifics
 
 **Retrieve Models:**
 
-```python app.py retrieve_models```
+```
+python app.py retrieve_models
+```
 
 **Delete Model:**
 
-```python app.py delete -model modelname``` 
+```
+python app.py delete -model modelname
+``` 
 
 or:
 
-```python app.py delete --model modelname```
+```
+python app.py delete --model modelname
+```
 
 **Train Model with custom dataset and model:**
 
-```python app.py train --tep datasets/test_set --trp datasets/training_set --model cat_dogmodel```
+```
+python app.py train --tep datasets/test_set --trp datasets/training_set --model cat_dogmodel
+```
 
 or:
 
-```python app.py train -tep datasets/test_set -trp datasets/training_set -model cat_dogmodel```
+```
+python app.py train -tep datasets/test_set -trp datasets/training_set -model cat_dogmodel
+```
 
 **Train with default dataset and model:**
 
 If the default model already exists, delete it before proceeding
 
-```python app.py train```
+```
+python app.py train
+```
 
 **Classification with default model:**
 
 with image file:
 
-```python app.py predict --path /path/to/image.png```
+```
+python app.py predict --path /path/to/image.png
+```
 
 with folder:
 
-```python app.py predict --path /path/to/folder```
+```
+python app.py predict --path /path/to/folder
+```
 
 or:
 
@@ -171,16 +187,22 @@ with image file:
 
 with folder:
 
-```python app.py predict -path /path/to/folder```
+```
+python app.py predict -path /path/to/folder
+```
 
 
 **Classification with custom model:**
 
-```python app.py predict --path /Users/src/assets/images/bg.png --model modelname```
+```
+python app.py predict --path /Users/src/assets/images/bg.png --model modelname
+```
 
 or:
 
-```python app.py predict -path /Users/src/assets/images/bg.png -model modelname```
+```
+python app.py predict -path /Users/src/assets/images/bg.png -model modelname
+```
 
 ## Built With
 
