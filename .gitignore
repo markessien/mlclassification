@@ -106,3 +106,5 @@ __pycache__
 .vscode
 settings.json
 .DS_Store
+datasets
+datasets/
