@@ -118,13 +118,21 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
                              callbacks=callbacks_list)
     #Model confidence
     x, y = zip(*(test_set[i] for i in range(len(test_set))))  
-    x_test, y_test = np.vstack(x), np.vstack(y)
-    eveluator =classifier
-    loss, acc = eveluator.evaluate(x_test, y_test.ravel(), batch_size=64)
+    x_test, y_test = np.vstack(x), np.vstack(y)    
+    loss, acc = classifier.evaluate(x_test, y_test.ravel(), batch_size=64)
     print("Confidence: " ,round(acc*100),'%')
     #print("Loss: ", loss)
-    # training_set.class_indices    
-    classifier.save(model_path)
+    # training_set.class_indices
+    train.label = training_set.class_indices
+    train.model = classifier
+
+    
+    #save Model with Unique ID
+def saveModel():
+    labels = train.label.keys()
+    labels = str(list(labels))+"_model.h5"
+    save = train.model.save(labels)
+    return save
 
 
 def prepImage(testImage):

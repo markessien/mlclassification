@@ -105,6 +105,7 @@ env/
 __pycache__
 .vscode
 settings.json
+<<<<<<< HEAD
 
 Dependency directories
 node_modules/
@@ -113,3 +114,10 @@ jspm_packages/
 # Optional npm cache directory
 .npm
 .DS_Store
+=======
+.DS_Store
+datasets
+datasets/
+node_modules
+yarn.lock
+>>>>>>> b80006c492557cdd2caef9099af4fbd9c935da1d
