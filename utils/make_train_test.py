@@ -8,13 +8,13 @@ from utils.constants import image_extensions
 def make_train_test(category_folder):
 
     if not os.path.isdir(category_folder):
-        print("Input a folder")
+        print("Input a valid folder path")
 
         return
 
-    # It is assumed that the inputted folder has been validated
-    # to contain only just images. Basically, the folder should
-    # have passed through @Munirat's code
+    # It is assumed from here that the inputted folder has been validated
+    # to contain only just images. Basically, the folder shouldhave passed 
+    # through @Munirat's code.
     for folder_name, folders, files in os.walk(category_folder):
 
         # Create their paths. They'll be in the first level of the folder inputted
