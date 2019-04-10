@@ -1,4 +1,4 @@
-#%%
+
 import os
 import shutil
 
@@ -59,7 +59,7 @@ def make_train_test(category_folder):
         return
 
 
-#%%
+
 
 
 # make_train_test('/home/olumide/Desktop/Test')
