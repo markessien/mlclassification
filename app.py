@@ -2,8 +2,9 @@ import os
 import json
 import sys
 import argparse
+import textwrap
 from utils.train_model import train
-from utils.train_model import train_model #Validator for train function
+from utils.train_model import train_model 
 from utils.predict_model import predictor
 from utils.model import model_delete
 from utils.model import import_model
@@ -18,30 +19,39 @@ from utils.constants import truth_values
 
 
 def parse_args(argv):
-    parser = argparse.ArgumentParser("")
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=textwrap.dedent('''\
+            A command line utility for image classification.
+            -----------------------------------------------
+            These are common commands for this app.'''))
     parser.add_argument(
         'app_action',
-        help='This can either be predict, train, retrieve_models or delete',
-        default='predict'
+        help='This can either be predict, train, retrieve_models or delete'
     )
     parser.add_argument(
+        '-path',
         '--path',
-        help='A path to a folder or image e.g /foo or foobar.jpg'
+        help='A path to a folder or image e.g foo or foobar.jpg'
 
     )
     parser.add_argument(
+        '-trp',
         '--trp',
         help='A training folder path e.g dataset/training_set'
     )
     parser.add_argument(
+        '-tep',
         '--tep',
         help='A test folder path e.g dataset/test_set'
     )
     parser.add_argument(
+        '-model',
         '--model',
         help='Selects a model to be used',
     )
     parser.add_argument(
+        '-gen_name',
         '--gen_name',
         help = 'A boolean to generate model name e.g yes or no',
         default = 'no'
