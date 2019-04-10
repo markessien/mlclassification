@@ -154,10 +154,15 @@
                             </div>
                         </div>
                         <div class="card custom-border2">
-                            <div class='figure'>                          
-                                <a href="#" class="previous round">&#8249;</a>
-                                <a href="#" class="next round">&#8250;</a>
-                            </div>
+                                <div class="w3-content w3-display-container">
+                                        <img class="mySlides" src="./testimages/nh3.jpg" style="width:100%; height:250px">
+                                        <img class="mySlides" src="./testimages/nh4.jpg" style="width:100%; height:250px">
+                                        <img class="mySlides" src="./testimages/nh5.jpg" style="width:100%; height:250px">
+                                        <img class="mySlides" src="./testimages/nh6.jpg" style="width:100%; height:250px">
+                                      
+                                        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                                    </div>
                             <div>                          
                                 <h3 class='h3-pred'>Confidence: </h3>
                                 <div class="progress--circle progress--25">
@@ -173,5 +178,26 @@
     <footer id="footer">
         <p class="container">HNG Internship 5</p>
     </footer>
+
+    <!-- For image slider -->
+    <script>
+            var slideIndex = 1;
+            showDivs(slideIndex);
+            
+            function plusDivs(n) {
+              showDivs(slideIndex += n);
+            }
+            
+            function showDivs(n) {
+              var i;
+              var x = document.getElementsByClassName("mySlides");
+              if (n > x.length) {slideIndex = 1}
+              if (n < 1) {slideIndex = x.length}
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";  
+              }
+              x[slideIndex-1].style.display = "block";  
+            }
+    </script>
 </body>
 </html>
