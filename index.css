@@ -160,8 +160,8 @@ body {
     color: #fff!important;
     background: rgba(250, 250, 250, 0.4) !important;
     border-radius: 100%;
-    width: 28px;
-    height: 28px;
+    width: 30px !important;
+    height: 30px !important;
     text-align: center;
     }
 
@@ -191,7 +191,7 @@ body {
 .w3-btn, .w3-button {
     border: none;
     display: inline-block;
-    padding: 8px 16px;
+    /* padding: 8px 16px; */
     vertical-align: middle;
     overflow: hidden;
     text-decoration: none;
@@ -295,5 +295,33 @@ opacity: 0.5;
     }
 
 
+
+    /* Text area */
+    textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding-top: 0px;
+        width: 100%;
+        border: 1px solid #d4d4d4;
+    }
+
+    textarea::placeholder {
+        position: absolute;
+        padding-left: 20px;
+        padding-top: 10px;
+        left: 4.76%;
+        right: 54.21%;
+        top: 8.7%;
+        bottom: 76.52%;
+
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: normal;
+
+        color: #959595;
+    }
     
 
