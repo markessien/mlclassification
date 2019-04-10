@@ -11,10 +11,6 @@ def make_train_test(category_folder):
         print("Input a folder")
 
         return
-    
-    # The name of the training and test set folders (their names in the folder inputted)
-    training_folder = '__training_set' 
-    test_folder = '__test_set' 
 
     for folder_name, folders, files in os.walk(category_folder):
 
