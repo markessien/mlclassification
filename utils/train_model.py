@@ -17,9 +17,9 @@ from keras.layers import Dense
 from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
 
-from .constants import model_dir
-from .constants import default_test_folder_path
-from .constants import default_train_folder_path
+from utils.constants import model_dir
+from utils.constants import default_test_folder_path
+from utils.constants import default_train_folder_path
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -49,9 +49,7 @@ def train_model(new_model,train_folder_path,test_folder_path):
 def _generator(folder_path =None, is_train_set=True):
     """
     Accepts a training folder path and generate training set from it.
-
     if a folder is not supplied, defaults to using ./datasets/training_set
-
     No need to make default dataset folder constant because it's only used here
     """
     if is_train_set:
@@ -150,5 +148,3 @@ def setupTF():
     keras.backend.set_session(sess)
 
     return
-
-

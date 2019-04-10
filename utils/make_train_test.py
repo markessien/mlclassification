@@ -1,8 +1,7 @@
 
 import os
 import shutil
-
-from constants import image_extensions
+from utils.constants import image_extensions
 
 image_extensions = ('jpeg', 'png', 'jpg')
 def make_train_test(category_folder):
