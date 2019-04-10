@@ -12,6 +12,9 @@ def make_train_test(category_folder):
 
         return
 
+    # It is assumed that the inputted folder has been validated
+    # to contain only just images. Basically, the folder should
+    # have passed through @Munirat's code
     for folder_name, folders, files in os.walk(category_folder):
 
         # Create their paths. They'll be in the first level of the folder inputted
