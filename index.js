@@ -46,3 +46,7 @@ function showDialog() {
     });
     ipcRenderer.send('datasetRecovery', path)
 }
+
+
+
+// the image slider
