@@ -1,10 +1,10 @@
-
+#%%
 import os
 import shutil
 
-from utils.constants import image_extensions
+from constants import image_extensions
 
-
+image_extensions = ('jpeg', 'png', 'jpg')
 def make_train_test(category_folder):
 
     if not os.path.isdir(category_folder):
@@ -59,7 +59,7 @@ def make_train_test(category_folder):
         return
 
 
-
+#%%
 
 
 # make_train_test('/home/olumide/Desktop/Test')
