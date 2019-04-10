@@ -1,0 +1,141 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.custom-title {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: normal;
+    text-align: center;
+
+    color: #000000;
+}
+
+.columns:nth-child(1) {
+    margin: 1rem;
+}
+
+.main-column {
+    margin:0.5rem;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 20px 20px;
+}
+
+.custom-button {
+    background: #252939;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+    color: #FFFFFF;
+    transition: 0.15s all ease-in-out;
+}
+
+.custom-button:hover {
+    background: #1BB9AC;
+    color: white;
+}
+
+.custom-button:focus {
+    background: #1BB9AC;
+    color: white;
+}
+
+.is-right-spaced {
+    padding-right: 0.25rem;
+}
+
+.card-content {
+    padding: 0.75rem;
+}
+
+.card-content>p {
+    padding: 0.5rem;
+}
+
+
+#myBar {
+    position: absolute;
+    width: 50%;
+    height: 30px;
+    background-color: #11998E;
+}
+
+#footer {
+    background: #084482;
+    height: 50px;
+    color: #EDEDED;
+    padding-top: 12.5px;
+    text-align: right;
+
+}
+
+.custom-border {
+    box-shadow: none;
+    border: 3px solid #d4d4d4;
+    border-radius: 4px;
+}
+
+.progress::-moz-progress-bar {
+    background-color: #252939;
+    border-radius: 6px;
+}
+
+.progress::-webkit-progress-value {
+    background-color: #252939;
+    border-radius: 6px;
+}
+
+.progress {
+    background-color: #252939;
+    border-radius: 6px;
+}
+
+.progress-left::-webkit-progress-value {
+    background-color: #084482;
+    border-radius: 6px;
+}
+.progress-left {
+    background-color: #084482;
+}
+
+.custom-card-header {
+    margin-top: -2.5rem;
+    margin-left: 1rem;
+    background: white;
+}
+
+.wrapper {
+    margin: 1rem;
+}
+
+#nav {
+    width: 1920px;
+    height: 50px;
+    left: 0px;
+    top: 0px;
+    text-align: left;
+    background: #084482;
+}
+.custom-label {
+    margin-right: 1rem;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: normal;
+    color: #000000;
+}
+.custom-input {
+    border-radius: 5px 0px 0px 5px !important;
+}
+
+.right {
+    float: right;
+}
