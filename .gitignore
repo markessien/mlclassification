@@ -108,3 +108,5 @@ settings.json
 .DS_Store
 datasets
 datasets/
+node_modules
+yarn.lock
