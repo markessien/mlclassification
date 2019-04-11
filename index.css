@@ -27,7 +27,7 @@ body {
 }
 
 .custom-button {
-    background: #252939;
+    background: #252939 !important;
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
@@ -167,8 +167,8 @@ body {
 
 .w3-display-left {
     position: absolute;
-    top: 50%;
-    left: 0%;
+    top: 45%;
+    left: 5%;
     transform: translate(0%, -50%);
     -ms-transform: translate(-0%, -50%);
 }
@@ -187,8 +187,8 @@ body {
 
 .w3-display-right {
     position: absolute;
-    top: 50%;
-    right: 0%;
+    top: 45%;
+    right: 5%;
     transform: translate(0%, -50%);
     -ms-transform: translate(0%, -50%);
 }
@@ -207,21 +207,8 @@ body {
     cursor: pointer;
     white-space: nowrap;
 }
-.w3-display-left {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    transform: translate(0%, -50%);
-    -ms-transform: translate(-0%, -50%);
-}
 
-.w3-display-right {
-    position: absolute;
-    top: 50%;
-    right: 0%;
-    transform: translate(0%, -50%);
-    -ms-transform: translate(0%, -50%);
-}
+
 
 .progress--circle {
     position: relative;
@@ -351,4 +338,11 @@ textarea::placeholder {
     textarea {
         column-span: 90%;
     }
+}
+
+@media (max-width: 769px){
+.column.is-three-fifths, .column.is-three-fifths-tablet {
+    /* flex: none; */
+    width: 40%;
+}
 }
