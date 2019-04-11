@@ -21,13 +21,13 @@ body {
 }
 
 .main-column {
-    margin:0.5rem;
+    margin: 0.5rem;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
     border-radius: 0px 0px 20px 20px;
 }
 
 .custom-button {
-    background: #252939;
+    background: #252939 !important;
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
@@ -103,7 +103,6 @@ body {
 .progress {
     background-color: #252939;
     border-radius: 6px;
-   
 }
 
 .progress-left::-webkit-progress-value {
@@ -156,42 +155,49 @@ body {
 
 /* For image slider section */
 
-.w3-black, .w3-hover-black:hover {
-    color: #fff!important;
+.w3-black,
+.w3-hover-black:hover {
+    color: #fff !important;
     background: rgba(250, 250, 250, 0.4) !important;
     border-radius: 100%;
-    width: 28px;
-    height: 28px;
+    width: 30px !important;
+    height: 30px !important;
     text-align: center;
-    }
+}
 
 .w3-display-left {
     position: absolute;
-    top: 50%;
-    left: 0%;
-    transform: translate(0%,-50%);
-    -ms-transform: translate(-0%,-50%);
+    top: 45%;
+    left: 5%;
+    transform: translate(0%, -50%);
+    -ms-transform: translate(-0%, -50%);
 }
-.w3-black, .w3-hover-black:hover {
-    color: #fff!important;
+
+.w3-black,
+.w3-hover-black:hover {
+    color: #fff !important;
     background: rgba(250, 250, 250, 0.4);
 }
-.w3-black, .w3-hover-black {
-    color: #fff!important;
+
+.w3-black,
+.w3-hover-black {
+    color: #fff !important;
     background: rgba(250, 250, 250, 0.4);
 }
 
 .w3-display-right {
     position: absolute;
-    top: 50%;
-    right: 0%;
-    transform: translate(0%,-50%);
-    -ms-transform: translate(0%,-50%);
+    top: 45%;
+    right: 5%;
+    transform: translate(0%, -50%);
+    -ms-transform: translate(0%, -50%);
 }
-.w3-btn, .w3-button {
+
+.w3-btn,
+.w3-button {
     border: none;
     display: inline-block;
-    padding: 8px 16px;
+    /* padding: 8px 16px; */
     vertical-align: middle;
     overflow: hidden;
     text-decoration: none;
@@ -201,20 +207,9 @@ body {
     cursor: pointer;
     white-space: nowrap;
 }
-.w3-display-left {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    transform: translate(0%,-50%);
-    -ms-transform: translate(-0%,-50%);
-}
-.w3-display-right {
-    position: absolute;
-    top: 50%;
-    right: 0%;
-    transform: translate(0%,-50%);
-    -ms-transform: translate(0%,-50%);
-}
+
+
+
 .progress--circle {
     position: relative;
     display: inline-block;
@@ -223,8 +218,9 @@ body {
     height: 60px;
     border-radius: 50%;
     background-color: #ddd;
-    }
-    .progress--circle:before {
+}
+
+.progress--circle:before {
     content: '';
     position: absolute;
     top: 5px;
@@ -233,67 +229,120 @@ body {
     height: 50px;
     border-radius: 50%;
     background-color: white;
-    }
-    .progress--circle:after {
+}
+
+.progress--circle:after {
     content: '';
     display: inline-block;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     background-color: #143b7a;
-    }
+}
+
 .progress__number {
-position: absolute;
-top: 50%;
-width: 100%;
-line-height: 1;
-margin-top: -0.75rem;
-text-align: center;
-font-size: 1.3rem;
-color: #777;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    line-height: 1;
+    margin-top: -0.75rem;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #777;
 }
+
 .progress--circle.progress--25:after {
-  background-image: linear-gradient(0deg, 
-  #ddd 50%, transparent 50%, transparent), 
-  linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+    background-image: linear-gradient(0deg,
+        #ddd 50%, transparent 50%, transparent),
+        linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
 }
-.figure{
-width:relative;
-height:230px;
-background:transparent url(https://www.leonardo-hotels.it/octopus/Upload/images/Pages/mulhwcc01mai17800x600.jpg) no-repeat;  
-padding-top: 80px;
+
+.figure {
+    width: relative;
+    height: 230px;
+    background: transparent url(https://www.leonardo-hotels.it/octopus/Upload/images/Pages/mulhwcc01mai17800x600.jpg) no-repeat;
+    padding-top: 80px;
 }
-a 
-{
-text-decoration: none;
-display: inline-block;
-padding: 8px 16px;
-opacity: 0.5;
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    opacity: 0.5;
 }
 
 .previous {
     background-color: #f1f1f1;
     color: black;
     float: left;
-    }
-    .next {
-    float: right;    
+}
+
+.next {
+    float: right;
     background-color: #f1f1f1;
     color: black;
-    }
-    .round {
+}
+
+.round {
     border-radius: 50%;
+}
+
+.h3-pred {
+    font-family: Ubuntu;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 28px;
+    padding-left: 75px;
+}
+
+.hide-input {
+    display: none;
+}
+
+
+/* Text area */
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 0px;
+    width: 100%;
+    border: 1px solid #d4d4d4;
+}
+
+textarea::placeholder {
+    position: absolute;
+    padding-left: 20px;
+    padding-top: 10px;
+    left: 4.76%;
+    right: 54.21%;
+    top: 8.7%;
+    bottom: 76.52%;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: normal;
+
+    color: #959595;
+}
+
+.align-item-left {
+    justify-content: flex-start;
+    display: flex;
+}
+
+@media (min-width: 1000px) {
+    textarea {
+        column-span: 90%;
     }
+}
 
-    .h3-pred{
-        font-family:Ubuntu;
-        float: left;
-        font-size: 24px;
-        font-weight: bold;
-        padding-top: 28px;
-        padding-left: 75px;
-    }
-
-
-    
-
+@media (max-width: 769px){
+.column.is-three-fifths, .column.is-three-fifths-tablet {
+    /* flex: none; */
+    width: 40%;
+}
+}

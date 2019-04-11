@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="./html_assets/fonts/ubuntu/style.css">
     <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
     <link rel="stylesheet" href="index.css">
-    <title>Hello Python from Electron!</title>
+    <title>ClassiFi</title>
     <script src="index.js"></script>
 </head>
+
 <body>
 
     <nav class="navbar" role="navigation" aria-label="main navigation" id="nav">
@@ -25,179 +26,194 @@
     </nav>
 
     <div class="wrapper">
-            <div class="columns ">
+        <div class="columns ">
 
-                    <div class="column is-half has-text-centered main-column">
-                        <p class="is-centered custom-title is-size-3">
-                            Training
+            <div class="column is-half has-text-centered main-column">
+                <p class="is-centered custom-title is-size-3">
+                    Training
+                </p>
+                <br />
+                <div class="card custom-border">
+                    <header class="custom-card-header is-pulled-left">
+                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                            Images
                         </p>
-                        <br />
-                        <div class="card custom-border">
-                            <header class="custom-card-header is-pulled-left">
-                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
-                                    Images
-                                </p>
-                            </header>
-                            <br />
-                            <div class="card-content">
-                                <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 30px;">
-                                    <div>
-                                        <label class="custom-label">Group A</label>
-                                    </div>
-                                    <div class="control" style="width:60%">
-                                        <input class="input custom-input" type="text" placeholder="No file selected">
-                                    </div>
-                                    <div class="control">
-                                        <a class="button custom-button has-text-white">
-                                            Choose File
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 30px;">
-                                        <div>
-                                            <label class="custom-label">Group B</label>
-                                        </div>
-                                    <div class="control" style="width:60%">
-                                        <input class="input custom-input" type="text" placeholder="No file selected">
-                                    </div>
-                                    <div class="control">
-                                        <a class="button custom-button has-text-white">
-                                            Choose File
-                                        </a>
-                                    </div>
-                                </div>
+                    </header>
+                    <br />
+                    <div class="card-content">
+                        <div class="field has-addons" style="width:100%; margin:auto; padding-bottom: 30px;">
+                            <div style="width:30%">
+                                <label class="custom-label">Group A</label>
                             </div>
-                        </div>
-                        <br/><br/><br/>
-                        <div class="card custom-border">
-                                <header class="custom-card-header is-pulled-left">
-                                    <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
-                                        <b>
-                                            Model
-                                        </b>
-                                    </p>
-                                </header>
-                                <br />
-                                <div class="card-content">
-                                    <div class="field has-addons">
-                                        <div class="control">
-                                            <textarea rows="4" cols="90" name="comment" placeholder="Placeholder Text"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="control" style="width:70%">
+                                <input class="hide-input" type="file" id="part1" />
+                                <input class="input custom-input" type="text" disabled placeholder="No file selected" />
                             </div>
-                            <br/>
                             <div class="control">
-                                    <a class="button custom-button right">
-                                        Start Training
+                                <label for="part1">
+                                    <a class="button custom-button has-text-white">
+                                        Choose File
                                     </a>
-                                </div>
-                                <br/><br/>
-                                <div class="columns is-vcentered has-text-centered">
-                                        <div class="column is-three-fifths">
-                                            <progress class="progress progress-left " value="40" max="100"></progress>
-                                        </div>
-                                        <div class="column">
-                                                <p><b>40%</b></p>
-                                            </div>
-                                        <div class="column">
-                                            <div class="control">
-                                                    <a class="button custom-button right">
-                                                        Save Model
-                                                    </a>
-                                                </div>
-                                        </div>
-                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                      
+                        <div class="field has-addons" style="width:100%; margin:auto; padding-bottom: 30px;">
+                            <div style="width:30%">
+                                <label class="custom-label">Group B</label>
+                            </div>
+                            <div class="control" style="width:70%">
+                                <input class="hide-input" type="file" id="part1" />
+                                <input class="input custom-input" type="text" disabled placeholder="No file selected" />
+                            </div>
+                            <div class="control">
+                                <label for="part1">
+                                    <a class="button custom-button has-text-white">
+                                        Choose File
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-            
-                    <div class="column is-half has-text-centered main-column">
-            
-                        <p class="is-centered custom-title is-size-3">
-                            <b>Prediction</b>
+                </div>
+                <br /><br /><br />
+                <div class="card custom-border">
+                    <header class="custom-card-header is-pulled-left">
+                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                            <b>
+                                Model
+                            </b>
                         </p>
-                        <br />
-                        <div class="card custom-border">
-                            <header class="custom-card-header is-pulled-left">
-                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
-                                    <b>
-                                        Images
-                                    </b>
-                                </p>
-                            </header>
-                            <br />
-                            <div class="card-content">
-                                <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 30px;">
-                                    <div class="control" style="width:80%">
-                                        <input class="input" type="text" placeholder="No file selected">
-                                    </div>
-                                    <div class="control">
+                    </header>
+                    <br />
+                    <div class="card-content" style="padding-top:0%;">
+                        <div class="field has-addons">
+                            <div class="control" style="width:100%">
+                                <textarea rows="9"  name="comment" placeholder="Placeholder Text"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="control">
+                    <a class="button custom-button right">
+                        Start Training
+                    </a>
+                </div>
+                <br /><br />
+                <div class="columns is-vcentered has-text-centered" >
+                    <div class="column is-three-fifths" style="width:50%; margin-left: 30px;">
+                        <progress class="progress progress-left " value="40" max="100"></progress>
+                    </div>
+                    <div class="column align-item-left">
+                        <p><b>40%</b></p>
+                    </div>
+                    <div class="column">
+                        <div class="control">
+                            <a class="button custom-button right" style="padding-left: 17px;padding-right: 17px;">
+                                Save Model
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half has-text-centered main-column">
+
+                <p class="is-centered custom-title is-size-3">
+                    <b>Prediction</b>
+                </p>
+                <br />
+                <div class="card custom-border">
+                    <header class="custom-card-header is-pulled-left">
+                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                            <b>
+                                Images
+                            </b>
+                        </p>
+                    </header>
+                    <br />
+                    <div class="card-content">
+                        <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 30px;">
+                            <div class="control" style="width:80%">
+                                <input class="hide-input" type="file" id="part3" />
+                                <input class="input" type="text" disabled placeholder="No file selected" />
+                            </div>
+                            <div class="control">
+                                <label for="part3">
+                                    <a class="button custom-button has-text-white">
+                                        Choose File
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="columns is-vcentered has-text-centered" style="width:80%; margin:auto;">
+                            <div class="" style="width:80%;">
+                                <progress class="progress" value="15" max="100">15%</progress>
+                            </div>
+                            <div class="column">
+                                <div class="level">
+                                    <div class="level-item is-narrow">
+                                        <p class="is-right-spaced"><b>20%</b></p>
                                         <a class="button custom-button has-text-white">
-                                            Choose File
+                                            Predict
                                         </a>
-                                    </div>
-                                </div>
-                                <div class="columns is-vcentered has-text-centered" style="width:80%; margin:auto;">
-                                    <div class="" style="width:80%;"> 
-                                        <progress class="progress" value="15" max="100">15%</progress>
-                                    </div>
-                                    <div class="column">
-                                        <div class="level">
-                                            <div class="level-item is-narrow">
-                                                <p class="is-right-spaced"><b>20%</b></p>
-                                                <a class="button custom-button has-text-white">
-                                                    Predict
-                                                </a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card custom-border2">
-                                <div class="w3-content w3-display-container">
-                                        <img class="mySlides" src="./testimages/nh3.jpg" style="width:100%; height:250px">
-                                        <img class="mySlides" src="./testimages/nh4.jpg" style="width:100%; height:250px">
-                                        <img class="mySlides" src="./testimages/nh5.jpg" style="width:100%; height:250px">
-                                        <img class="mySlides" src="./testimages/nh6.jpg" style="width:100%; height:250px">
-                                      
-                                        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                                        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
-                                    </div>
-                            <div>                          
-                                <h3 class='h3-pred'>Confidence: </h3>
-                                <div class="progress--circle progress--25">
-                                <div class="progress__number">80%</div>
-                            </div>
+                    </div>
+                </div>
+                <div class="card custom-border2">
+                    <div class="w3-content w3-display-container">
+                        <img class="mySlides" src="./testimages/nh3.jpg" style="width:100%; height:250px">
+                        <img class="mySlides" src="./testimages/nh4.jpg" style="width:100%; height:250px">
+                        <img class="mySlides" src="./testimages/nh5.jpg" style="width:100%; height:250px">
+                        <img class="mySlides" src="./testimages/nh6.jpg" style="width:100%; height:250px">
+
+                        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                    </div>
+                    <div style="width:50%; margin-left:auto; margin-right: auto;">
+                        <h3 class='h3-pred'>Confidence: </h3>
+                        <div class="progress--circle progress--25">
+                            <div class="progress__number">80%</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
     <footer id="footer">
-        <p class="container">HNG Internship 5</p>
+        <p class="container " style="float:right;  margin-right: 30px;">HNG Internship 5</p>
     </footer>
 
     <!-- For image slider -->
     <script>
-            var slideIndex = 1;
-            showDivs(slideIndex);
-            
-            function plusDivs(n) {
-              showDivs(slideIndex += n);
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) {
+                slideIndex = 1
             }
-            
-            function showDivs(n) {
-              var i;
-              var x = document.getElementsByClassName("mySlides");
-              if (n > x.length) {slideIndex = 1}
-              if (n < 1) {slideIndex = x.length}
-              for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";  
-              }
-              x[slideIndex-1].style.display = "block";  
+            if (n < 1) {
+                slideIndex = x.length
             }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
     </script>
 </body>
+
 </html>
