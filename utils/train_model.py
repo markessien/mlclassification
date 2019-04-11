@@ -1,4 +1,8 @@
 import os
+import sys
+#import json
+import logging
+import math
 
 import keras
 import numpy as np
@@ -13,6 +17,7 @@ from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
+from keras_tqdm import TQDMCallback
 
 from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
@@ -38,13 +43,25 @@ def train_model(new_model,train_folder_path,test_folder_path):
         # test_folder_path must also be a directory
         if os.path.isdir(test_folder_path):
             train(new_model, train_folder=train_folder_path, test_folder=test_folder_path)
-
+        sys.stdout.flush()
         print('\n The provided test folder is not a directory')
         return # You must return  
     #Means train_folder_path is not a directory
     print('\n The provided train folder is not a directory')
+    sys.stdout.flush()
     return
 
+def get_total_images(folder_path):
+    '''
+    This function counts the total number of images in a folder.
+    
+    '''
+    count = 0
+    for root, folders, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith(image_extensions):
+                count+=1
+    return count
 
 def _generator(folder_path =None, is_train_set=True):
     """
@@ -57,24 +74,41 @@ def _generator(folder_path =None, is_train_set=True):
     if is_train_set:
         if folder_path is None:
             folder_path = default_train_folder_path
-        return train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
+        
+        total_sample_size = get_total_images(folder_path)
+        training_data =train_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
+        return dict(training_dataset=training_data, total_sample_size=total_sample_size)
     if folder_path is None:
         folder_path = default_test_folder_path
-    return test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
+    total_sample_size = get_total_images(folder_path)
+    test_data = test_datagen.flow_from_directory(folder_path,target_size=(64, 64),
                                                  batch_size=32,
                                                  class_mode='binary')
+    return dict(test_data=test_data, total_sample_size=total_sample_size)
 
 
-def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folder=None):
+def train(model_name, epochs=100, train_folder=None, test_folder=None):
+    batch_size = 32
+    
+    #Configure keras_tqdm logger callback. 
+    
+    logfile = open(os.path.join(root_dir,'training.log'),'w')
+    #Get samples sizes
     
     #Generate training data set 
-    training_set = _generator(train_folder, is_train_set=True)
-    #Generate test data set
-    test_set = _generator(test_folder, is_train_set=False)
+    training_gen = _generator(train_folder, is_train_set=True)
+    training_set = training_gen.get("training_dataset")
+    total_training_data_sample = training_gen.get("total_sample_size")
+    steps_per_epoch = math.ceil(total_training_data_sample/batch_size)
 
-    epoch_steps= all_count/ 32
+    #Generate test data set
+    test_gen = _generator(test_folder, is_train_set=False)
+    test_set = test_gen.get("test_dataset")
+    total_testing_datasample = test_gen.get('total_sample_size')
+    validation_steps  =math.ceil(total_testing_datasample/batch_size)
+
     model_path = os.path.join(model_dir, model_name)
 
     print("Training")
@@ -98,7 +132,7 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
         # checkpoint
 
     checkpoint = ModelCheckpoint(model_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    callbacks_list = [checkpoint]
+    callbacks_list = [TQDMCallback(output_file=logfile),checkpoint]
     if os.path.isfile(model_path):
         print ("Resumed model's weights from {}".format(model_path))
         # load weights
@@ -110,29 +144,20 @@ def train(model_name, epochs=100, all_count=10000, train_folder=None, test_folde
 
     classifier.fit_generator(
                              training_set,
-                             steps_per_epoch=epoch_steps,
+                             steps_per_epoch=steps_per_epoch,
                              epochs=epochs,
                              verbose=1,
                              validation_data=test_set,
-                             validation_steps=2000,
+                             validation_steps=validation_steps,
                              callbacks=callbacks_list)
     #Model confidence
     x, y = zip(*(test_set[i] for i in range(len(test_set))))  
     x_test, y_test = np.vstack(x), np.vstack(y)    
-    loss, acc = classifier.evaluate(x_test, y_test.ravel(), batch_size=64)
+    loss, acc = classifier.evaluate(x_test, y_test.ravel(), batch_size=batch_size)
     print("Confidence: " ,round(acc*100),'%')
     #print("Loss: ", loss)
-    # training_set.class_indices
-    train.label = training_set.class_indices
-    train.model = classifier
-
-    
-    #save Model with Unique ID
-def saveModel():
-    labels = train.label.keys()
-    labels = str(list(labels))+"_model.h5"
-    save = train.model.save(labels)
-    return save
+    # training_set.class_indices    
+    classifier.save(model_path)
 
 
 def prepImage(testImage):

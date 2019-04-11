@@ -1,9 +1,11 @@
 import os
+import sys
 import numpy as np
 import shutil
 import json
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
+from tqdm import tqdm
 from utils.constants import default_model
 from utils.constants import model_dir
 from utils.constants import model_extension
@@ -22,6 +24,7 @@ def predictor(input_type, folder_or_image, model):
     """
 
     # Load the model
+    model = os.path.join(model_dir,model)
     classifier = import_model(model)
 
     if input_type == 'file':
@@ -31,58 +34,67 @@ def predictor(input_type, folder_or_image, model):
         outcome = test(classifier, folder_or_image)
 
         if outcome == True:
-            print('\nNot Hotel')
+            print("\nThe image does not correspond with sorted image for this model")
+            sys.stdout.flush()
             return
 
-        print('\nHotel')
-
+        print("\nThis image correspond with the sorted images for this model")
+        sys.stdout.flush()
         return  # important. Must return
 
     # It's implicit that the input type is a folder from here on
-
+    folder_ = folder_or_image
     prediction = []  # list of file names that are the prediction
     not_prediction = []  # list of file names that are not the prediction
-
-    for folder_name, folders, files in os.walk(folder_or_image):
-
-        # Make the prediction and not prediction folders (just thier paths)
-        # I used some form of dynamic naming here to create the folder names
-        # Please feel free to change it to something more suitable.
-        # I simply used the folder name of the current folder being checked as
-        # the prediction folder and then added 'not_' to that name for the
-        # not_prediction folder. So if 'hotels' was being checked, the folder
-        # names for the predictions would be 'hotels' and 'not_hotels'
-        # Kindly change as deemed.
-        prediction_folder = os.path.join(
-            folder_name, os.path.basename(folder_name))
-        not_prediction_folder = os.path.join(
-            folder_name, 'not_' + os.path.basename(folder_name))
-
-        # Create the folders using their paths
-        os.mkdir(prediction_folder)
-        os.mkdir(not_prediction_folder)
-
-        for file in files:
+    #First create prediction folder inside provided folder
+    main_prediction_folder = os.path.join(folder_,'predictions')
+    if os.path.isdir(main_prediction_folder):
+        shutil.rmtree(main_prediction_folder)
+    os.mkdir(main_prediction_folder)
+    # Make the prediction and not prediction folders (just thier paths)
+    # I used some form of dynamic naming here to create the folder names
+    # Please feel free to change it to something more suitable.
+    # I simply used the folder name of the current folder being checked as
+    # the prediction folder and then added 'not_' to that name for the
+    # not_prediction folder. So if 'hotels' was being checked, the folder
+    # names for the predictions would be 'hotels' and 'not_hotels'
+    # Kindly change as deemed.
+        
+    prediction_folder = os.path.join(
+            main_prediction_folder, os.path.basename(folder_))
+    not_prediction_folder = os.path.join(
+            main_prediction_folder, 'not_' + os.path.basename(folder_))
+        
+    # Create the folders using their paths
+    os.mkdir(prediction_folder)
+    os.mkdir(not_prediction_folder)
+    #We need to exclude the prediction folder as we walk the provided directory
+    exclude = set(['predictions'])
+    for root, dirs, files in os.walk(folder_):
+        # Below code modifies dirs in place using the default topdown=True, check os.walk help doc
+        dirs[:]= [d for d in dirs if d not in exclude]
+        
+        for file in tqdm(files):
 
             # Didn't remove the file-type validation here as some files in the supplied
             # directory may not be images, unlike up where only an image is supplied.
             if file.lower().endswith(image_extensions):
-                outcome = test(classifier, os.path.join(folder_name, file))
+                outcome = test(classifier, os.path.join(root, file))
 
                 # Add to JSON list and then copy it to its respective folder
                 if outcome == True:
                     not_prediction.append(file)
-                    shutil.copy(os.path.join(folder_name, file),
+                    shutil.copy(os.path.join(root, file),
                                 not_prediction_folder)
                 else:
                     prediction.append(file)
-                    shutil.copy(os.path.join(folder_name, file),
+                    shutil.copy(os.path.join(root, file),
                                 prediction_folder)
 
         # Then actually write to JSON (Since we are still using JSON)
-        with open(os.path.join(folder_name, json_file), 'w') as f:
-            json.dump({os.path.basename(folder_name): prediction,
-                       'not_' + os.path.basename(folder_name): not_prediction}, f)
+        with open(os.path.join(main_prediction_folder, json_file), 'w') as f:
+            json.dump({os.path.basename(root): prediction,
+                       'not_' + os.path.basename(root): not_prediction}, f)
        
         prediction.clear() # clear the list containing the prediction names for use in the next iterated folder
         not_prediction.clear()  # Do the same for the not_prediction list

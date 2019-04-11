@@ -3,6 +3,7 @@ import json
 import sys
 import argparse
 import textwrap
+import logging
 from utils.train_model import train
 from utils.train_model import train_model 
 from utils.predict_model import predictor
@@ -62,6 +63,9 @@ def parse_args(argv):
 def main(argv=sys.argv):
     """ The main script """
 
+    #Configure logging
+    logging.basicConfig(filename='applog.log',filemode='w', level=logging.INFO, format='%(levelname)s:%(message)s')
+
     args = parse_args(argv)
 
     action = args.app_action
@@ -91,6 +95,7 @@ def main(argv=sys.argv):
                     return
                 #Here, the user might have supplied one folder argument or None at all
                 print("\n Both training folder and test folder arguments are required")
+                sys.stdout.flush()
                 return
             #The user did not supply model name and did not ask us to generate one. So definitely, 
             # we are the one running this from console app
@@ -98,12 +103,14 @@ def main(argv=sys.argv):
             #have trained our default model before. If default model exist, return
             if default_model in all_models():
                 print("Retraining the default model is forbidden. Supply model name or Delete the default model manually and proceed")
+                sys.stdout.flush()
                 return
                 
             #Training our default model now
             new_model = default_model
             print("Training the default model now...")
             #We use train function directly here for obvious reasons
+            sys.stdout.flush()
             return train(new_model)
         
         #Model name supplied
@@ -111,6 +118,7 @@ def main(argv=sys.argv):
         if new_model in all_models():
             print("There's already a model with that name. Please choose another name"
              " or find a model with name {}. Delete it and try again".format(new_model))
+            sys.stdout.flush()
             return
         #From here on, we expect user to supply training dataset and test dataset. 
         #trp and tep args are required args implicitly for users from app
@@ -119,6 +127,7 @@ def main(argv=sys.argv):
             return train_model(new_model, train_folder_path, test_folder_path)
         #Here, the user might have supplied one folder argument or None at all
         print("\n Both training folder and test folder arguments are required")
+        sys.stdout.flush()
         return 
                 
     elif action == 'predict':
@@ -133,6 +142,7 @@ def main(argv=sys.argv):
             # If one was supplied, check that it actually exists
             if model not in all_models():
                 print("No such model has been trained")
+                sys.stdout.flush()
                 return
 
         # if it's not a folder that was supplied, check if it's a file
@@ -140,12 +150,14 @@ def main(argv=sys.argv):
             if os.path.isfile(folder_or_image):
                 if not folder_or_image.endswith(image_extensions):
                     print("\nError: An image file is required. Try again\n")
+                    sys.stdout.flush()
                     return
                 input_type = 'file'
                 # add logic before here to pass in the model we want to use in the predictor
                 predictor(input_type, folder_or_image, model)
                 return
             print('\nError: Invalid path. Kindly supply a valid folder or image path\n')
+            sys.stdout.flush()
             return
 
         input_type = 'folder'
@@ -154,19 +166,23 @@ def main(argv=sys.argv):
         predictor(input_type, folder_or_image, model)
         if input_type == 'folder':
             print(
-                f"\nDone! The results are in {folder_or_image}")
+                f"\nDone! The results are in {folder_or_image}/predictions")
+            sys.stdout.flush()
+            return
 
     elif action == 'delete':
         # Check that model name is provided. 
 
         if not model:
             print("\n You must supply a model to delete")
+            sys.stdout.flush()
             return
         
         model = model + model_extension
             
         if model not in all_models():
             print("That model does not exist")
+            sys.stdout.flush()
             return
 
         model_delete(model)
@@ -177,12 +193,14 @@ def main(argv=sys.argv):
 
         # List all models
         print(all_models())
-
+        sys.stdout.flush()
         return
 
 
     else:
         print('\nAction command is not supported\n for help: run python3 app.py -h')
+        sys.stdout.flush()
+        return
 
 if __name__ == '__main__':
     main()
