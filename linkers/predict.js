@@ -20,4 +20,16 @@ const predictImage = () => {
 
 }
 
-predictImage()
+function addGroup(input) {
+    console.log(input, document.getElementById('files').value);
+
+}
+
+
+function train() {
+    console.log('train');
+}
+
+function predict() {
+    console.log('predict');
+}
