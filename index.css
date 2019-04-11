@@ -6,7 +6,6 @@ body {
 }
 
 .custom-title {
-    font-family: "Ubuntu";
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
@@ -28,12 +27,16 @@ body {
 
 .custom-button {
     background: #252939;
-    font-family: Roboto;
+    font-size: 15px;
     font-style: normal;
     font-weight: 500;
+    min-height: 37px;
+    min-width: 109px;
+    opacity: unset;
     line-height: normal;
     text-align: center;
     color: #FFFFFF;
+    border-radius: 0px 5px 5px 0px !important;
     transition: 0.15s all ease-in-out;
 }
 
@@ -52,7 +55,7 @@ body {
 }
 
 .card-content {
-    padding: 0.75rem;
+    padding: 0 0.75rem;
 }
 
 .card-content>p {
@@ -78,7 +81,7 @@ body {
 
 .custom-border {
     box-shadow: none;
-    border: 3px solid #d4d4d4;
+    border: 1px solid #d4d4d4;
     border-radius: 4px;
 }
 
@@ -109,6 +112,7 @@ body {
     background-color: #084482;
     border-radius: 6px;
 }
+
 .progress-left {
     background-color: #084482;
 }
@@ -144,14 +148,19 @@ body {
     line-height: normal;
     color: #000000;
 }
+
 .custom-input {
-    border-radius: 5px 0px 0px 5px !important;
+    border-radius: 4px 0px 0px 4px !important;
+    background-color: #ffffff!important;
+    border-color: #D4D4D4!important;
+
 }
 
 .right {
     float: right;
 }
 
+.mySlides {display:none;}
 
 /* For image slider section */
 
@@ -207,6 +216,7 @@ body {
     cursor: pointer;
     white-space: nowrap;
 }
+
 .w3-display-left {
     position: absolute;
     top: 50%;
@@ -352,3 +362,4 @@ textarea::placeholder {
         column-span: 90%;
     }
 }
+
