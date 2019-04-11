@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "electron-packager": "^13.1.1",
+        "path": "^0.12.7",
         "python-shell": "^1.0.7"
     }
 }
