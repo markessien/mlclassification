@@ -15,13 +15,14 @@ function start_training(){
      gb.innerHTML = "Group B folder is required";
         return;
     }
-    var groupbPath = groupA.files[0].path;
     var groupaPath = groupA.files[0].path;
+    var groupbPath = groupB.files[0].path;
     var gen_name = document.getElementById('generate_name').value;
     
-    var trainArgs = ['train', '-grpA',groupaPath, '-grpB', groupB, '-gen_name',gen_name]
+    var trainArgs = ['train', '-grpA',groupaPath, '-grpB', groupbPath, '-gen_name',gen_name]
 
     var options = {
+    mode:'binary',
     scriptPath : __dirname,
     args : trainArgs,
     pythonOptions:['-u'],
