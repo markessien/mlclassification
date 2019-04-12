@@ -2,6 +2,8 @@ var {
     PythonShell
 } = require("python-shell");
 var path = require('path');
+const fs = require('fs');
+
 class Store {
     constructor() {
         this.groups = {}
@@ -72,7 +74,7 @@ function addPredict(event) {
         args: ['retrieve_models']
     }
     PythonShell.run('app.py', options, (err, results) => {
-        
+
         Swal.fire({
             html: `<br/><span>This prediction will be done using your default model</span>`,
             showCloseButton: true,
@@ -115,17 +117,26 @@ function predict(folder) {
             document.getElementById('predictprogress').value = perc;
             document.getElementById('predicttag').innerText = `${perc}%`;
             document.getElementById('predictresult').innerText = 'Completed';
-            document.getElementById(`slides`).hidden = false;
             const slides = document.getElementById(`sliders`);
-            //todo: Get the directory for the valid and the count of files in it and loop through below;
-            for (let i = 3; i < 8; i++) {
-                const img = document.createElement("img");
-                img.src = `${folder}`;
-                img.className = "mySlides"
-                img.style = "width:100%; height:250px;";
-                slides.appendChild(img);
-            }
-            showDivs(5);
+            fs.readdir(folder, function (err, files) {
+                if(files.split('.')>1){
+                //handling error
+                if (err) {
+                    return console.log('Unable to scan directory: ' + err);
+                }
+                //listing all files using forEach
+                document.getElementById(`slides`).hidden = false;
+                files.forEach(function (file) {
+                    const img = document.createElement("img");
+                    img.src = `${folder+'/'+file}`;
+                    img.className = "mySlides"
+                    img.style = "width:100%; height:250px;";
+                    slides.appendChild(img);
+                });
+                showDivs(5);
+                }
+            });
+
         });
     } catch (error) {
         console.log(error)
