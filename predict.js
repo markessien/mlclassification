@@ -93,8 +93,10 @@ function addPredict(event) {
 
 
 function predict(folder) {
-    console.log('hello')
-    document.getElementById('predictprogress').value = 30
+    console.log('hello');
+    const perc = 30;
+    document.getElementById('predictprogress').value = perc;
+    document.getElementById('predicttag').innerText = `${perc}%`;
     try {
         const options = {
             mode: 'text',
@@ -119,7 +121,6 @@ function predict(folder) {
             document.getElementById('predictresult').innerText = 'Completed';
             const slides = document.getElementById(`sliders`);
             fs.readdir(folder, function (err, files) {
-                if(files.split('.')>1){
                 //handling error
                 if (err) {
                     return console.log('Unable to scan directory: ' + err);
@@ -128,13 +129,12 @@ function predict(folder) {
                 document.getElementById(`slides`).hidden = false;
                 files.forEach(function (file) {
                     const img = document.createElement("img");
-                    img.src = `${folder+'/'+file}`;
+                    file.split('.').length > 1 ? img.src = `${folder+'/'+file}` : null;
                     img.className = "mySlides"
                     img.style = "width:100%; height:250px;";
-                    slides.appendChild(img);
+                    slides.appendChild(img)
                 });
                 showDivs(5);
-                }
             });
 
         });
