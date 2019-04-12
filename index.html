@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./html_assets/fonts/questrial/style.css">
     <link rel="stylesheet" href="./html_assets/fonts/ubuntu/style.css">
     <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
-    <link rel="stylesheet" href="./html_assets/styles/roboto/style.css">
+    <link rel="stylesheet" href="./html_assets/fonts/Roboto/style.css">
     <link rel="stylesheet" href="index.css">
     <title>ClassiFi</title>
     <script src="index.js"></script>
@@ -57,7 +57,7 @@
                                 <input type="text" class="input custom-input custom-file"
                                     placeholder="No file selected" />
                                 <input id="files" type="file" class="input custom-input custom-file"
-                                    placeholder="No file selected" style="display: none;" onchange="addGroup('a')" webkitdirectory directory multiple/>
+                                    placeholder="No file selected" style="display: none;" onchange="addGroup(event,'a')" webkitdirectory directory multiple/>
                             </div>
                             <div class="control">
                                 <label for="files" class="button custom-button has-text-white">
@@ -75,7 +75,7 @@
                                 <form id=uploadImageForm>
                                     <input type="text" class="input custom-input custom-file"
                                         placeholder="No file selected" />
-                                    <input id="fileB" class="input custom-input custom-file" onchange="addGroup('b')" type="file"
+                                    <input id="fileB" class="input custom-input custom-file" onchange="addGroup(event,'b')" type="file"
                                         placeholder="No file selected" style=" display:none;" webkitdirectory directory multiple>
                                 </form>
                             </div>
