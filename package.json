@@ -26,5 +26,62 @@
         "fs": "0.0.1-security",
         "path": "^0.12.7",
         "python-shell": "^1.0.7"
-    }
+    },
+    "config": {
+        "forge": {
+          "make_targets": {
+            "win32": [
+              "squirrel"
+            ],
+            "darwin": [
+              "zip",
+              "dmg"
+            ],
+            "linux": [
+              "deb",
+              "rpm"
+            ]
+          },
+          "electronPackagerConfig": {
+            "packageManager": "npm",
+            "prune": true,
+            "icon": "",
+            "ignore": [
+              "/src/pycalc$",
+              "\\.git(ignore|config)",
+              "\\.vscode",
+              "\\.idea",
+              "/package-lock\\.json",
+              "Pipfile($|\\.lock)",
+              "/(api_pythermal|api|prtail)\\.spec",
+              "/bin$",
+              "/build$",
+              "/out2$",
+              "/Output$",
+              "/README\\.md",
+              "/Classifi\\.iss",
+              "/UsbDk_1.0.19_x64\\.msi",
+              "/(api_pythermal|t|t2)\\.py$",
+              "/pythermal$"
+            ]
+          },
+          "electronInstallerDMG": {
+            "title": "Classifi Install",
+            "icon": ""
+          },
+          "electronWinstallerConfig": {
+            "name": "Classifi"
+          },
+          "electronInstallerDebian": {},
+          "electronInstallerRedhat": {},
+          "github_repository": {
+            "owner": "",
+            "name": ""
+          },
+          "windowsStoreConfig": {
+            "packageName": "",
+            "name": "Classifi"
+          }
+        }
+      }
 }
