@@ -47,7 +47,8 @@ function addGroup(event, clast) {
     document.getElementById(`trainbutton`).disabled = false;
     console.log('Saving Directory')
     Swal.fire({
-        html: `You can use <b>${JSON.stringify(store.getGroup())}</b>`,
+        // html: `You can use <b>${JSON.stringify(store.getGroup())}</b>`,
+        html: `You have selected <b>${folder}</b>`,
         showCloseButton: true,
         showCancelButton: true,
         focusConfirm: false,
@@ -70,7 +71,7 @@ function addPredict(event) {
     document.getElementById(`predictinput`).placeholder = folder;
     // document.getElementById(`predictbutton`).disabled = false;
     Swal.fire({
-        html: `You can use <b>${ path.join(__dirname, folder)}</b>`,
+        html: `You have selected <b>${ path.join(__dirname, folder)}</b>`,
         showCloseButton: true,
         showCancelButton: true,
         focusConfirm: false,
