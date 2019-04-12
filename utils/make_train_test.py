@@ -1,65 +1,79 @@
-
+import sys
 import os
 import shutil
+import math
+import subprocess
+from .constants import image_extensions
+from .constants import model_dir
 
-from utils.constants import image_extensions
+def copyWithSubprocess(cmd):
+    DEVNULL = open(os.devnull, 'wb')        
+    subprocess.Popen(cmd, stdout=DEVNULL, stderr=subprocess.STDOUT)
 
 
-def make_train_test(category_folder):
 
-    if not os.path.isdir(category_folder):
+def make_train_test(groupa, groupb):
+    
+    if not (os.path.isdir(groupa) and os.path.isdir(groupb)):
         print("Input a folder")
-
+        sys.stdout.flush()
         return
+    #Make new directory at root
+    new_dir = os.path.join(model_dir,'new_datasets')
+    if os.path.isdir(new_dir):
+        shutil.rmtree(new_dir)
+    os.mkdir(new_dir)
 
-    # It is assumed that the inputted folder has been validated
-    # to contain only just images. Basically, the folder should
-    # have passed through @Munirat's code
-    for folder_name, folders, files in os.walk(category_folder):
+    #make training_set and test_set directories inside new_dir
+    training_set = os.path.join(new_dir,'training_sets')
+    os.mkdir(training_set)
+    test_set = os.path.join(new_dir,'test_sets')
+    os.mkdir(test_set)
+    
+    #Create group A folder inside training set folder e.g hotel
+    groupA_folder_train = os.path.join(training_set,os.path.basename(groupa))
+    os.mkdir(groupA_folder_train)
+    #Create group B folder inside training set folder e.g not-hotel
+    groupB_folder_train = os.path.join(training_set,os.path.basename(groupb))
+    os.mkdir(groupB_folder_train)
 
-        # Create their paths. They'll be in the first level of the folder inputted
-        training_folder = os.path.join(category_folder, '__training_set')
-        test_folder = os.path.join(category_folder, '__test_set')
+    #Create group A folder inside test set folder e.g hotel
+    groupA_folder_test = os.path.join(test_set,os.path.basename(groupa))
+    os.mkdir(groupA_folder_test)
+    #Create group B folder inside test set folder e.g hotel
+    groupB_folder_test = os.path.join(test_set,os.path.basename(groupb))
+    os.mkdir(groupB_folder_test)
+    
+    #Now we have the structure new_datasets/training_set/groupa, new_datasets/training_set/groupb
+    # And new_datasets/test_set/groupa, new_datasets/test_set/groupa
 
-        # Actually create the folders
-        os.mkdir(training_folder)  
-        os.mkdir(test_folder)
+    #Copy folders content respectively
+    #Copy whole to training set
+    
+    for file in os.listdir(groupa):
+        if file.endswith(image_extensions):
+            copyWithSubprocess(['cp',os.path.join(groupa,file), groupA_folder_train])
+    for file in os.listdir(groupb):
+        if file.endswith(image_extensions):
+            copyWithSubprocess(['cp',os.path.join(groupb,file), groupB_folder_train])
+    
+    # Copy 20% to test_set
+   
+    total = math.ceil(len(os.listdir(groupa))*0.2)
+    print(total)
+    for file in os.listdir(groupa)[:total]:
+        if file.endswith(image_extensions):
+            copyWithSubprocess(['cp',os.path.join(groupa,file), groupA_folder_test])
+               
+    
+    total = math.ceil(len(os.listdir(groupb))*0.2)
+    for file in os.listdir(groupb)[:total]:
+        if file.endswith(image_extensions):
+            copyWithSubprocess(['cp',os.path.join(groupb,file), groupB_folder_test])
 
-        # Take 80% of the files in that directory
-        for i in range(int(len(files)*0.8)): 
-            # Check if they are valid images
-            if files[i].endswith(image_extensions): 
-                # And copy it to the training set folder
-                shutil.copy(os.path.join(folder_name, files[i]), training_folder)
+    return dict(training_set = training_set,test_set=test_set)
+                
 
-        # After copying to the training folder, then os.walk in the training folder. 
-        # I'm using os.walk because the function is a generator,
-        # and so we won't have a problem if the files are very 
-        # many. Generators provide (yield) items as needed (once per time)
-        # unlike lists which provide everything at once. Like always, 
-        # any better solution should be implemented.
-        # There was no need to create my own generator since python
-        # already has os.walk inbuilt.
-
-        # Also, note the naming system I used. The folder_name, folders
-        # and files have an underscore before them. This is to 
-        # differentiate them from the original ones in the category_folder
-        for _folder_name, _folders, _files in os.walk(training_folder):
-            # Loop through the files in the main category_folder
-            # We want to get the remaining  20% of the files to
-            # copy to the test set folder
-            for file in files:
-                # If any of the files is not in training folder
-                if file not in _files:
-                    # Then copy it to the test folder
-                    shutil.copy(os.path.join(folder_name, file), test_folder)
-
-
-        
-        return
-
-
-
-
-
-# make_train_test('/home/olumide/Desktop/Test')
+if __name__ == '__main__':
+    # A Test
+    make_train_test('./datasets/training_set/hotels','./datasets/training_set/not-hotels')
