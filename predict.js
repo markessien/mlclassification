@@ -182,6 +182,14 @@ function train() {
 
 function startTraining(options) {
     PythonShell.run('app.py', options, (err, results) => {
+        if(err){
+            Swal.fire({
+                html: `<span>${err}</span>`,
+                showCloseButton: false,
+                showCancelButton: false,
+                focusConfirm: false
+            })
+        }
         Swal.fire({
             html: `<span>${results}</span>`,
             showCloseButton: false,
