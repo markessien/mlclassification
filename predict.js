@@ -26,21 +26,11 @@ class Store {
 
 const store = new Store();
 
-const predictImage = () => {
-    try {
-        const predict = new PythonShell('app.py train', options);
-        predict.end((err, code, message) => {
-            console.log(err, code, message)
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 function addGroup(event, clast) {
     const files = event.target.files;
-    var folder = files[0];
-    folder = folder.webkitRelativePath;
+    var folder = files[0].path;
+    folder = folder.path;
     store.addGroup(clast, folder)
     document.getElementById(`visible${clast}`).placeholder = folder;
     document.getElementById(`trainbutton`).disabled = false;
@@ -72,7 +62,7 @@ function addGroup(event, clast) {
 function addPredict(event) {
     const files = event.target.files;
     var folder = files[0];
-    folder = folder.webkitRelativePath;
+    folder = folder.path;
     store.addPredict(folder)
     document.getElementById(`predictinput`).placeholder = folder;
     const options = {
@@ -91,7 +81,7 @@ function addPredict(event) {
             confirmButtonText: 'Proceed',
             preConfirm: () => {
                 return [
-                    predict()
+                    predict(folder)
                 ]
             },
             cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel',
@@ -100,7 +90,7 @@ function addPredict(event) {
 }
 
 
-function predict() {
+function predict(folder) {
     console.log('hello')
     document.getElementById('predictprogress').value = 30
     try {
@@ -108,7 +98,7 @@ function predict() {
             mode: 'text',
             scriptPath: './server',
             pythonPath: '/usr/local/bin/python3',
-            args: ['predict', '-path', 'testimages/nh3.jpg']
+            args: ['predict', '-path', `${folder}`]
         }
         PythonShell.run('app.py', options, (err, results) => {
             if (err) throw err;
@@ -116,7 +106,7 @@ function predict() {
             console.log('results: %j', results);
             //todo: If api returns the results and the folder directory
             Swal.fire({
-                html: `<span>${results.split(',')[1]}</span>`,
+                html: `<span>${results}</span>`,
                 showCloseButton: false,
                 showCancelButton: false,
                 focusConfirm: false
@@ -130,8 +120,7 @@ function predict() {
             //todo: Get the directory for the valid and the count of files in it and loop through below;
             for (let i = 3; i < 8; i++) {
                 const img = document.createElement("img");
-
-                img.src = `./testimages/nh${i}.jpg`;
+                img.src = `${folder}`;
                 img.className = "mySlides"
                 img.style = "width:100%; height:250px;";
                 slides.appendChild(img);
