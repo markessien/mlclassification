@@ -21,6 +21,12 @@ class Store {
     getPredict() {
         return this.predict;
     }
+    validateGroup() {
+        if (this.groups.groupa && this.groups.groupb) {
+            return true;
+        }
+        return false
+    }
     clearGreat() {
         this.groups = {};
     }
@@ -32,33 +38,10 @@ const store = new Store();
 function addGroup(event, clast) {
     const files = event.target.files;
     var folder = files[0].path;
-    folder = folder.path;
-    store.addGroup(clast, folder)
+    folder = folder;
+    store.addGroup(clast, folder);
     document.getElementById(`visible${clast}`).placeholder = folder;
-    document.getElementById(`trainbutton`).disabled = false;
-    console.log('Saving Directory');
-    const options = {
-        mode: 'text',
-        scriptPath: './server',
-        pythonPath: '/usr/local/bin/python3',
-        args: ['retrieve_models']
-    }
-    PythonShell.run('app.py', options, (err, results) => {
-        Swal.fire({
-            html: `You have ${results}<br/> <input placeholder="Input your model Name"/>>`,
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            confirmButtonText: 'Proceed',
-            preConfirm: () => {
-                return [
-                    predict()
-                ]
-            },
-            cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel',
-        })
-    });
-
+    store.validateGroup() === true ? document.getElementById(`trainbutton`).disabled = false : null;
 }
 
 function addPredict(event) {
@@ -170,5 +153,50 @@ function updateConfidenceProgress(id, name) {
 }
 
 function train() {
+    const textareavalue = document.getElementById(`modelname`).value;
+    const modelname = textareavalue.split('').length > 1 ? textareavalue : makeid(8);
+    console.log('Saving Directory');
+    const groups = store.getGroup()
+    const groupa = groups.groupa;
+    const groupb = groups.groupb;
+    const options = {
+        mode: 'text',
+        scriptPath: './server',
+        pythonPath: '/usr/local/bin/python3',
+        args: ['train', '--grpA', `${groupa}`, '--grpB', `${groupb}`, '--model', `${modelname}`]
+    }
+    Swal.fire({
+        html: `<span>You are about to train a model with name <b>${modelname}</b></span>`,
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Proceed',
+        preConfirm: () => {
+            return [
+                startTraining(options)
+            ]
+        },
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel',
+    })
+}
 
+function startTraining(options) {
+    PythonShell.run('app.py', options, (err, results) => {
+        Swal.fire({
+            html: `<span>${results}</span>`,
+            showCloseButton: false,
+            showCancelButton: false,
+            focusConfirm: false
+        })
+    });
+}
+
+function makeid(length) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 }

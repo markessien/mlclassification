@@ -82,17 +82,17 @@ def main(argv=sys.argv):
     model = args.model 
 
     if action == 'train': 
-        
+                            #Means user fulfilled the requirement. we can proceed now
+        process_folders = make_train_test(groupA,groupB)
+        train_folder_path = process_folders.get("training_set")
+        test_folder_path = process_folders.get("test_set")
         new_model = model
         if not new_model:
             if generate_model_name in truth_values:
                 #The user want us to generate model name for them
                 #trp and tep args are required args implicitly for users from app
                 if groupA and groupB:
-                    #Means user fulfilled the requirement. we can proceed now
-                    process_folders = make_train_test(groupA,groupB)
-                    train_folder_path = process_folders.get("training_set")
-                    test_folder_path = process_folders.get("test_set")
+
                     #generate name
                     new_model = generate_name(train_folder_path)
                     train_model(new_model, train_folder_path, test_folder_path)

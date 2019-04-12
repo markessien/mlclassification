@@ -55,7 +55,7 @@
 
 
                             <div class="control file has-name" style="width:50%;">
-                                <input type="text" id="visiblegroupa" class="input custom-input custom-file"
+                                <input type="text" id="visiblegroupa" disabled class="input custom-input custom-file"
                                     placeholder="No file selected" />
                                 <input id="groupa" type="file" class="input custom-input custom-file"
                                     placeholder="No file selected" style="display: none;"
@@ -75,7 +75,7 @@
 
                             <div class="control" style="width:50%; ">
 
-                                <input type="text" id="visiblegroupb" class="input custom-input custom-file"
+                                <input type="text" id="visiblegroupb" disabled class="input custom-input custom-file"
                                     placeholder="No file selected" />
                                 <input id="groupb" class="input custom-input custom-file"
                                     onchange="addGroup(event,'groupb')" type="file" placeholder="No file selected"
@@ -96,16 +96,19 @@
                     <header class="custom-card-header is-pulled-left">
                         <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
                             <b>
-                                Model
-                            </b>
-                        </p>
+                                Model</b></p>
                     </header>
                     <br />
-                    <div class="card-content" style="padding-top: 0px;">
+                    <!-- <label class="checkbox checkbox-container">
+                        <input type="checkbox" class="box" id="generate_name">
+                        Generate model name.
+                    </label> -->
+                    <p class="checkbox-container"><small>Enter a
+                            name for your model below</small></p>
+                    <div class="card-content">
                         <div class="field has-addons">
-                            <div class="control" style="width:90%; margin:auto;">
-
-                                <textarea rows="9" name="comment" placeholder="Placeholder Text"></textarea>
+                            <div class="control">
+                                <textarea rows="4" cols="90" name="modelname" id="modelname" placeholder="Model name"></textarea>
                             </div>
                         </div>
                     </div>
@@ -160,7 +163,7 @@
                             </div>
                             <div class="control">
                                 <label for="predict" class="button custom-button has-text-white">
-                                    Choose File
+                                    Choose Folder
                                     </a>
                             </div>
                         </div>
@@ -184,8 +187,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card custom-border2" hidden id="slides" >
-                    <div class="w3-content w3-display-container"  id="sliders">
+                <div class="card custom-border2" hidden id="slides">
+                    <div class="w3-content w3-display-container" id="sliders">
                         <div id="slider">
                         </div>
                         <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
@@ -215,8 +218,6 @@
         function plusDivs(n) {
             showDivs(slideIndex += n);
         }
-
-
     </script>
 </body>
 
