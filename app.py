@@ -94,7 +94,8 @@ def main(argv=sys.argv):
                     train_folder_path = process_folders.get("training_set")
                     test_folder_path = process_folders.get("test_set")
                     #generate name
-                    new_model = generate_name(train_folder_path)
+                    folder = process_folders.get("folder");
+                    new_model = generate_name(folder) # Adds extension
                     train_model(new_model, train_folder_path, test_folder_path)
                     return
                 #Here, the user might have supplied one folder argument or None at all

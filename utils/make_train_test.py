@@ -71,7 +71,7 @@ def make_train_test(groupa, groupb):
         if file.endswith(image_extensions):
             copyWithSubprocess(['cp',os.path.join(groupb,file), groupB_folder_test])
 
-    return dict(training_set = training_set,test_set=test_set)
+    return dict(training_set = training_set,test_set=test_set,folder=groupA_folder_train)
                 
 
 if __name__ == '__main__':

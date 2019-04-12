@@ -153,13 +153,16 @@ def train(model_name, epochs=100, train_folder=None, test_folder=None):
                              validation_steps=validation_steps,
                              callbacks=callbacks_list)
     #Model confidence
-    x, y = zip(*(test_set[i] for i in range(len(test_set))))  
-    x_test, y_test = np.vstack(x), np.vstack(y)    
-    loss, acc = classifier.evaluate(x_test, y_test.ravel(), batch_size=batch_size)
-    print("Confidence: " ,round(acc*100),'%')
+    #x, y = zip(*(test_set[i] for i in range(len(test_set))))  
+    #x_test, y_test = np.vstack(x), np.vstack(y)    
+    #loss, acc = classifier.evaluate(x_test, y_test.ravel(), batch_size=batch_size)
+    #print("Confidence: " ,round(acc*100),'%')
     #print("Loss: ", loss)
     # training_set.class_indices    
     classifier.save(model_path)
+    print("Saved")
+    sys.stdout.flush()
+    return
 
 
 def prepImage(testImage):
