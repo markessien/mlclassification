@@ -68,4 +68,5 @@ def generate_name(train_folder_path):
             name = disambiguate_name(name)
         return name+model_extension
     print("Provided path is not a directory")
+    sys.stdout.flush()
     return
