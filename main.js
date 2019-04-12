@@ -1,62 +1,61 @@
-const { app, BrowserWindow } = require('electron');
-var fs = require('fs');
-let { PythonShell }= require('python-shell')
-const {ipcMain} = require('electron')
+const electron = require('electron');
+
+// Module to control application life.
+const app = electron.app
+    // Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow
+
 const path = require('path')
+const url = require('url')
 
-ipcMain.on('trainingDatasetRecovery', (event, arg) => {
-    var dir = arg[0]
-    console.log(dir)
-    var results = [];
-    var list = fs.readdirSync(dir);
+let { PythonShell } = require('python-shell')
 
-    list.forEach(function (file) {
-        file = path.resolve(dir, file);
-        var fileStats = fs.statSync(file);
-        if (fileStats.isDirectory()){
-            file = file.split('/');
-            results.push(file[file.length-1]);
-        }
-    })
-    event.sender.send('trainingDatasets',results)
-});
 
-ipcMain.on('testDatasetRecovery', (event, arg) => {
-    var dir = arg[0]
-    console.log(dir)
-    var results = [];
-    var list = fs.readdirSync(dir);
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow
 
-    list.forEach(function (file) {
-        file = path.resolve(dir, file);
-        var fileStats = fs.statSync(file);
-        if (fileStats.isDirectory()){
-            file = file.split('/');
-            results.push(file[file.length-1]);
-        }
-    })
-    event.sender.send('testDatasets',results)
-});
 
 function createWindow() {
-    // PythonShell.run('app.py',{args:["./test_set"]}, function (err, results) {
-    //     if (err) throw err;
-    //     console.log('hello.py finished.');
-    //     console.log('results', results);
-    // });
-    window = new BrowserWindow({
-        width: 1000,
-        height: 600
-    });
-    window.loadFile("index.html");
+    // Create the browser window.
+    mainWindow = new BrowserWindow({ width: 860, height: 800 })
+
+    // and load the index.html of the app.
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, '/index.html'),
+        protocol: 'file:',
+        slashes: true
+    }))
+
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools()
+
+    // Emitted when the window is closed.
+    mainWindow.on('closed', function() {
+        // Dereference the window object, usually you would store windows
+        // in an array if your app supports multi windows, this is the time
+        // when you should delete the corresponding element.
+        mainWindow = null
+    })
 }
 
-app.on('ready', createWindow);
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow)
 
-app.on('window-all-closed', () => {
-    // On macOS it is common for applications and their menu bar
+// Quit when all windows are closed.
+app.on('window-all-closed', function() {
+    // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-        app.quit();
+
+    app.quit()
+})
+
+app.on('activate', function() {
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (mainWindow === null) {
+        createWindow()
     }
-});
+})

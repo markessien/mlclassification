@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="./html_assets/styles/bulma.min.css">
     <link rel="stylesheet" href="index.css">
     <title>ClassiFi</title>
-    <script src="index.js"></script>
+    <script src="linkers/classifier.js"></script>
 </head>
 
 <body>
 
     <nav class="navbar" role="navigation" aria-label="main navigation" id="nav">
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-            data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -46,76 +45,88 @@
                             <div style="width:30%">
                                 <label class="custom-label">Group A</label>
                             </div>
-                            <div class="control" style="width:70%">
-                                <input class="hide-input" type="file" id="part1" />
-                                <input class="input custom-input" type="text" disabled placeholder="No file selected" />
+                            <div class="file">
+                                <label class="file-label">
+    									<input class="file-input" id="groupa" type="file" name="groupa" webkitdirectory>
+    									<span class="file-cta">
+      									<span class="file-icon">
+        									<i class="fas fa-upload"></i>
+      												</span>
+      														<span class="file-label" id="folderA">
+        														Choose Group A Folder
+      														</span>
+    										</span>
+  									</label>
                             </div>
-                            <div class="control">
-                                <label for="part1">
-                                    <a class="button custom-button has-text-white">
-                                        Choose File
-                                    </a>
-                                </label>
-                            </div>
+                            <br/>
+                            
                         </div>
+                        <p id="a_required" class="has-text-danger"></p>
                         <br /><br /><br />
                         <div class="field has-addons" style="width:100%; margin:auto; padding-bottom: 30px;">
                             <div style="width:30%">
                                 <label class="custom-label">Group B</label>
                             </div>
-                            <div class="control" style="width:70%">
-                                <input class="hide-input" type="file" id="part1" />
-                                <input class="input custom-input" type="text" disabled placeholder="No file selected" />
-                            </div>
-                            <div class="control">
-                                <label for="part1">
-                                    <a class="button custom-button has-text-white">
-                                        Choose File
-                                    </a>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br /><br /><br />
-                <div class="card custom-border">
-                    <header class="custom-card-header is-pulled-left">
-                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
-                            <b>
-                                Model
-                            </b>
-                        </p>
-                    </header>
-                    <br />
-                    <div class="card-content">
-                        <div class="field has-addons">
-                            <div class="control">
-                                <textarea rows="4" cols="90" name="comment" placeholder="Placeholder Text"></textarea>
+                            <div class="file">
+                                <label class="file-label">
+    									<input class="file-input" id="groupb" type="file" name="groupb" webkitdirectory>
+    									<span class="file-cta">
+      									<span class="file-icon">
+        									<i class="fas fa-upload"></i>
+      												</span>
+      														<span class="file-label" id="folderB">
+        														Choose Group B Folder
+      														</span>
+    									</span>
+  									</label>
+                               
                             </div>
                         </div>
-                    </div>
-                </div>
-                <br />
-                <div class="control">
-                    <a class="button custom-button right">
-                        Start Training
-                    </a>
-                </div>
-                <br /><br />
-                <div class="columns is-vcentered has-text-centered">
-                    <div class="column is-three-fifths">
-                        <progress class="progress progress-left " value="40" max="100"></progress>
-                    </div>
-                    <div class="column align-item-left">
-                        <p><b>40%</b></p>
-                    </div>
-                    <!-- <div class="column">
+                         <p id="b_required" class="has-text-danger"></p>
+                        <br /><br /><br />
+                        <div class="card custom-border">
+                            <header class="custom-card-header is-pulled-left">
+                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                                    <b>
+                                Model</b></p>
+                            </header>
+                            <br />
+                            <label class="checkbox">
+                                    <input type="checkbox" id="generate_name">
+                                        Generate model name.
+                            </label>
+                            <p><small>Choose the option above to generate model name or enter model name below</small></p>
+                            <div class="card-content">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <textarea rows="4" cols="90" name="modelname" placeholder="Model name"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
                         <div class="control">
+                            <a class="button custom-button right" id="startTraining" onclick="start_training()">
+                        		Start Training</a>
+                        </div>
+                        <br /><br />
+                        <div class="columns is-vcentered has-text-centered">
+                            <div class="column is-three-fifths">
+                                <progress class="progress progress-left " value="40" max="100"></progress>
+                            </div>
+                            <div class="column align-item-left">
+                                <p><b>40%</b></p>
+                            </div>
+                            <!-- <div class="column">
+                        	<div class="control">
                             <a class="button custom-button right">
                                 Save Model
                             </a>
+                        	</div>
+                    		</div> -->
                         </div>
-                    </div> -->
+
+                    </div>
                 </div>
             </div>
 
@@ -214,6 +225,29 @@
             }
             x[slideIndex - 1].style.display = "block";
         }
+    </script>
+    <script>
+        // Folder selection 
+        var groupa = document.getElementById("groupa");
+        groupa.onchange = function() {
+            var ga = document.getElementById('a_required');
+            ga.innerHTML =""
+            if (groupa.files.length > 0) {
+                console.log(groupa.files[0].name);
+                document.getElementById('folderA').innerHTML = groupa.files[0].name;
+            }
+        }
+
+        var groupb = document.getElementById("groupb");
+        groupb.onchange = function() {
+            var gb = document.getElementById('b_required');
+            gb.innerHTML =""
+            if (groupb.files.length > 0) {
+                console.log(groupb.files[0].name);
+                document.getElementById('folderB').innerHTML = groupb.files[0].name;
+            }
+        };
+
     </script>
 </body>
 
