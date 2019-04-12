@@ -4,7 +4,7 @@ import shutil
 import math
 import subprocess
 from .constants import image_extensions
-from .constants import model_dir
+from .constants import root_dir
 
 def copyWithSubprocess(cmd):
     DEVNULL = open(os.devnull, 'wb')        
@@ -19,7 +19,7 @@ def make_train_test(groupa, groupb):
         sys.stdout.flush()
         return
     #Make new directory at root
-    new_dir = os.path.join(model_dir,'new_datasets')
+    new_dir = os.path.join(root_dir,'new_datasets')
     if os.path.isdir(new_dir):
         shutil.rmtree(new_dir)
     os.mkdir(new_dir)
@@ -60,7 +60,7 @@ def make_train_test(groupa, groupb):
     # Copy 20% to test_set
    
     total = math.ceil(len(os.listdir(groupa))*0.2)
-    print(total)
+    
     for file in os.listdir(groupa)[:total]:
         if file.endswith(image_extensions):
             copyWithSubprocess(['cp',os.path.join(groupa,file), groupA_folder_test])

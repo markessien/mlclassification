@@ -25,6 +25,8 @@ from keras.callbacks import ModelCheckpoint
 from .constants import model_dir
 from .constants import default_test_folder_path
 from .constants import default_train_folder_path
+from .constants import root_dir
+from .constants import image_extensions
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -146,7 +148,7 @@ def train(model_name, epochs=100, train_folder=None, test_folder=None):
                              training_set,
                              steps_per_epoch=steps_per_epoch,
                              epochs=epochs,
-                             verbose=1,
+                             verbose=0,
                              validation_data=test_set,
                              validation_steps=validation_steps,
                              callbacks=callbacks_list)

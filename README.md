@@ -108,6 +108,8 @@ Download and extract this [file](https://drive.google.com/file/d/15ExWHHPnzdqzQD
 This are command options in full:
 
 ```
+A command line utility for image classification.
+-----------------------------------------------
 These are common commands for this app.
 
 positional arguments:
@@ -118,8 +120,10 @@ optional arguments:
   -h, --help            show this help message and exit
   -path PATH, --path PATH
                         A path to a folder or image e.g foo or foobar.jpg
-  -trp TRP, --trp TRP   A training folder path e.g dataset/training_set
-  -tep TEP, --tep TEP   A test folder path e.g dataset/test_set
+  -grpA GRPA, --grpA GRPA
+                        A group A folder path e.g hotels
+  -grpB GRPB, --grpB GRPB
+                        A group B folder path e.g not-hotels
   -model MODEL, --model MODEL
                         Selects a model to be used
   -gen_name GEN_NAME, --gen_name GEN_NAME
@@ -148,13 +152,13 @@ python app.py delete --model modelname
 **Train Model with custom dataset and model:**
 
 ```
-python app.py train --tep datasets/test_set --trp datasets/training_set --model cat_dogmodel
+python app.py train --grpA path/to/groupA --grpB path/to/groupB --model cat_dogmodel
 ```
 
 or:
 
 ```
-python app.py train -tep datasets/test_set -trp datasets/training_set -model cat_dogmodel
+python app.py train -grpA path/to/groupA -grpB path/to/groupB -model cat_dogmodel
 ```
 
 **Train with default dataset and model:**

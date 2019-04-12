@@ -16,7 +16,7 @@ from utils.constants import model_dir
 from utils.constants import model_extension
 from utils.constants import image_extensions
 from utils.constants import truth_values
-
+from utils.make_train_test import make_train_test
 
 
 def parse_args(argv):
@@ -37,14 +37,14 @@ def parse_args(argv):
 
     )
     parser.add_argument(
-        '-trp',
-        '--trp',
-        help='A training folder path e.g dataset/training_set'
+        '-grpA',
+        '--grpA',
+        help='A group A folder path e.g hotels'
     )
     parser.add_argument(
-        '-tep',
-        '--tep',
-        help='A test folder path e.g dataset/test_set'
+        '-grpB',
+        '--grpB',
+        help='A group B folder path e.g not-hotels'
     )
     parser.add_argument(
         '-model',
@@ -69,8 +69,9 @@ def main(argv=sys.argv):
     args = parse_args(argv)
 
     action = args.app_action
-    train_folder_path =args.trp
-    test_folder_path = args.tep
+    groupA =args.grpA
+    groupB = args.grpB
+
     folder_or_image = "" if args.path is None else args.path
     #Any arg supplied to this will be seen as True, no arg means False
     generate_model_name = args.gen_name 
@@ -87,8 +88,11 @@ def main(argv=sys.argv):
             if generate_model_name in truth_values:
                 #The user want us to generate model name for them
                 #trp and tep args are required args implicitly for users from app
-                if train_folder_path and test_folder_path:
+                if groupA and groupB:
                     #Means user fulfilled the requirement. we can proceed now
+                    process_folders = make_train_test(groupA,groupB)
+                    train_folder_path = process_folders.get("training_set")
+                    test_folder_path = process_folders.get("test_set")
                     #generate name
                     new_model = generate_name(train_folder_path)
                     train_model(new_model, train_folder_path, test_folder_path)
