@@ -155,6 +155,7 @@ function updateConfidenceProgress(id, name) {
 }
 
 function train() {
+    document.getElementById(`trainbutton`).disabled = true;
     const textareavalue = document.getElementById(`modelname`).value;
     const modelname = textareavalue.split('').length > 1 ? textareavalue : makeid(8);
     console.log('Saving Directory');
@@ -167,14 +168,14 @@ function train() {
         confirmButtonText: 'Proceed',
         onClose: () => {
             return [
-                startTraining(groups,modelname)
+                startTraining(groups, modelname)
             ]
         },
         cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel',
     })
 }
 
-function startTraining(groups,modelname) {
+function startTraining(groups, modelname) {
     const groupa = groups.groupa;
     const groupb = groups.groupb;
     const options = {
@@ -183,24 +184,44 @@ function startTraining(groups,modelname) {
         pythonPath: '/usr/local/bin/python3',
         args: ['train', '--grpA', `${groupa}`, '--grpB', `${groupb}`, '--model', `${modelname}`]
     }
-
-    PythonShell.run('app.py', options, (err, results) => {
-        document.getElementById('responses').innerText = results;
-        if (err) {
+    try {
+        let pyshell = new PythonShell('app.py', options);
+        pyshell.send('');
+        pyshell.on('message', function (message) {
             Swal.fire({
-                html: `<span>${err}</span>`,
+                html: `<span>${message}</span>`,
                 showCloseButton: false,
                 showCancelButton: false,
                 focusConfirm: false
             })
-        }
+        });
+        pyshell.end(function (err, code, signal) {
+            if (err) {
+                document.getElementById(`trainbutton`).disabled = false
+                Swal.fire({
+                    html: `<span>${err}</span>`,
+                    showCloseButton: false,
+                    showCancelButton: false,
+                    focusConfirm: false
+                })
+            }
+            Swal.fire({
+                html: `<p>The exit code was ${code}</p><p>The exit signal was: ${signal}</p>`,
+                showCloseButton: false,
+                showCancelButton: false,
+                focusConfirm: false
+            })
+        });
+    } catch (error) {
+        document.getElementById(`trainbutton`).disabled = false
         Swal.fire({
-            html: `<span>${results}</span>`,
+            html: `<span>${error}</span>`,
             showCloseButton: false,
             showCancelButton: false,
             focusConfirm: false
         })
-    });
+    }
+
 }
 
 function makeid(length) {
