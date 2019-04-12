@@ -2,7 +2,9 @@ const { app, BrowserWindow } = require('electron');
 var fs = require('fs');
 let { PythonShell }= require('python-shell')
 const {ipcMain} = require('electron')
-const path = require('path')
+const path = require('path');
+let window;
+const url = require('url');
 
 ipcMain.on('trainingDatasetRecovery', (event, arg) => {
     var dir = arg[0]
@@ -48,7 +50,12 @@ function createWindow() {
         width: 1000,
         height: 600
     });
-    window.loadFile("index.html");
+    window.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+  
 }
 
 app.on('ready', createWindow);
@@ -58,5 +65,13 @@ app.on('window-all-closed', () => {
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
         app.quit();
+    }
+});
+
+app.on('activate', () => {
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (window == 'null') {
+        createWindow();
     }
 });

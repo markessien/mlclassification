@@ -68,9 +68,7 @@ def get_total_images(folder_path):
 def _generator(folder_path =None, is_train_set=True):
     """
     Accepts a training folder path and generate training set from it.
-
     if a folder is not supplied, defaults to using ./datasets/training_set
-
     No need to make default dataset folder constant because it's only used here
     """
     if is_train_set:
@@ -177,5 +175,3 @@ def setupTF():
     keras.backend.set_session(sess)
 
     return
-
-
