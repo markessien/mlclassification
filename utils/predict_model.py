@@ -15,6 +15,8 @@ from utils.model import model_delete
 from utils.model import import_model
 from utils.model import all_models
 
+
+
 # Use the default one if no one is supplied by the user
 def predictor(input_type, folder_or_image, model):
     """
@@ -34,11 +36,11 @@ def predictor(input_type, folder_or_image, model):
         outcome = test(classifier, folder_or_image)
 
         if outcome == True:
-            print("\nThe image does not correspond with sorted image for Group A in this model")
+            print("\nThe image is not a hotel")
             sys.stdout.flush()
             return
 
-        print("\nThis image correspond with the sorted images for Group B in this model")
+        print("\nThis image is a hotel")
         sys.stdout.flush()
         return  # important. Must return
 

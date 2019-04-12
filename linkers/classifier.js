@@ -1,5 +1,6 @@
-let {PythonShell} = require('python-shell')
-const fs = require("fs")
+
+let {PythonShell} = require('python-shell');
+const fs = require("fs");
 const readline = require('readline');
 
 var path = require("path")
@@ -26,7 +27,7 @@ function start_training(){
     var trainArgs = ['train', '-grpA',groupaPath, '-grpB', groupbPath, '-model', modelname, '-gen_name',gen_name]
 
     var options = {
-    mode:'binary',
+    mode:'text',
     scriptPath : __dirname,
     args : trainArgs,
     pythonOptions:['-u'],
@@ -39,5 +40,77 @@ function start_training(){
 
     console.log(message)
   })
+}
+
+function start_prediction(){
+    var folder = document.getElementById('predfolder');
+    var fileselected = document.getElementById('predfile');
+    if (folder.files.length>0){
+        var working = document.getElementById("working");
+        working.innerHTML = "Predicting folder,...just a few minutes";
+        var folderpath = folder.files[0].path;
+        var predArgs = ['predict', '--path',folderpath];
+
+    var options = {
+    mode:'text',
+    scriptPath : __dirname,
+    args : predArgs,
+    pythonOptions:['-u'],
+    pythonPath: path.join(__dirname,'env/bin/python')
+
+  };
+
+  let pyshell = new PythonShell('app.py', options);
+
+  pyshell.on('message', function(message) {
+
+    var working = document.getElementById("working");
+    working.innerHTML = message;
+  })
+  pyshell.end(function (err,code,signal) {
+  if (err) throw err;
+  
+});
+    }
+  else if (fileselected.files.length>0){
+    var working = document.getElementById("working");
+        working.innerHTML = "Predicting image ...";
+        var filepath = fileselected.files[0].path;
+        var predArgs = ['predict', '--path',filepath];
+
+    var options = {
+    mode:'text',
+    scriptPath : __dirname,
+    args : predArgs,
+    pythonOptions:['-u'],
+    pythonPath: path.join(__dirname,'env/bin/python')
+
+  };
+
+  let pyshell = new PythonShell('app.py', options);
+
+  pyshell.on('message', function(message) {
+
+    var working = document.getElementById("working");
+    working.innerHTML = message;
+  })
+
+}
+}
+
+function allmodels(){
+    var options = {
+    mode:'text',
+    scriptPath : __dirname,
+    args : ['retrieve_models'],
+    pythonOptions:['-u'],
+    pythonPath: path.join(__dirname,'env/bin/python')
+
+  };
+  let pyshell = new PythonShell('app.py', options);
+  pyshell.on("message",function(){
+
+  });
+
 }
 

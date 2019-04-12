@@ -1,6 +1,4 @@
-<!Doctype HTML>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./html_assets/fonts/questrial/style.css">
@@ -29,23 +27,23 @@
         <div class="columns ">
 
             <div class="column is-half has-text-centered main-column">
-                <p class="is-centered custom-title is-size-3">
+                <p class="is-centered custom-title is-size-2">
                     Training
                 </p>
-                <br />
+                <br /><br/>
                 <div class="card custom-border">
                     <header class="custom-card-header is-pulled-left">
-                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-4">
                             Images
                         </p>
                     </header>
                     <br />
                     <div class="card-content">
-                        <div class="field has-addons" style="width:100%; margin:auto; padding-bottom: 30px;">
+                        <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 20px;">
                             <div style="width:30%">
                                 <label class="custom-label">Group A</label>
                             </div>
-                            <div class="file">
+                            <div class="file is-pulled-right">
                                 <label class="file-label">
     									<input class="file-input" id="groupa" type="file" name="groupa" webkitdirectory>
     									<span class="file-cta">
@@ -53,7 +51,7 @@
         									<i class="fas fa-upload"></i>
       												</span>
       														<span class="file-label" id="folderA">
-        														Choose Group A Folder
+        														Choose a folder
       														</span>
     										</span>
   									</label>
@@ -62,12 +60,12 @@
                             
                         </div>
                         <p id="a_required" class="has-text-danger"></p>
-                        <br /><br /><br />
-                        <div class="field has-addons" style="width:100%; margin:auto; padding-bottom: 30px;">
+                        
+                        <div class="field has-addons" style="width:80%; margin:auto;padding-bottom: 10px">
                             <div style="width:30%">
                                 <label class="custom-label">Group B</label>
                             </div>
-                            <div class="file">
+                            <div class="file is-pulled-right">
                                 <label class="file-label">
     									<input class="file-input" id="groupb" type="file" name="groupb" webkitdirectory>
     									<span class="file-cta">
@@ -75,7 +73,7 @@
         									<i class="fas fa-upload"></i>
       												</span>
       														<span class="file-label" id="folderB">
-        														Choose Group B Folder
+        														Choose a folder
       														</span>
     									</span>
   									</label>
@@ -83,10 +81,10 @@
                             </div>
                         </div>
                          <p id="b_required" class="has-text-danger"></p>
-                        <br /><br /><br />
+                        
                         <div class="card custom-border">
                             <header class="custom-card-header is-pulled-left">
-                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                                <p class="card-header-title is-pulled-left is-centered custom-title is-size-4">
                                     <b>
                                 Model</b></p>
                             </header>
@@ -132,13 +130,13 @@
 
             <div class="column is-half has-text-centered main-column">
 
-                <p class="is-centered custom-title is-size-3">
+                <p class="is-centered custom-title is-size-2">
                     <b>Prediction</b>
                 </p>
-                <br />
+                <br /><br/>
                 <div class="card custom-border">
                     <header class="custom-card-header is-pulled-left">
-                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-3">
+                        <p class="card-header-title is-pulled-left is-centered custom-title is-size-4">
                             <b>
                                 Images
                             </b>
@@ -146,19 +144,47 @@
                     </header>
                     <br />
                     <div class="card-content">
-                        <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 30px;">
-                            <div class="control" style="width:80%">
-                                <input class="hide-input" type="file" id="part3" />
-                                <input class="input" type="text" disabled placeholder="No file selected" />
+                        <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 20px;">
+                            <div style="width:30%">
+                                <label class="custom-label">Folder</label>
                             </div>
-                            <div class="control">
-                                <label for="part3">
-                                    <a class="button custom-button has-text-white">
-                                        Choose File
-                                    </a>
-                                </label>
+                            <div class="file is-pulled-right">
+                                <label class="file-label">
+                                        <input class="file-input" id="predfolder" type="file" name="predfolder" webkitdirectory>
+                                        <span class="file-cta">
+                                        <span class="file-icon">
+                                            <i class="fas fa-upload"></i>
+                                                    </span>
+                                                            <span class="file-label" id="predfoldname">
+                                                                Choose a folder
+                                                            </span>
+                                            </span>
+                                    </label>
                             </div>
+                            <br/>
+                            
                         </div>
+                        <div class="field has-addons" style="width:80%; margin:auto; padding-bottom: 10px;">
+                            <div style="width:30%">
+                                <label class="custom-label">Image</label>
+                            </div>
+                            <div class="file is-pulled-right break-word">
+                                <label class="file-label">
+                                        <input class="file-input" id="predfile" type="file" name="predfile">
+                                        <span class="file-cta">
+                                        <span class="file-icon">
+                                            <i class="fas fa-upload"></i>
+                                                    </span>
+                                                            <span class="file-label " id="predfilename">
+                                                                Choose an image
+                                                            </span>
+                                            </span>
+                                    </label>
+                            </div>
+                            <br/>
+                            
+                        </div>
+                        <p id="working" class="break-word"></p>
                         <div class="columns is-vcentered has-text-centered" style="width:80%; margin:auto;">
                             <div class="" style="width:80%;">
                                 <progress class="progress" value="15" max="100">15%</progress>
@@ -167,7 +193,7 @@
                                 <div class="level">
                                     <div class="level-item is-narrow">
                                         <p class="is-right-spaced"><b>20%</b></p>
-                                        <a class="button custom-button has-text-white">
+                                        <a class="button custom-button has-text-white" onclick="start_prediction()">
                                             Predict
                                         </a>
                                     </div>
@@ -245,6 +271,22 @@
             if (groupb.files.length > 0) {
                 console.log(groupb.files[0].name);
                 document.getElementById('folderB').innerHTML = groupb.files[0].name;
+            }
+        };
+        // Folder selection 
+        var predfolder = document.getElementById("predfolder");
+        predfolder.onchange = function() {
+            if (predfolder.files.length > 0) {
+                console.log(predfolder.files[0].name);
+                document.getElementById('predfoldname').innerHTML = predfolder.files[0].name;
+            }
+        }
+
+        var predfile = document.getElementById("predfile");
+        predfile.onchange = function() {
+            if (predfile.files.length > 0) {
+                console.log(predfile.files[0].name);
+                document.getElementById('predfilename').innerHTML = predfile.files[0].name;
             }
         };
 
