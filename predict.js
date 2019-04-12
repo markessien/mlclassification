@@ -158,7 +158,23 @@ function train() {
     const textareavalue = document.getElementById(`modelname`).value;
     const modelname = textareavalue.split('').length > 1 ? textareavalue : makeid(8);
     console.log('Saving Directory');
-    const groups = store.getGroup()
+    const groups = store.getGroup();
+    Swal.fire({
+        html: `<span>You are about to train a model with name <b>${modelname}</b></span>`,
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Proceed',
+        onClose: () => {
+            return [
+                startTraining(groups,modelname)
+            ]
+        },
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel',
+    })
+}
+
+function startTraining(groups,modelname) {
     const groupa = groups.groupa;
     const groupb = groups.groupb;
     const options = {
@@ -167,23 +183,9 @@ function train() {
         pythonPath: '/usr/local/bin/python3',
         args: ['train', '--grpA', `${groupa}`, '--grpB', `${groupb}`, '--model', `${modelname}`]
     }
-    Swal.fire({
-        html: `<span>You are about to train a model with name <b>${modelname}</b></span>`,
-        showCloseButton: true,
-        showCancelButton: true,
-        focusConfirm: false,
-        confirmButtonText: 'Proceed',
-        preConfirm: () => {
-            return [
-                startTraining(options)
-            ]
-        },
-        cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel',
-    })
-}
 
-function startTraining(options) {
     PythonShell.run('app.py', options, (err, results) => {
+        document.getElementById('responses').innerText = results;
         if (err) {
             Swal.fire({
                 html: `<span>${err}</span>`,
@@ -192,16 +194,6 @@ function startTraining(options) {
                 focusConfirm: false
             })
         }
-        const logpath = path.join(__dirname, '/server/training.log')
-        var myInterface = readline.createInterface({
-            input: fs.createReadStream(logpath)
-        });
-        var lineno = 0;
-        myInterface.on('line', function (line) {
-            lineno++;
-            document.getElementById('responses').value= 'Line number ' + lineno + ': ' + line
-        });
-
         Swal.fire({
             html: `<span>${results}</span>`,
             showCloseButton: false,
