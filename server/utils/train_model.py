@@ -134,7 +134,7 @@ def train(model_name, epochs=100, train_folder=None, test_folder=None):
     classifier.add(Dense(units=1, activation='sigmoid'))
         # checkpoint
 
-    checkpoint = ModelCheckpoint(model_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+    checkpoint = ModelCheckpoint(model_path, verbose=1, save_best_only=True, mode='max')
     callbacks_list = [TQDMCallback(output_file=logfile),checkpoint]
     if os.path.isfile(model_path):
         print ("Resumed model's weights from {}".format(model_path))

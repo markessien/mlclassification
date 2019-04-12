@@ -2,7 +2,9 @@ var {
     PythonShell
 } = require("python-shell");
 var path = require('path');
-const fs = require('fs');
+var readline = require('readline');
+var fs = require('fs');
+
 
 class Store {
     constructor() {
@@ -182,7 +184,7 @@ function train() {
 
 function startTraining(options) {
     PythonShell.run('app.py', options, (err, results) => {
-        if(err){
+        if (err) {
             Swal.fire({
                 html: `<span>${err}</span>`,
                 showCloseButton: false,
@@ -190,6 +192,16 @@ function startTraining(options) {
                 focusConfirm: false
             })
         }
+        const logpath = path.join(__dirname, '/server/training.log')
+        var myInterface = readline.createInterface({
+            input: fs.createReadStream(logpath)
+        });
+        var lineno = 0;
+        myInterface.on('line', function (line) {
+            lineno++;
+            document.getElementById('responses').value= 'Line number ' + lineno + ': ' + line
+        });
+
         Swal.fire({
             html: `<span>${results}</span>`,
             showCloseButton: false,
