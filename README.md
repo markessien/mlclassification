@@ -70,8 +70,12 @@ pip install -r requirements.txt
 
 ## Deployment
 
-Start app (Make sure to enter a valid path to a file or a folder)
+Start app 
 
+```
+npm install && npm start
+
+```
 
 Example of valid commands
 
