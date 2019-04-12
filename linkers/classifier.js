@@ -1,4 +1,7 @@
 let {PythonShell} = require('python-shell')
+const fs = require("fs")
+const readline = require('readline');
+
 var path = require("path")
 
 function start_training(){
@@ -18,8 +21,9 @@ function start_training(){
     var groupaPath = groupA.files[0].path;
     var groupbPath = groupB.files[0].path;
     var gen_name = document.getElementById('generate_name').value;
+    var modelname = document.getElementById("modelname").value
     
-    var trainArgs = ['train', '-grpA',groupaPath, '-grpB', groupbPath, '-gen_name',gen_name]
+    var trainArgs = ['train', '-grpA',groupaPath, '-grpB', groupbPath, '-model', modelname, '-gen_name',gen_name]
 
     var options = {
     mode:'binary',
@@ -31,8 +35,9 @@ function start_training(){
   }
   let pyshell = new PythonShell('app.py', options);
 
-
   pyshell.on('message', function(message) {
-    swal(message);
+
+    console.log(message)
   })
 }
+

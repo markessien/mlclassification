@@ -96,6 +96,8 @@ def main(argv=sys.argv):
                     #generate name
                     folder = process_folders.get("folder");
                     new_model = generate_name(folder) # Adds extension
+                    print("Training starting...")
+                    sys.stdout.flush()
                     train_model(new_model, train_folder_path, test_folder_path)
                     return
                 #Here, the user might have supplied one folder argument or None at all
