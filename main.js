@@ -10,6 +10,18 @@ const url = require('url')
 
 let { PythonShell } = require('python-shell')
 
+let train_options = {
+    mode: 'text',
+    pythonPath: 'env/bin/python',
+    pythonOptions: ['-u'], // get print results in real-time
+    args: ['train', 'grpA', 'grpB','gen_name']
+  };
+  PythonShell.run('app.py', train_options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+  });
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -59,3 +71,4 @@ app.on('activate', function() {
         createWindow()
     }
 })
+
