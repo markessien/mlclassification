@@ -79,9 +79,6 @@ function addPredict(event) {
 
 function predict(folder) {
     console.log('hello');
-    const perc = 30;
-    document.getElementById('predictprogress').value = perc;
-    document.getElementById('predicttag').innerText = `${perc}%`;
     try {
         const options = {
             mode: 'text',
@@ -90,7 +87,18 @@ function predict(folder) {
             args: ['predict', '-path', `${folder}`]
         }
         PythonShell.run('app.py', options, (err, results) => {
-            if (err) throw err;
+            if (err) {
+                Swal.fire({
+                    html: `<span>Unable to scan directory: ${err}</span>`,
+                    showCloseButton: false,
+                    showCancelButton: false,
+                    focusConfirm: false
+                })   
+                return;        
+            };
+            const perc = 30;
+            document.getElementById('predictprogress').value = perc;
+            document.getElementById('predicttag').innerText = `${perc}%`;
             // results is an array consisting of messages collected during execution
             console.log('results: %j', results);
             //todo: If api returns the results and the folder directory
@@ -108,6 +116,12 @@ function predict(folder) {
             fs.readdir(folder, function (err, files) {
                 //handling error
                 if (err) {
+                    Swal.fire({
+                        html: `<span>Unable to scan directory: ${err}</span>`,
+                        showCloseButton: false,
+                        showCancelButton: false,
+                        focusConfirm: false
+                    })
                     return console.log('Unable to scan directory: ' + err);
                 }
                 //listing all files using forEach
@@ -124,7 +138,12 @@ function predict(folder) {
 
         });
     } catch (error) {
-        console.log(error)
+        Swal.fire({
+            html: `<span>${error}</span>`,
+            showCloseButton: false,
+            showCancelButton: false,
+            focusConfirm: false
+        })
     }
 }
 

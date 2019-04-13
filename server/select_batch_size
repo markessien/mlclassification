@@ -1,8 +1,0 @@
-import numpy as np
-def select_batch_size(train_folder_path):
-    if len(train_folder_path) <=100:
-        return (np.random.randint(0,20))
-    elif len(train_folder_path) >100:
-        return len(train_folder_path)/100
-    else:
-        print('select a file')
