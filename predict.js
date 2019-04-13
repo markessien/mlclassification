@@ -6,6 +6,7 @@ var readline = require('readline');
 var fs = require('fs');
 
 
+
 class Store {
     constructor() {
         this.groups = {}
@@ -66,7 +67,7 @@ function addPredict(event) {
             showCancelButton: true,
             focusConfirm: false,
             confirmButtonText: 'Proceed',
-            preConfirm: () => {
+            onClose: () => {
                 return [
                     predict(folder)
                 ]
@@ -96,9 +97,9 @@ function predict(folder) {
                 })   
                 return;        
             };
-            const perc = 30;
-            document.getElementById('predictprogress').value = perc;
-            document.getElementById('predicttag').innerText = `${perc}%`;
+            const per = 30;
+            document.getElementById('predictprogress').value = per;
+            document.getElementById('predicttag').innerText = `${per}%`;
             // results is an array consisting of messages collected during execution
             console.log('results: %j', results);
             //todo: If api returns the results and the folder directory
