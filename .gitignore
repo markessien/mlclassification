@@ -119,4 +119,8 @@ datasets/
 new_datasets/
 node_modules
 yarn.lock
+server/app
+server/__pycache__/
+dist
+build
 mlclassification-darwin-x64

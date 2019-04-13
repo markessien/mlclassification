@@ -1,0 +1,6 @@
+pillow
+Ipython
+tensorflow
+keras
+keras_tqdm
+numpy
